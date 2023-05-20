@@ -13,12 +13,12 @@
     - [FUI MoodBoard](https://www.behance.net/collection/203026051/FUI)
 
 **Objectives**:
-- Reconnaissance: find dashboard username to log into. It's going to be in a screenshot in one of the blog posts.
-- find hidden dashboard: on url /c2/panel by checking the robots.txt (the file will be spammed with entries to make it harder to find, player will need to filter in some way
-- the dashboard will have a user agent filter. Player will need to spoof it. They'll get the user agent either from more reconnaissance or by sending a malicious link in a message in the contact-us section.
+- [ ] Reconnaissance: find dashboard username to log into. It's going to be in a screenshot in one of the blog posts.
+- [ ] find hidden dashboard: on url /c2/panel by checking the robots.txt (the file will be spammed with entries to make it harder to find, player will need to filter in some way
+- [x] the dashboard will have a user agent filter. Player will need to spoof it. They'll get the user agent either from more reconnaissance or by sending a malicious link in a message in the contact-us section.
   The server will make a request with the needed user agent to fake an employer clicking on the link.
-- bypass authentication with some sort of JSON injection or another unsanitised vulnerability in the graphql mutation
-- unprotected endpoint: once logged in, the player should play with the graphql endpoint to find the role/admin field inside the login query response and change it to admin=1 or role="admin",<br/>
+- [ ] bypass authentication with some sort of JSON injection or another unsanitised vulnerability in the graphql mutation
+- [ ] unprotected endpoint: once logged in, the player should play with the graphql endpoint to find the role/admin field inside the login query response and change it to admin=1 or role="admin",<br/>
   this will set the player to admin client side so that they can explore the admin dashboard.<br/> Once they find the admin utilities, they'll need to tamper with their jwt token to set the role to admin there as well.
   On the admin dashboard, they'll find a button that will then make a request to /c2/dashboard/p4n1c that safely removes the malware from victims's neurotaps if the jwt contains the admin role.
 

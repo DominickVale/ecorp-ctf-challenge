@@ -7,15 +7,24 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Staff {
-  id        String      @id @default(uuid())
-  email     String   @unique
-  password  String
-  role      Role
+model StaffUser {
+  id    Int      @id @default(autoincrement())
+  role  StaffRole  @default(default)
+  // add other arbitrary user data fields
 }
 
-enum Role {
-  TESTER
-  DEFAULT
-  NORMAL
+model Client {
+  id        String    @id @default(uuid())
+  name      String
+  surname   String
+  age       Int
+  heartrate Int
+  o2        Int
+  // add other medical and psychological data fields
+}
+
+enum StaffRole {
+  admin
+  tester
+  default
 }
