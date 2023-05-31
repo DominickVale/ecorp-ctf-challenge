@@ -5,26 +5,31 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+generator pothos {
+  provider = "prisma-pothos-types"
 }
 
 model StaffUser {
-  id    Int      @id @default(autoincrement())
-  role  StaffRole  @default(default)
-  // add other arbitrary user data fields
+  id       Int      @id @default(autoincrement())
+  username String   @unique
+  password String
+  role     StaffRole @default(DEFAULT)
 }
 
 model Client {
-  id        String    @id @default(uuid())
+  id        String   @id @default(uuid())
   name      String
   surname   String
   age       Int
   heartrate Int
   o2        Int
-  // add other medical and psychological data fields
 }
 
 enum StaffRole {
-  admin
-  tester
-  default
+  ADMIN
+  TESTER
+  DEFAULT
 }

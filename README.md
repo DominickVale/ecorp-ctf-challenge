@@ -1,34 +1,45 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# Setup
+todo
 
-First, run the development server:
+# Meta
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+**Estimated difficulty**: Easy
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**Theme**: An evil corporation (Neuratap) (bootleg evil neuralink) is an emerging corporation that produces brain-machine interfaces boasting about privacy, security and clients well-being on top of everything else.
+    But word got out that they run malware on their neuratap implants, stealing data by deciphering sensory inputs and accessing sensitive data,
+    along with manipulating their victims' thoughts to convince everyone they know to buy a neuratap too. They must be stopped before they infect too many people... Word got out that they have an entire c2 dashboard exposed on their clearnet website!
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+**Tags**: reconnaissance, graphql, enumeration, robots.txt, unchecked jwt signature, minified source code inspection
 
-## Learn More
+**Design**: cyberpunk-like, futuristic user interface.
 
-To learn more about Next.js, take a look at the following resources:
+**Design inspiration**: 
+    - [FUI MoodBoard](https://www.behance.net/collection/203026051/FUI)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Objectives**:
+- [ ] Reconnaissance: find dashboard username to log into. It's going to be in a screenshot in one of the blog posts.
+- [ ] find hidden dashboard: on url /c2/panel by checking the robots.txt (the file will be spammed with entries to make it harder to find, player will need to filter in some way
+- [x] the dashboard will have a user agent filter. Player will need to spoof it. They'll get the user agent either from more reconnaissance or by sending a malicious link in a message in the contact-us section.
+  The server will make a request with the needed user agent to fake an employer clicking on the link.
+- [ ] bypass authentication with some sort of JSON injection or another unsanitised vulnerability in the graphql mutation
+- [ ] unprotected endpoint: once logged in, the player should play with the graphql endpoint to find the role/admin field inside the login query response and change it to admin=1 or role="admin",<br/>
+  this will set the player to admin client side so that they can explore the admin dashboard.<br/> Once they find the admin utilities, they'll need to tamper with their jwt token to set the role to admin there as well.
+  On the admin dashboard, they'll find a button that will then make a request to /c2/dashboard/p4n1c that safely removes the malware from victims's neurotaps if the jwt contains the admin role.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+The graphql endpoint will have both graphiql and introspection disabled to make it not solvable in 2 minutes. They'll need to work with error messages / suggestions.
 
-## Deploy on Vercel
+The objectives might change slightly as i design it further but this should be the gist of it. It might end up being slightly easier or slightly harder depending on the dashboard design :)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Flags**:
+- on dashboard login (will be set as a cookie)
+- on dashboard admin mode (will show up somewhere easy to spot on the dashboard)
+- on successful request sent to p4n1c
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Useful links
+- https://github.com/dolevf/Damn-Vulnerable-GraphQL-Application
+- https://cheatsheetseries.owasp.org/cheatsheets/GraphQL_Cheat_Sheet.html
+- https://youtu.be/NPDp7GHmMa0
+- https://www.apollographql.com/blog/graphql/security/securing-your-graphql-api-from-malicious-queries/
+- https://book.hacktricks.xyz/pentesting-web/hacking-jwt-json-web-tokens#tamper-data-without-modifying-anything
