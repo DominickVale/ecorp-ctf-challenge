@@ -4,6 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "setup": "docker compose -f docker-compose.base.yaml build && docker compose -f docker-compose.base.yaml up",
+    "db-bootstrap": "yarn prisma generate && yarn prisma migrate dev --name init && yarn prisma db seed --preview-feature",
+    "up-dev": "docker compose -f docker-compose.base.yaml up",
+    "down-dev": "docker compose -f docker-compose.base.yaml down",
+    "build-dev": "docker compose -f docker-compose.base.yaml build",
+    "up-prod": "docker compose -f docker-compose.prod.yaml up",
+    "down-prod": "docker compose -f docker-compose.prod.yaml down",
+    "build-prod": "docker compose -f docker-compose.prod.yaml build",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -39,7 +47,7 @@
     "react-dom": "18.2.0",
     "tailwindcss": "3.3.2",
     "ts-node": "^10.9.1",
-    "typescript": "5.0.4",
+    "typescript": "5.0.2",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

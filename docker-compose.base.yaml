@@ -1,6 +1,7 @@
 version: '3.8'
 services:
   web:
+    restart: always
     build:
       context: .
       dockerfile: dev.Dockerfile
@@ -8,6 +9,10 @@ services:
       - '3000:3000'
     depends_on:
       - postgres
+    volumes:
+      - ./:/app
+      - /app/node_modules
+      - /app/.next
     networks:
       - main_network
   postgres:

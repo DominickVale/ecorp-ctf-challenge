@@ -1,6 +1,20 @@
 
 # Setup
-todo
+### DEV
+```bash
+# Create a network, which allows containers to communicate
+# with each other, by using their container name as a hostname
+docker network create main_network #(if you change this also change the name in the Dockerfiles)
+
+yarn setup # (if first time)
+# enter container terminal
+docker exec -it ecorp-ctf-challenge-web-1 sh
+# inside container terminal
+yarn prisma generate
+yarn prisma migrate dev --name init # (if first time)
+yarn prisma db push
+yarn prisma db seed
+```
 
 # Meta
 
