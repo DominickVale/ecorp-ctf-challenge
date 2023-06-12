@@ -2,16 +2,6 @@ import prisma from "@/lib/prisma";
 import builder from "@/pages/api/builder";
 import "./mutations"
 
-export enum StaffUserRole {
-    TESTER = "TESTER",
-    DEFAULT = "DEFAULT",
-    ADMIN = "ADMIN",
-}
-
-builder.enumType(StaffUserRole, {
-    name: 'StaffUserRole',
-});
-
 builder.prismaObject("Client", {
     findUnique: (client) => ({id: client.id}),
     fields: (t) => ({
@@ -29,10 +19,7 @@ builder.prismaObject("StaffUser", {
         id: t.exposeID('id'),
         username: t.exposeString('username'),
         password: t.exposeString('password'),
-        role: t.field({
-            type: StaffUserRole,
-            resolve: (u) => u.role as StaffUserRole
-        })
+        level: t.exposeInt('level')
     }),
 });
 

@@ -4,7 +4,8 @@ import {startServerAndCreateNextHandler} from "@as-integrations/next";
 
 export const dynamic = true;
 const server = new ApolloServer({
-    schema
+    schema,
+    introspection: process.env.NODE_ENV === 'development',
 });
 
 export default startServerAndCreateNextHandler(server, {

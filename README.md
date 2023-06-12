@@ -10,10 +10,7 @@ yarn setup # (if first time)
 # enter container terminal
 docker exec -it ecorp-ctf-challenge-web-1 sh
 # inside container terminal
-yarn prisma generate
-yarn prisma migrate dev --name init # (if first time)
-yarn prisma db push
-yarn prisma db seed
+yarn db-bootstrap
 ```
 
 # Meta
@@ -34,17 +31,20 @@ yarn prisma db seed
 
 **Objectives**:
 - [ ] Reconnaissance: find dashboard username to log into. It's going to be in a screenshot in one of the blog posts.
-- [ ] find hidden dashboard: on url /c2/panel by checking the robots.txt (the file will be spammed with entries to make it harder to find, player will need to filter in some way
-- [x] the dashboard will have a user agent filter. Player will need to spoof it. They'll get the user agent either from more reconnaissance or by sending a malicious link in a message in the contact-us section.
+- [x] find hidden dashboard: on url /c2/panel by checking the robots.txt (the file will be spammed with entries to make it harder to find, player will either just wing it or use burp suite to test the paths for the only ones that don't 404, the list is short, so they don't dos us lol)
+- [x-ish] the dashboard will have a user agent filter. Player will need to spoof it. They'll get the user agent either from more reconnaissance or by sending a malicious link in a message in the contact-us section.
   The server will make a request with the needed user agent to fake an employer clicking on the link.
-- [ ] bypass authentication with some sort of JSON injection or another unsanitised vulnerability in the graphql mutation
-- [ ] unprotected endpoint: once logged in, the player should play with the graphql endpoint to find the role/admin field inside the login query response and change it to admin=1 or role="admin",<br/>
-  this will set the player to admin client side so that they can explore the admin dashboard.<br/> Once they find the admin utilities, they'll need to tamper with their jwt token to set the role to admin there as well.
-  On the admin dashboard, they'll find a button that will then make a request to /c2/dashboard/p4n1c that safely removes the malware from victims's neurotaps if the jwt contains the admin role.
+- [done server - todo client] once the dashboard is accessed, the player will need to intercept graphql requests and play with mutation names to find the right ones by enumerating the schema via typos (introspection disabled, but suggestions enabled)...
+   Of course the guesses will be easy (login, registerStaffUser etc). The register mutation will require an apikey, which can be found somewhere in the client minified source code.
+    They'll be able to register a default staff user from which they can then log in to and explore the dashboard.
+- [ ] unprotected endpoint: the player should've noticed by now the "level" field inside the login/register query response and change it to level=1 (all permissions),<br/>
+  this will set the player to admin on client side so that they can explore the admin dashboard.<br/> Once they find the admin utilities, they'll need to tamper with their jwt token to set the "level" there as well.
+  On the admin dashboard, they'll find a button that will then make a request to /c2/dashboard/p4n1c that safely removes the malware from victim's neurotaps if the jwt contains the admin role.
+- [ ] bonus point if they also find a way to erase all the users data (the deleteClientData mutation will accept an array of ids, which they can get through the getClientsList query)
 
-The graphql endpoint will have both graphiql and introspection disabled to make it not solvable in 2 minutes. They'll need to work with error messages / suggestions.
+The graphql endpoint will have both graphiql playground and introspection disabled to make it not solvable in 2 minutes. They'll need to work with error messages / suggestions.
 
-The objectives might change slightly as i design it further but this should be the gist of it. It might end up being slightly easier or slightly harder depending on the dashboard design :)
+The objectives might change slightly as I design it further but this should be the gist of it. It might end up being slightly easier or slightly harder depending on the dashboard design :)
 
 **Flags**:
 - on dashboard login (will be set as a cookie)

@@ -10,7 +10,7 @@ async function main() {
     for (let i = 0; i < 10; i++) {
         await prisma.staffUser.create({
             data: {
-                role: i % 2 === 0 ? 'ADMIN' : 'DEFAULT',
+                level: faker.number.int({min: 1, max: 5}),
                 username: faker.internet.displayName({
                     firstName: faker.person.lastName(),
                     lastName: faker.person.firstName()

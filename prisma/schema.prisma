@@ -13,23 +13,17 @@ generator pothos {
 }
 
 model StaffUser {
-  id       Int       @id @default(autoincrement())
-  username String    @unique
+  id       Int    @id @default(autoincrement())
+  username String @unique
   password String
-  role     StaffRole @default(DEFAULT)
+  level    Int    @default(5)
 }
 
 model Client {
-  id        String   @id @default(uuid())
+  id        String @id @default(uuid())
   name      String
   surname   String
   age       Int
   heartrate Int
   o2        Int
-}
-
-enum StaffRole {
-  ADMIN
-  TESTER
-  DEFAULT
 }
