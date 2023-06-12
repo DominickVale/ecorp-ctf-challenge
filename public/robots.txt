@@ -1,0 +1,911 @@
+# Allow all crawlers for /
+User-agent: *
+Allow: /
+
+# Block all crawlers for /admin
+User-agent: *
+Disallow: /admin
+
+# Block all crawlers for /login
+User-agent: *
+Disallow: /login
+
+# Block all crawlers for /private/dashboard
+User-agent: *
+Disallow: /private/dashboard
+
+# Block all crawlers for /private
+User-agent: *
+Disallow: /private
+
+# Block all crawlers for /backup/db
+User-agent: *
+Disallow: /backup/db
+
+# Block all crawlers for /tmp/logs
+User-agent: *
+Disallow: /tmp/logs
+
+# Block all crawlers for /temp/cache
+User-agent: *
+Disallow: /temp/cache
+
+# Block all crawlers for /private/dashboard/private
+User-agent: *
+Disallow: /private/dashboard/private
+
+# Block all crawlers for /dashboard/c2/private/panel/private/confidential
+User-agent: *
+Disallow: /dashboard/c2/private/panel/private/confidential
+
+# Block all crawlers for /panel/dashboard/private/confidential
+User-agent: *
+Disallow: /panel/dashboard/private/confidential
+
+# Block all crawlers for c2c/private/dashboard/private/confidential/top-private
+User-agent: *
+Disallow: c2c/private/dashboard/private/confidential/top-private
+
+# Block all crawlers for /dashboard/c2/private/panel/private/confidential/top-private
+User-agent: *
+Disallow: /dashboard/c2/private/panel/private/confidential/top-private
+
+# Block all crawlers for /dashboard/panel/private/c2/private/confidential/top-private
+User-agent: *
+Disallow: /dashboard/panel/private/c2/private/confidential/top-private
+
+# Block all crawlers for /panel/c2/private/dashboard
+User-agent: *
+Disallow: /panel/c2/private/dashboard
+
+# Block all crawlers for /data
+User-agent: *
+Disallow: /data
+
+# Block all crawlers for /c2/panel
+User-agent: *
+Disallow: /c2/panel
+
+# Block all crawlers for /user/profile
+User-agent: *
+Disallow: /user/profile
+
+# Block all crawlers for /api
+User-agent: *
+Disallow: /api
+
+# Block all crawlers for /api/admin
+User-agent: *
+Disallow: /api/admin
+
+# Block all crawlers for /scripts
+User-agent: *
+Disallow: /scripts
+
+# Block all crawlers for /styles
+User-agent: *
+Disallow: /styles
+
+# Block all crawlers for /docs
+User-agent: *
+Disallow: /docs
+
+# Block all crawlers for /download
+User-agent: *
+Disallow: /download
+
+# Block all crawlers for /search
+User-agent: *
+Disallow: /search
+
+# Block all crawlers for /report
+User-agent: *
+Disallow: /report
+
+# Block all crawlers for /temp123456
+User-agent: *
+Disallow: /temp123456
+
+# Block all crawlers for /debug
+User-agent: *
+Disallow: /debug
+
+# Block all crawlers for /test
+User-agent: *
+Disallow: /test
+
+# Block all crawlers for /demo
+User-agent: *
+Disallow: /demo
+
+# Allow all crawlers for /c2/panel (Googlebot)
+User-agent: Googlebot
+Disallow: /c2/panel
+
+# Block all crawlers for /panel/dashboard/private/c2/private/confidential/top-private
+User-agent: *
+Disallow: /panel/dashboard/private/c2/private/confidential/top-private
+
+# Block all crawlers for /c2/dashboard/private/panel/private/confidential/top-private
+User-agent: *
+Disallow: /c2/dashboard/private/panel/private/confidential/top-private
+
+# Allow all crawlers for /c2/panel (Bingbot)
+User-agent: Bingbot
+Disallow: /c2/panel
+
+# Block all crawlers for /dashboard/panel
+User-agent: *
+Disallow: /dashboard/panel
+
+# Block all crawlers for /c2/panel/dashboard
+User-agent: *
+Disallow: /c2/panel/dashboard
+
+# Block all crawlers for /panel/c2/dashboard
+User-agent: *
+Disallow: /panel/c2/dashboard
+
+# Block all crawlers for /c2/dashboard/panel
+User-agent: *
+Disallow: /c2/dashboard/panel
+
+# Block all crawlers for /dashboard/c2/panel
+User-agent: *
+Disallow: /dashboard/c2/panel
+
+# Block all crawlers for /panel/dashboard/c2
+User-agent: *
+Disallow: /panel/dashboard/c2
+
+# Block all crawlers for /c2/panel/dashboard/private
+User-agent: *
+Disallow: /c2/panel/dashboard/private
+
+# Block all crawlers for /dashboard/c2/panel/private
+User-agent: *
+Disallow: /dashboard/c2/panel/private
+
+# Block all crawlers for /panel/dashboard/c2/private
+User-agent: *
+Disallow: /panel/dashboard/c2/private
+
+# Block all crawlers for /c2/dashboard/panel/private
+User-agent: *
+Disallow: /c2/dashboard/panel/private
+
+# Block all crawlers for /c2/dashboard/private/panel/private/confidential
+User-agent: *
+Disallow: /c2/dashboard/private/panel/private/confidential
+
+# Block all crawlers for /dashboard/panel/private/c2/private/confidential
+User-agent: *
+Disallow: /dashboard/panel/private/c2/private/confidential
+
+# Block all crawlers for /panel/c2/private/dashboard/private/confidential
+User-agent: *
+Disallow: /panel/c2/private/dashboard/private/confidential
+
+# Block all crawlers for /dashboard/panel/c2/private
+User-agent: *
+Disallow: /dashboard/panel/c2/private
+
+# Block all crawlers for /panel/c2/dashboard/private
+User-agent: *
+Disallow: /panel/c2/dashboard/private
+
+# Block all crawlers for /c2/panel/private/dashboard
+User-agent: *
+Disallow: /c2/panel/private/dashboard
+
+# Block all crawlers for /dashboard/c2/private/panel
+User-agent: *
+Disallow: /dashboard/c2/private/panel
+
+# Block all crawlers for /panel/dashboard/private/c2
+User-agent: *
+Disallow: /panel/dashboard/private/c2
+
+# Block all crawlers for /c2/dashboard/private/panel
+User-agent: *
+Disallow: /c2/dashboard/private/panel
+
+# Block all crawlers for /dashboard/panel/private/c2
+User-agent: *
+Disallow: /dashboard/panel/private/c2
+
+# Block all crawlers for /panel/c2/private/dashboard
+User-agent: *
+Disallow: /panel/c2/private/dashboard
+
+# Block all crawlers for /c2/panel/private/dashboard/private
+User-agent: *
+Disallow: /c2/panel/private/dashboard/private
+
+# Block all crawlers for /dashboard/c2/private/panel/private
+User-agent: *
+Disallow: /dashboard/c2/private/panel/private
+
+# Block all crawlers for /panel/dashboard/private/c2/private
+User-agent: *
+Disallow: /panel/dashboard/private/c2/private
+
+# Block all crawlers for /c2/dashboard/private/panel/private
+User-agent: *
+Disallow: /c2/dashboard/private/panel/private
+
+# Block all crawlers for /dashboard/panel/private/c2/private
+User-agent: *
+Disallow: /dashboard/panel/private/c2/private
+
+# Block all crawlers for /panel/c2/private/dashboard/private
+User-agent: *
+Disallow: /panel/c2/private/dashboard/private
+
+# Block all crawlers for /private
+User-agent: *
+Disallow: /private
+
+# Block all crawlers for /backup
+User-agent: *
+Disallow: /backup
+
+# Block all crawlers for /tmp
+User-agent: *
+Disallow: /tmp
+
+# Block all crawlers for /temp
+User-agent: *
+Disallow: /temp
+
+# Block all crawlers for /config
+User-agent: *
+Disallow: /config
+
+# Block all crawlers for /admin/dashboard
+User-agent: *
+Disallow: /admin/dashboard
+
+# Block all crawlers for /login/authenticate
+User-agent: *
+Disallow: /login/authenticate
+
+# Block all crawlers for /private/files
+User-agent: *
+Disallow: /private/files
+
+# Block all crawlers for /private/documents
+User-agent: *
+Disallow: /private/documents
+
+# Block all crawlers for /dashboard/panel
+User-agent: *
+Disallow: /dashboard/panel
+
+# Block all crawlers for /admin/dashboard
+User-agent: *
+Disallow: /admin/dashboard
+
+# Block all crawlers for /panel/admin
+User-agent: *
+Disallow: /panel/admin
+
+# Block all crawlers for /dashboard/users
+User-agent: *
+Disallow: /dashboard/users
+
+# Block all crawlers for /users/dashboard
+User-agent: *
+Disallow: /users/dashboard
+
+# Block all crawlers for /panel/settings
+User-agent: *
+Disallow: /panel/settings
+
+# Block all crawlers for /settings/panel
+User-agent: *
+Disallow: /settings/panel
+
+# Block all crawlers for /dashboard/support
+User-agent: *
+Disallow: /dashboard/support
+
+# Block all crawlers for /support/dashboard
+User-agent: *
+Disallow: /support/dashboard
+
+# Block all crawlers for /panel/account
+User-agent: *
+Disallow: /panel/account
+
+# Block all crawlers for /account/panel
+User-agent: *
+Disallow: /account/panel
+
+# Block all crawlers for /dashboard/blog
+User-agent: *
+Disallow: /dashboard/blog
+
+# Block all crawlers for /blog/dashboard
+User-agent: *
+Disallow: /blog/dashboard
+
+# Block all crawlers for /panel/store
+User-agent: *
+Disallow: /panel/store
+
+# Block all crawlers for /store/panel
+User-agent: *
+Disallow: /store/panel
+
+# Block all crawlers for /dashboard/events
+User-agent: *
+Disallow: /dashboard/events
+
+# Block all crawlers for /events/dashboard
+User-agent: *
+Disallow: /events/dashboard
+
+# Block all crawlers for /panel/gallery
+User-agent: *
+Disallow: /panel/gallery
+
+# Block all crawlers for /gallery/panel
+User-agent: *
+Disallow: /gallery/panel
+
+# Block all crawlers for /dashboard/portfolio
+User-agent: *
+Disallow: /dashboard/portfolio
+
+# Block all crawlers for /portfolio/dashboard
+User-agent: *
+Disallow: /portfolio/dashboard
+
+# Block all crawlers for /panel/news
+User-agent: *
+Disallow: /panel/news
+
+# Block all crawlers for /news/panel
+User-agent: *
+Disallow: /news/panel
+
+# Block all crawlers for /dashboard/services
+User-agent: *
+Disallow: /dashboard/services
+
+# Block all crawlers for /services/dashboard
+User-agent: *
+Disallow: /services/dashboard
+
+# Block all crawlers for /panel/about
+User-agent: *
+Disallow: /panel/about
+
+# Block all crawlers for /about/panel
+User-agent: *
+Disallow: /about/panel
+
+# Block all crawlers for /dashboard/contact
+User-agent: *
+Disallow: /dashboard/contact
+
+# Block all crawlers for /contact/dashboard
+User-agent: *
+Disallow: /contact/dashboard
+
+# Block all crawlers for /panel/faq
+User-agent: *
+Disallow: /panel/faq
+
+# Block all crawlers for /faq/panel
+User-agent: *
+Disallow: /faq/panel
+
+# Block all crawlers for /dashboard/support
+User-agent: *
+Disallow: /dashboard/support
+
+# Block all crawlers for /support/dashboard
+User-agent: *
+Disallow: /support/dashboard
+
+# Block all crawlers for /dashboard/panel/private/c2/private/confidential
+User-agent: *
+Disallow: /dashboard/panel/private/c2/private/confidential
+
+# Block all crawlers for /panel/c2/private/dashboard/private/confidential
+User-agent: *
+Disallow: /panel/c2/private/dashboard/private/confidential
+
+# Block all crawlers for /dashboard/panel/c2/private
+User-agent: *
+Disallow: /dashboard/panel/c2/private
+
+# Block all crawlers for /panel/c2/dashboard/private
+User-agent: *
+Disallow: /panel/c2/dashboard/private
+
+# Block all crawlers for /c2/panel/private/dashboard
+User-agent: *
+Disallow: /c2/panel/private/dashboard
+
+# Block all crawlers for /dashboard/c2/private/panel
+User-agent: *
+Disallow: /dashboard/c2/private/panel
+
+# Block all crawlers for /panel/dashboard/private/c2
+User-agent: *
+Disallow: /panel/dashboard/private/c2
+
+# Block all crawlers for /c2/dashboard/private/panel
+User-agent: *
+Disallow: /c2/dashboard/private/panel
+
+# Block all crawlers for /dashboard/panel/private/c2
+User-agent: *
+Disallow: /dashboard/panel/private/c2
+
+# Block all crawlers for /panel/c2/private/dashboard
+User-agent: *
+Disallow: /panel/c2/private/dashboard
+
+# Block all crawlers for /c2/panel/private/dashboard/private
+User-agent: *
+Disallow: /c2/panel/private/dashboard/private
+
+# Block all crawlers for /dashboard/c2/private/panel/private
+User-agent: *
+Disallow: /dashboard/c2/private/panel/private
+
+# Block all crawlers for /panel/dashboard/private/c2/private
+User-agent: *
+Disallow: /panel/dashboard/private/c2/private
+
+# Block all crawlers for /c2/dashboard/private/panel/private
+User-agent: *
+Disallow: /c2/dashboard/private/panel/private
+
+# Block all crawlers for /dashboard/panel/private/c2/private
+User-agent: *
+Disallow: /dashboard/panel/private/c2/private
+
+# Block all crawlers for /panel/c2/private/dashboard/private
+User-agent: *
+Disallow: /panel/c2/private/dashboard/private
+
+# Block all crawlers for /private
+User-agent: *
+Disallow: /private
+
+# Block all crawlers for /backup
+User-agent: *
+Disallow: /backup
+
+# Block all crawlers for /tmp
+User-agent: *
+Disallow: /tmp
+
+# Block all crawlers for /temp
+User-agent: *
+Disallow: /temp
+
+# Block all crawlers for /config
+User-agent: *
+Disallow: /config
+
+# Block all crawlers for /admin/dashboard
+User-agent: *
+Disallow: /admin/dashboard
+
+# Block all crawlers for /login/authenticate
+User-agent: *
+Disallow: /login/authenticate
+
+# Block all crawlers for /private/files
+User-agent: *
+Disallow: /private/files
+
+# Block all crawlers for /private/documents
+User-agent: *
+Disallow: /private/documents
+
+# Block all crawlers for /dashboard/panel
+User-agent: *
+Disallow: /dashboard/panel
+
+# Block all crawlers for /admin/dashboard
+User-agent: *
+Disallow: /admin/dashboard
+
+# Block all crawlers for /panel/admin
+User-agent: *
+Disallow: /panel/admin
+
+# Block all crawlers for /dashboard/users
+User-agent: *
+Disallow: /dashboard/users
+
+# Block all crawlers for /users/dashboard
+User-agent: *
+Disallow: /users/dashboard
+
+# Block all crawlers for /panel/settings
+User-agent: *
+Disallow: /panel/settings
+
+# Block all crawlers for /settings/panel
+User-agent: *
+Disallow: /settings/panel
+
+# Block all crawlers for /dashboard/support
+User-agent: *
+Disallow: /dashboard/support
+
+# Block all crawlers for /support/dashboard
+User-agent: *
+Disallow: /support/dashboard
+
+# Block all crawlers for /panel/account
+User-agent: *
+Disallow: /panel/account
+
+# Block all crawlers for /account/panel
+User-agent: *
+Disallow: /account/panel
+
+# Block all crawlers for /dashboard/blog
+User-agent: *
+Disallow: /dashboard/blog
+
+# Block all crawlers for /blog/dashboard
+User-agent: *
+Disallow: /blog/dashboard
+
+# Block all crawlers for /panel/c2/private/dashboard/private/confidential
+User-agent: *
+Disallow: /panel/c2/private/dashboard/private/confidential
+
+# Block all crawlers for /dashboard/panel/c2/private
+User-agent: *
+Disallow: /dashboard/panel/c2/private
+
+# Block all crawlers for /panel/c2/dashboard/private
+User-agent: *
+Disallow: /panel/c2/dashboard/private
+
+# Block all crawlers for /c2/panel/private/dashboard
+User-agent: *
+Disallow: /c2/panel/private/dashboard
+
+# Block all crawlers for /dashboard/c2/private/panel
+User-agent: *
+Disallow: /dashboard/c2/private/panel
+
+# Block all crawlers for /panel/dashboard/private/c2
+User-agent: *
+Disallow: /panel/dashboard/private/c2
+
+# Block all crawlers for /c2/dashboard/private/panel
+User-agent: *
+Disallow: /c2/dashboard/private/panel
+
+# Block all crawlers for /dashboard/panel/private/c2
+User-agent: *
+Disallow: /dashboard/panel/private/c2
+
+# Block all crawlers for /panel/c2/private/dashboard
+User-agent: *
+Disallow: /panel/c2/private/dashboard
+
+# Block all crawlers for /c2/panel/private/dashboard/private
+User-agent: *
+Disallow: /c2/panel/private/dashboard/private
+
+# Block all crawlers for /dashboard/c2/private/panel/private
+User-agent: *
+Disallow: /dashboard/c2/private/panel/private
+
+# Block all crawlers for /panel/dashboard/private/c2/private
+User-agent: *
+Disallow: /panel/dashboard/private/c2/private
+
+# Block all crawlers for /c2/dashboard/private/panel/private
+User-agent: *
+Disallow: /c2/dashboard/private/panel/private
+
+# Block all crawlers for /dashboard/panel/private/c2/private
+User-agent: *
+Disallow: /dashboard/panel/private/c2/private
+
+# Block all crawlers for /panel/c2/private/dashboard/private
+User-agent: *
+Disallow: /panel/c2/private/dashboard/private
+
+# Block all crawlers for /private
+User-agent: *
+Disallow: /private
+
+# Block all crawlers for /backup
+User-agent: *
+Disallow: /backup
+
+# Block all crawlers for /tmp
+User-agent: *
+Disallow: /tmp
+
+# Block all crawlers for /temp
+User-agent: *
+Disallow: /temp
+
+# Block all crawlers for /config
+User-agent: *
+Disallow: /config
+
+# Block all crawlers for /admin/dashboard
+User-agent: *
+Disallow: /admin/dashboard
+
+# Block all crawlers for /login/authenticate
+User-agent: *
+Disallow: /login/authenticate
+
+# Block all crawlers for /private/files
+User-agent: *
+Disallow: /private/files
+
+# Block all crawlers for /private/documents
+User-agent: *
+Disallow: /private/documents
+
+# Block all crawlers for /dashboard/panel
+User-agent: *
+Disallow: /dashboard/panel
+
+# Block all crawlers for /admin/dashboard
+User-agent: *
+Disallow: /admin/dashboard
+
+# Block all crawlers for /panel/admin
+User-agent: *
+Disallow: /panel/admin
+
+# Block all crawlers for /dashboard/users
+User-agent: *
+Disallow: /dashboard/users
+
+# Block all crawlers for /users/dashboard
+User-agent: *
+Disallow: /users/dashboard
+
+# Block all crawlers for /panel/settings
+User-agent: *
+Disallow: /panel/settings
+
+# Block all crawlers for /settings/panel
+User-agent: *
+Disallow: /settings/panel
+
+# Block all crawlers for /dashboard/support
+User-agent: *
+Disallow: /dashboard/support
+
+# Block all crawlers for /support/dashboard
+User-agent: *
+Disallow: /support/dashboard
+
+# Block all crawlers for /panel/account
+User-agent: *
+Disallow: /panel/account
+
+# Block all crawlers for /account/panel
+User-agent: *
+Disallow: /account/panel
+
+# Block all crawlers for /dashboard/blog
+User-agent: *
+Disallow: /dashboard/blog
+
+# Block all crawlers for /blog/dashboard
+User-agent: *
+Disallow: /blog/dashboard
+
+# Block all crawlers for /panel/store
+User-agent: *
+Disallow: /panel/store
+
+# Block all crawlers for /store/panel
+User-agent: *
+Disallow: /store/panel
+
+# Block all crawlers for /dashboard/events
+User-agent: *
+Disallow: /dashboard/events
+
+# Block all crawlers for /events/dashboard
+User-agent: *
+Disallow: /events/dashboard
+
+# Block all crawlers for /panel/gallery
+User-agent: *
+Disallow: /panel/gallery
+
+# Block all crawlers for /gallery/panel
+User-agent: *
+Disallow: /gallery/panel
+
+# Block all crawlers for /dashboard/portfolio
+User-agent: *
+Disallow: /dashboard/portfolio
+
+# Block all crawlers for /portfolio/dashboard
+User-agent: *
+Disallow: /portfolio/dashboard
+
+# Block all crawlers for /panel/news
+User-agent: *
+Disallow: /panel/news
+
+# Block all crawlers for /news/panel
+User-agent: *
+Disallow: /news/panel
+
+# Block all crawlers for /dashboard/services
+User-agent: *
+Disallow: /dashboard/services
+
+# Block all crawlers for /services/dashboard
+User-agent: *
+Disallow: /services/dashboard
+
+# Block all crawlers for /panel/about
+User-agent: *
+Disallow: /panel/about
+
+# Block all crawlers for /about/panel
+User-agent: *
+Disallow: /about/panel
+
+# Block all crawlers for /dashboard/contact
+User-agent: *
+Disallow: /dashboard/contact
+
+# Block all crawlers for /contact/dashboard
+User-agent: *
+Disallow: /contact/dashboard
+
+# Block all crawlers for /panel/faq
+User-agent: *
+Disallow: /panel/faq
+
+# Block all crawlers for /faq/panel
+User-agent: *
+Disallow: /faq/panel
+
+# Block all crawlers for /dashboard/support
+User-agent: *
+Disallow: /dashboard/support
+
+# Block all crawlers for /support/dashboard
+User-agent: *
+Disallow: /support/dashboard
+
+# Block all crawlers for /dashboard/panel/private/c2/private/confidential
+User-agent: *
+Disallow: /dashboard/panel/private/c2/private/confidential
+
+# Block all crawlers for /panel/c2/private/dashboard/private/confidential
+User-agent: *
+Disallow: /panel/c2/private/dashboard/private/confidential
+
+# Block all crawlers for /dashboard/panel/c2/private
+User-agent: *
+Disallow: /dashboard/panel/c2/private
+
+# Block all crawlers for /panel/c2/dashboard/private
+User-agent: *
+Disallow: /panel/c2/dashboard/private
+
+# Block all crawlers for /c2/panel/private/dashboard
+User-agent: *
+Disallow: /c2/panel/private/dashboard
+
+# Block all crawlers for /dashboard/c2/private/panel
+User-agent: *
+Disallow: /dashboard/c2/private/panel
+
+# Block all crawlers for /panel/dashboard/private/c2
+User-agent: *
+Disallow: /panel/dashboard/private/c2
+
+# Block all crawlers for /c2/dashboard/private/panel
+User-agent: *
+Disallow: /c2/dashboard/private/panel
+
+# Block all crawlers for /dashboard/panel/private/c2
+User-agent: *
+Disallow: /dashboard/panel/private/c2
+
+# Block all crawlers for /panel/c2/private/dashboard
+User-agent: *
+Disallow: /panel/c2/private/dashboard
+
+# Block all crawlers for /c2/panel/private/dashboard/private
+User-agent: *
+Disallow: /c2/panel/private/dashboard/private
+
+# Block all crawlers for /dashboard/c2/private/panel/private
+User-agent: *
+Disallow: /dashboard/c2/private/panel/private
+
+# Block all crawlers for /panel/dashboard/private/c2/private
+User-agent: *
+Disallow: /panel/dashboard/private/c2/private
+
+# Block all crawlers for /c2/dashboard/private/panel/private
+User-agent: *
+Disallow: /c2/dashboard/private/panel/private
+
+# Block all crawlers for /dashboard/panel/private/c2/private
+User-agent: *
+Disallow: /dashboard/panel/private/c2/private
+
+# Block all crawlers for /panel/c2/private/dashboard/private
+User-agent: *
+Disallow: /panel/c2/private/dashboard/private
+
+# Block all crawlers for /private
+User-agent: *
+Disallow: /private
+
+# Block all crawlers for /backup
+User-agent: *
+Disallow: /backup
+
+# Block all crawlers for /tmp
+User-agent: *
+Disallow: /tmp
+
+# Block all crawlers for /temp
+User-agent: *
+Disallow: /temp
+
+# Block all crawlers for /config
+User-agent: *
+Disallow: /config
+
+# Block all crawlers for /admin/dashboard
+User-agent: *
+Disallow: /admin/dashboard
+
+# Block all crawlers for /login/authenticate
+User-agent: *
+Disallow: /login/authenticate
+
+# Block all crawlers for /private/files
+User-agent: *
+Disallow: /private/files
+
+# Block all crawlers for /private/documents
+User-agent: *
+Disallow: /private/documents
+
+# Block all crawlers for /dashboard/panel
+User-agent: *
+Disallow: /dashboard/panel
+
+# Block all crawlers for /admin/dashboard
+User-agent: *
+Disallow: /admin/dashboard
+
+# Block all crawlers for /panel/admin
+User-agent: *
+Disallow: /panel/admin
+
+# Block all crawlers for /dashboard/users
+User-agent: *
+Disallow: /dashboard/users
+
+# Block all crawlers for /users/dashboard
+User-agent: *
+Disallow: /users/dashboard
