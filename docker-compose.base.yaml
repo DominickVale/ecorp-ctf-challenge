@@ -10,9 +10,24 @@ services:
     depends_on:
       - postgres
     volumes:
-      - ./:/app
-      - /app/node_modules
-      - /app/.next
+      - ./:/home/pptruser/app
+      - /home/pptruser/app/node_modules
+      - /home/pptruser/app/.next
+    networks:
+      - main_network
+    command: [ "yarn", "dev" ]
+  bot:
+    restart: always
+    depends_on:
+      - web
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    ports:
+      - '1337:1337'
+    volumes:
+      - ./:/home/pptruser/app
+    command: [ "yarn", "dev:bot" ]
     networks:
       - main_network
   postgres:

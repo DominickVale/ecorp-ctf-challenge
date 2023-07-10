@@ -1,0 +1,30 @@
+### Send POST request with json body
+POST http://localhost:3000/contact-us
+accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+accept-language: 'en-CA,en;q=0.9,it-IT;q=0.8,it;q=0.7,en-GB;q=0.6,en-US;q=0.5',
+cache-control: 'no-cache',
+connection: 'close',
+cookie: 'token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIxLCJsZXZlbCI6MSwiaWF0IjoxNjg2NTk5ODI4LCJleHAiOjE2ODY2MDM0Mjh9.lWw8BJg5iEbb1mZk9wqva1dpygeBeEjjSClsPgTKQ_c; t=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIxLCJsZXZlbCI6NSwiaWF0IjoxNjg2NjAxODUzLCJleHAiOjE2ODY2MDU0NTN9.g_Xvmkep5rFGh0vRtXx2aE1iQfRCB-gnkcpugotXJfQ',
+host: 'localhost:3000',
+pragma: 'no-cache',
+x-forwarded-for: '::ffff:172.19.0.1',
+x-forwarded-host: 'localhost:3000',
+x-forwarded-proto: 'http',
+User-Agent: CUSTOM
+
+{
+"message": "<body><img src='https://4196-77-32-58-208.ngrok-free.app/image'/><script>console.log('test')</script></body>"
+}
+
+### GET
+GET http://localhost:3000/
+accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+accept-language: 'en-CA,en;q=0.9,it-IT;q=0.8,it;q=0.7,en-GB;q=0.6,en-US;q=0.5',
+cache-control: 'max-age=0',
+connection: 'close',
+cookie: 'token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIxLCJsZXZlbCI6MSwiaWF0IjoxNjg2NTk5ODI4LCJleHAiOjE2ODY2MDM0Mjh9.lWw8BJg5iEbb1mZk9wqva1dpygeBeEjjSClsPgTKQ_c; t=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIxLCJsZXZlbCI6NSwiaWF0IjoxNjg2NjAxODUzLCJleHAiOjE2ODY2MDU0NTN9.g_Xvmkep5rFGh0vRtXx2aE1iQfRCB-gnkcpugotXJfQ',
+host: 'localhost:3000',
+user-agent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+x-forwarded-for: '::ffff:172.19.0.1',
+x-forwarded-host: 'localhost:3000',
+x-forwarded-proto: 'http',
