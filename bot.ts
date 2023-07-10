@@ -26,7 +26,7 @@ async function loadPage(html: string, browser: puppeteer.Browser): Promise<void>
         page.setContent(html, {waitUntil: 'domcontentloaded', timeout: 2000})
         await page.setJavaScriptEnabled(true);
         await page.evaluate(() => {
-            return new Promise(resolve => setTimeout(resolve, 5000));
+            return new Promise(resolve => setTimeout(resolve, 1500));
         });
     } catch (err) {
         console.log(`err in loadPage: ${err}`);
