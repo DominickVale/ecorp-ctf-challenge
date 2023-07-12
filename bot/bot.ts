@@ -17,11 +17,7 @@ async function loadPage(html: string, browser: puppeteer.Browser): Promise<void>
                 console.log(`${response.status()} ${response.url()}`))
             .on('requestfailed', request =>
                 console.log(`${request.failure().errorText} ${request.url()}`))
-        await page.setUserAgent(process.env.ALLOWED_USER_AGENT || '');
-        await page.setExtraHTTPHeaders({
-            'N': process.env.N_HASH_ID || "undefined",
-            "X-Forwarded-For": ""
-        })
+        await page.setUserAgent(process.env.ALLOWED_USER_AGENT_ID || '');
         await page.setJavaScriptEnabled(false)
         page.setContent(html, {waitUntil: 'domcontentloaded', timeout: 2000})
         await page.setJavaScriptEnabled(true);

@@ -1,0 +1,20 @@
+{
+  "name": "xssbot",
+  "version": "1.0.0",
+  "description": "xss bot",
+  "main": "bot.ts",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "start": "nodemon --watch bot.ts --exec ts-node bot.ts "
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "puppeteer": "^13.5.0",
+    "ts-node": "^10.9.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
