@@ -9,7 +9,7 @@
     "@next/next/no-html-link-for-pages": "off",
     "tailwindcss/no-custom-classname": "off",
     "tailwindcss/classnames-order": "error",
-    "max-len": ["warn", { "code": 120 }]
+    "max-len": ["warn", { "code": 100 }]
   },
   "settings": {
     "tailwindcss": {
