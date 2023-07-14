@@ -1,21 +1,12 @@
 import prisma from "@/lib/prisma";
-import {sign} from "jsonwebtoken";
+import {decode, sign} from "jsonwebtoken";
 import builder from "@/pages/api/builder";
 import bcrypt from 'bcrypt'
 import {setCookie} from "@/common/utils/setCookie";
 
+const SECRET_QUESTION_ANSWER = "Fluffi"
 
 builder.mutationFields((t) => ({
-    tmpSetStaffUserLevel: t.prismaField({
-        type: 'StaffUser',
-        args: {
-            username: t.arg.string({required: true}),
-            level: t.arg.int({required: true}),
-        },
-        resolve: async (query, _, args, context, info) => {
-            throw new Error("WIP while we figure out the safest way to do this; ETA 1 week");
-        }
-    }),
     tmpRegister: t.prismaField({
         type: 'StaffUser',
         args: {
@@ -25,17 +16,18 @@ builder.mutationFields((t) => ({
         },
         resolve: async (query, _, args, context, info) => {
             const {username, password, apikey} = args;
-            if (apikey !== process.env.MOCK_API_KEY) {
+            if (apikey !== process.env.TEST_API_KEY) {
                 throw new Error("Invalid API testing key");
             }
             const hashedPassword = await bcrypt.hash(password, 10);
+            // First CTF vulnerability: registration overrides existing users
+            // chatgpt complete here
 
             //@todo: add ip based delay
             const user = await prisma.staffUser.create({
                 data: {
                     username,
                     password: hashedPassword,
-                    level: 5, //5: minimum permissions, 1: maximum permissions
                 },
             });
             return user;
@@ -46,40 +38,40 @@ builder.mutationFields((t) => ({
         nullable: true,
         args: {
             username: t.arg.string({required: true}),
-            password: t.arg.string({required: true}),
+            secQuestion: t.arg.string({required: true}),
         },
+        // secQuestion = password
         resolve: async (query, _, args, context, info) => {
-            const {username, password} = args;
+            const {username, secQuestion} = args;
             const {res} = context;
 
-            //@todo add delay
+                const user = await prisma.staffUser.findUnique({
+                    where: {username}
+                });
 
-            const user = await prisma.staffUser.findUnique({
-                where: {
-                    username
+                if (!user) {
+                    throw new Error('Invalid username');
                 }
-            });
 
-            if (!user) {
-                throw new Error('Invalid username');
-            }
+                const passwordMatch = await bcrypt.compare(secQuestion, user.password);
 
-            const passwordMatch = await bcrypt.compare(password, user.password);
+                if (!passwordMatch) {
+                    throw new Error('Invalid password');
+                }
 
-            if (!passwordMatch) {
-                throw new Error('Invalid password');
-            }
+                // Sign with HS256 algorithm
+                const jwtToken = sign({userId: user.id, level: user.level}, process.env.JWT_SECRET!, {
+                    expiresIn: '1h',
+                    algorithm: 'HS256',
+                });
 
-            const token = sign({userId: user.id, level: user.level}, 'secret', {
-                expiresIn: '1h',
-                algorithm: 'HS256',
-            });
+                setCookie(res, 't', jwtToken, {
+                    httpOnly: true,
+                    path: '/',
+                    maxAge: 60 * 60 * 1000, // 1 hour
+                });
 
-            setCookie(res, 'token', token, {
-                httpOnly: true,
-                maxAge: 60 * 60 * 1000, // 1 hour
-            })
-            return user;
+                return user;
         },
     }),
 }));
