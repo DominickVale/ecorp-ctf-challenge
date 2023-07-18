@@ -1,21 +1,51 @@
-import {PrismaClient} from '@prisma/client';
-import {faker} from '@faker-js/faker';
-import {v4 as uuidv4} from 'uuid';
+import { faker } from "@faker-js/faker";
+import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcrypt";
+import {generateNeurotapIds} from "./seed.utils";
+
+
+
+
 
 const prisma = new PrismaClient();
 
+const secretQuestions = [
+    "What is your favorite food?",
+    "What brings you joy?",
+    "What is your favorite animal?",
+]
+
 async function main() {
+    const hashedPwd = await bcrypt.hash("cat", 10);
+    // Special one
+    console.log("Creating special one")
+    await prisma.staffUser.create({
+        data: {
+            id: process.env.EXAMPLE_ID || "32FM01102030H1F2959294214553233",
+            level: faker.number.int(2),
+            username: faker.internet.displayName({
+                firstName: faker.person.lastName(),
+                lastName: faker.person.firstName()
+            }),
+            securityQuestion: secretQuestions[2],
+            password: hashedPwd
+        },
+    });
+
     console.log("Seeding staffUsers")
-    // Seed StaffUser
+    const neurotapIds = generateNeurotapIds();
     for (let i = 0; i < 10; i++) {
+        console.log(neurotapIds[i])
         await prisma.staffUser.create({
             data: {
+                id: neurotapIds[i],
                 level: faker.number.int({min: 1, max: 5}),
                 username: faker.internet.displayName({
                     firstName: faker.person.lastName(),
                     lastName: faker.person.firstName()
                 }),
-                password: faker.internet.password(),
+                securityQuestion: faker.helpers.arrayElement(secretQuestions),
+                password: faker.internet.password()
             },
         });
     }
@@ -36,10 +66,10 @@ async function main() {
 }
 
 main()
-    .catch((e) => {
-        console.error(e);
-        process.exit(1);
-    })
-    .finally(async () => {
-        await prisma.$disconnect();
-    });
+.catch((e) => {
+    console.error(e);
+    process.exit(1);
+})
+.finally(async () => {
+    await prisma.$disconnect();
+});

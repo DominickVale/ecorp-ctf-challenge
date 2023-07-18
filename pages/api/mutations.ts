@@ -1,10 +1,14 @@
-import prisma from "@/lib/prisma";
-import {decode, sign} from "jsonwebtoken";
+import { setCookie } from "@/common/utils/setCookie";
 import builder from "@/pages/api/builder";
-import bcrypt from 'bcrypt'
-import {setCookie} from "@/common/utils/setCookie";
+import bcrypt from "bcrypt";
+import { sign } from "jsonwebtoken";
+import { v4 as uuid } from "uuid";
 
-const SECRET_QUESTION_ANSWER = "Fluffi"
+import prisma from "@/lib/prisma";
+
+
+
+
 
 builder.mutationFields((t) => ({
     tmpRegister: t.prismaField({
@@ -20,40 +24,42 @@ builder.mutationFields((t) => ({
                 throw new Error("Invalid API testing key");
             }
             const hashedPassword = await bcrypt.hash(password, 10);
-            // First CTF vulnerability: registration overrides existing users
-            // chatgpt complete here
 
             //@todo: add ip based delay
-            const user = await prisma.staffUser.create({
+            return await prisma.staffUser.create({
                 data: {
+                    id: uuid(),
                     username,
+                    level: 5,
+                    securityQuestion: "n/d",
                     password: hashedPassword,
                 },
             });
-            return user;
         }
     }),
-    login: t.prismaField({
+
+// just allow players to find the login mutation and insert the valid answer
+    c2NeurocLogin: t.prismaField({
         type: "StaffUser",
         nullable: true,
         args: {
-            username: t.arg.string({required: true}),
-            secQuestion: t.arg.string({required: true}),
+            id: t.arg.string({required: true}), // id: userAgent (NEUROTAP-v0.2-BEG!---32FM01102030H1F2959294214553233!---)
+            password: t.arg.string({required: true}), // password: secQuestion (cat)
         },
         // secQuestion = password
         resolve: async (query, _, args, context, info) => {
-            const {username, secQuestion} = args;
+            const {id, password} = args;
             const {res} = context;
 
                 const user = await prisma.staffUser.findUnique({
-                    where: {username}
+                    where: {id}
                 });
 
                 if (!user) {
-                    throw new Error('Invalid username');
+                    throw new Error('Invalid id');
                 }
 
-                const passwordMatch = await bcrypt.compare(secQuestion, user.password);
+                const passwordMatch = await bcrypt.compare(password, user.password);
 
                 if (!passwordMatch) {
                     throw new Error('Invalid password');

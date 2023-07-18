@@ -7,7 +7,6 @@ function renderPostCategory(posts: PostPreviewData[]) {
 
 export default function Blog() {
   const allPostsData = getCategorizedPostPreviews();
-  console.log("Posts: ", allPostsData);
   return (
     <main className="grid-cols-golden-inner">
       <section className="col-start-2 col-end-9">

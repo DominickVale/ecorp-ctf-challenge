@@ -13,10 +13,11 @@ generator pothos {
 }
 
 model StaffUser {
-  id       Int    @id @default(autoincrement())
-  username String @unique
-  password String
-  level    Int    @default(5)
+  id               String @id
+  username         String @unique
+  password         String
+  securityQuestion String @default("What is your favourite colour?")
+  level            Int    @default(1)
 }
 
 model Client {

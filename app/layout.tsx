@@ -1,7 +1,8 @@
 import "./globals.css";
 
-import { siteConfig } from "@/config/site";
 import Link from "next/link";
+
+import { siteConfig } from "@/config/site";
 
 export const metadata = {
   title: {
@@ -64,6 +65,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </ul>
         </nav>
         <div className="col-start-2 col-end-[15] pt-24 row-auto">{children}</div>
+        <div className="col-start-2 col-end-15 grid grid-cols-[repeat(13,1fr)] content-end border-t-1 border-t-gray-500 pt-2 text-xs">
+          <p className="col-start-2 col-span-2 flex flex-row gap-11">
+            © 2030 Neurotap. All rights reserved.
+          </p>
+          <p className="col-start-9 pl-16 col-span-5 justify-start gap-11">
+            By Dominick Vale — have fun :)
+          </p>
+        </div>
       </body>
     </html>
   );

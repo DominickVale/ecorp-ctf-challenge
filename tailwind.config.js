@@ -4,12 +4,13 @@ module.exports = {
         "./pages/**/*.{js,ts,jsx,tsx,mdx}",
         "./components/**/*.{js,ts,jsx,tsx,mdx}",
         "./app/**/*.{js,ts,jsx,tsx,mdx}",
+        "./app/**/**/*.{js,ts,jsx,tsx,mdx}",
     ],
     darkMode: ["class"],
     theme: {
         // golden ratio
         fontSize: {
-            "xs": ".618rem",
+            "xs": ".7rem", // 0.618rem would be too small (9px)
             "sm": "1rem",
             "base": "1.618rem",
             "lg": "2.618rem",

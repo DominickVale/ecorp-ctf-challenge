@@ -16,7 +16,8 @@
     "start": "next start",
     "lint": "next lint",
     "seed-db": "ts-node prisma/seed.ts",
-    "codegen": "graphql-codegen --config codegen.ts"
+    "codegen": "graphql-codegen --config codegen.ts",
+    "test": "jest --watch"
   },
   "dependencies": {
     "@apollo/server": "^4.7.1",
@@ -41,8 +42,7 @@
     "dotenv": "^16.3.1",
     "encoding": "^0.1.13",
     "graphql": "^16.6.0",
-    "graphql-request": "^6.0.0",
-    "graphql-yoga": "^3.9.1",
+    "graphql-request": "^6.1.0",
     "gray-matter": "^4.0.3",
     "jsdom": "^22.1.0",
     "jsonwebtoken": "^9.0.0",
@@ -62,8 +62,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.1",
-    "@graphql-codegen/cli": "4.0.0",
-    "@graphql-codegen/client-preset": "4.0.0",
+    "@graphql-codegen/cli": "^4.0.1",
     "@graphql-codegen/introspection": "4.0.0",
     "@ianvs/prettier-plugin-sort-imports": "^4.0.2",
     "@types/bcrypt": "^5.0.0",
@@ -74,8 +73,10 @@
     "eslint-config-next": "13.4.2",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-tailwindcss": "^3.13.0",
+    "jest": "^29.6.1",
     "prettier": "^3.0.0",
-    "prettier-plugin-tailwindcss": "^0.3.0"
+    "prettier-plugin-tailwindcss": "^0.3.0",
+    "ts-jest": "^29.1.1"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
