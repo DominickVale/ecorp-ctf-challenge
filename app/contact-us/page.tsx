@@ -6,6 +6,7 @@ import Button from "@/components/buttons/button";
 import { Input } from "@/components/inputs/input";
 import SelectBox from "@/components/inputs/selectbox";
 import { Textarea } from "@/components/inputs/textarea";
+import { SupportType } from "@/app/api/contact/route";
 
 export default function ContactUs() {
   const [isSending, setIsSending] = useState(false);
@@ -19,6 +20,7 @@ export default function ContactUs() {
     console.log(formData);
     const name = formData.get("name") as string;
     const message = formData.get("message") as string;
+    const supportType = formData.get("support-type") as SupportType;
 
     let _errors: string[] = [];
     if (name.length < 2) _errors.push("Name must be at least 2 characters long");
@@ -37,8 +39,9 @@ export default function ContactUs() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name: name,
-        message: message,
+        name,
+        message,
+        supportType,
       }),
     });
 
@@ -85,14 +88,6 @@ export default function ContactUs() {
           </div>
         )}
       </form>
-      <div className="col-start-2 col-end-15 grid grid-cols-[repeat(13,1fr)] content-end border-t-1 border-t-gray-500 pt-2 text-xs">
-        <p className="col-start-2 col-span-2 flex flex-row gap-11">
-          © 2030 Neurotap. All rights reserved.
-        </p>
-        <p className="col-start-9 pl-16 col-span-5 justify-start gap-11">
-          By Dominick Vale — have fun :)
-        </p>
-      </div>
     </main>
   );
 }
