@@ -7,7 +7,7 @@ export const dynamic = true;
 const server = new ApolloServer({
     schema,
     introspection: process.env.NODE_ENV === 'development',
-    plugins: [ApolloServerPluginLandingPageDisabled()],
+    plugins: process.env.NODE_ENV === 'development' ? [] : [ApolloServerPluginLandingPageDisabled()],
 });
 
 export default startServerAndCreateNextHandler(server, {

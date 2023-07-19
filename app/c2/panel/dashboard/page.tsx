@@ -8,6 +8,7 @@ import request, { gql } from "graphql-request";
 
 import Modal from "./components/Modal";
 import { GetStaffUserDoc, LoginDoc} from "@/app/c2/panel/gql-docs";
+import Button from "@/components/buttons/button";
 
 interface DashboardProps {}
 
@@ -35,10 +36,18 @@ function Dashboard(props: DashboardProps) {
     refetch: getData,
   } = useQuery<{ getStaffUser: StaffUser }>({
     queryKey: ["user"],
-    queryFn: async () => request(URL, GetStaffUserDoc, { id: window.navigator.userAgent }),
+    retry: 1,
+    retryDelay: 1000,
+    refetchOnWindowFocus: false,
+    queryFn: async () => request(URL, GetStaffUserDoc, { i: window.navigator.userAgent }),
   });
 
-  const [devMode, setDevMode] = useState(staffUserData?.getStaffUser?.level === -1 || true);
+  const [adminMode, setAdminMode] = useState(staffUserData?.getStaffUser?.level === 0);
+
+  console.log("adminMode", adminMode, "level: ", staffUserData?.getStaffUser?.level)
+  useEffect(() => {
+    setAdminMode(staffUserData?.getStaffUser?.level === 0);
+  }, [staffUserData?.getStaffUser?.level])
 
   const { data: clientsData, isLoading, isError, refetch } = useQuery<{ getClientsList: Client[] }>({
     queryKey: ["clients"],
@@ -54,14 +63,27 @@ function Dashboard(props: DashboardProps) {
     setSelectedClient(null);
   };
 
-  const resetDbDev = async () => {
-    await fetch(`/api/v1/dev/purge`, {
+  const panic = async () => {
+    await fetch(`/api/v1/dev/panic`, {
       method: "POST",
       credentials: "same-origin",
+      mode: "same-origin",
+      cache: "no-cache",
+      referrerPolicy: "origin",
       headers: {
         "Content-Type": "application/json",
+        "Host": "localhost:3000",
+        "User-Agent": "NEUROTAP-v0.2-BEG!---32FM01102030H1F2959294214553233!---",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.5",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Referer": "http://localhost:3000/c2/panel/dashboard",
+        "Connection": "keep-alive",
+        "Upgrade-Insecure-Requests": "1",
+        "Sec-Fetch-Dest": "document",
+        "Sec-Fetch-Mode": "navigate",
+        "Sec-Fetch-Site": "same-origin"
       },
-      body: JSON.stringify({ testApiKey: process.env.NEXT_PUBLIC_TEST_API_KEY! }),
     });
   }
 
@@ -74,7 +96,7 @@ function Dashboard(props: DashboardProps) {
 
       <header className="text-2xl mb-8">Evil Corporation C2 Dashboard</header>
 
-      <h2>ACCESS LEVEL: {devMode ? "DEV-TESTING" : staffUserData?.getStaffUser?.level}</h2>
+      <h2>ACCESS LEVEL: {staffUserData?.getStaffUser?.level}</h2>
       {isLoading ? (
         <p>Loading...</p>
       ) : isError ? (
@@ -97,12 +119,13 @@ function Dashboard(props: DashboardProps) {
           ))}
         </div>
       )}
-      {devMode && (
+      {adminMode && (
           <section>
-            <button onClick={resetDbDev}>Reset dev db</button>
-            <button>Register new staff </button>
-            <button>Delete staff user </button>
-            <button>UNSAFE SHUT DOWN ALL NEUROTAPS</button>
+            <Button onClick={panic}>PANIC</Button>
+            <Button onClick={() => alert("WIP: migration registerNewStaff to graphql arch, ETA: low priority ~ Q4")}>Register new staff</Button>
+            <Button onClick={() => alert("WIP: migration tmpSetStaffLevel to graphql arch, ETA: 1 week")}>Set staff level</Button>
+            <Button>Delete staff user </Button>
+            <Button>UNSAFE SHUT DOWN ALL NEUROTAPS</Button>
           </section>
       )}
       {selectedClient && <Modal isOpen={true} onClose={handleCloseModal} client={selectedClient} />}

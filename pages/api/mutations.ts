@@ -6,6 +6,51 @@ import { sign } from "jsonwebtoken";
 import prisma from "@/lib/prisma";
 
 builder.mutationFields((t) => ({
+  deleteStaffUser: t.prismaField({
+    type: "StaffUser",
+    args: {
+        i: t.arg.string({ required: true }),
+    },
+    resolve: async (query, _, args, context, info) => {
+        throw new Error("Unauthorized. Required access level: 0. This incident will be reported.");
+    }
+  }),
+  _devSetLevel: t.prismaField({
+    type: "StaffUser",
+    args: {
+      i: t.arg.string({ required: true }),
+      l: t.arg.int({ required: true }),
+    },
+    resolve: async (query, _, args, context, info) => {
+      const { i, l } = args;
+      const { res } = context;
+
+      const user = await prisma.staffUser.findUnique({
+        where: { id: i },
+      });
+
+      if(!user) {
+        throw new Error("Invalid id");
+      }
+
+      const jwtToken = sign({ userId: i, level: l }, process.env.JWT_SECRET!, {
+        expiresIn: "1h",
+        algorithm: "HS256",
+      });
+
+      setCookie(res, "t", jwtToken, {
+        httpOnly: true,
+        path: "/",
+        maxAge: 60 * 60 * 1000, // 1 hour
+      });
+
+      return {
+        ...user,
+        level: l
+      }
+    },
+  }),
+
   // just allow players to find the login mutation and insert the valid answer
   c2NeurocLogin: t.prismaField({
     type: "StaffUser",
