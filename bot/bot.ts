@@ -1,8 +1,8 @@
 import net from "net";
-import dotenv from "dotenv";
 import puppeteer from "puppeteer";
+import path from "path";
 
-dotenv.config();
+require('dotenv').config({path: path.join(__dirname, '../.env')});
 
 export type JobType = {
     html: string;

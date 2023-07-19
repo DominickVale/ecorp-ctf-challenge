@@ -19,7 +19,8 @@ yarn db-bootstrap
 
 **Theme**: An evil corporation (Neurotap) is an emerging corporation that produces brain-machine interfaces boasting about privacy, security and clients well-being on top of everything else.
     But word got out that they run malware on their Neurotap implants, stealing data by deciphering sensory inputs and accessing sensitive data,
-    along with manipulating their victims' thoughts to convince everyone they know to buy a Neurotap too. They must be stopped before they "infect" too many people... Also, our intel says that they have an entire c2 dashboard exposed on their clearnet website and that they rushed it!
+    along with manipulating their victims' thoughts to convince everyone they know to buy a Neurotap too. They must be stopped before they "infect" too many people... 
+    Our intel says that they have an entire c2 dashboard exposed on their clearnet website and they had recently started migrating back-end architecture. If we're lucky, they might've rushed things and made some mistakes!
 
 
 **Tags**: reconnaissance, graphql, enumeration, robots.txt, malicious link, minified source code inspection
@@ -35,18 +36,24 @@ yarn db-bootstrap
 - [x-ish] the dashboard will have a user agent filter. Player will need to spoof it. They'll get the user agent by sending a malicious image in a message in the contact-us section.
   The server will make a request with the needed user agent to fake an employer viewing the image and leaking the user agent.
   The request will also have other info
-- [done server - todo client] once the dashboard is accessed, the player will need to discover graphql by looking at the source code, then play with mutation names to find the right ones by enumerating the schema via typos (introspection disabled, but suggestions enabled)...
-   Of course the guesses will be easy (c2Login, setLevel). The setLevel mutation will be unprotected and be able to set any user as admin, requires a testApikey, which can be found somewhere in the client minified source code.
-- [ ] On the admin dashboard, they'll find a button to erase all the users data (the deleteClientData mutation will accept an array of ids, which they can get through the getClientsList query)
+- [done server - todo client] once the dashboard is accessed, the player will need to discover graphql by looking at the source code, then play with mutation names to find the right ones by enumerating the schema via typos (introspection disabled, but suggestions enabled)... Some can be read through minified source code.
+- To access the admin/testing dashboard, they'll need to change the level to -1 when the request comes in by intercepting it.
+- [ ] On the admin/testing dashboard, they'll find a "purge db" dev setting, they'll need an api key found again in the sourcecode
 
 The graphql endpoint will have both graphiql playground and introspection disabled to make it not solvable in 2 minutes. They'll need to work with error messages / suggestions.
 
 The objectives might change slightly as I design it further but this should be the gist of it. It might end up being slightly easier or slightly harder depending on the dashboard design :)
 
+
+
 **Flags**:
 - on dashboard login (will be set as a cookie)
 - on dashboard admin mode (will show up somewhere easy to spot on the dashboard)
 - on successful request sent to p4n1c
+
+## Notes
+
+- The website will hint about the userAgents being global identifier for internet "identity"
 
 Useful links
 - https://github.com/dolevf/Damn-Vulnerable-GraphQL-Application

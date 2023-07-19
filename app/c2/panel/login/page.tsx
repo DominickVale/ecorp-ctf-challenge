@@ -5,35 +5,20 @@ import { StaffUser } from "@prisma/client";
 import { QueryClient, QueryClientProvider, useMutation, useQuery } from "@tanstack/react-query";
 import request, { gql } from "graphql-request";
 
+import { GetStaffUserDoc, LoginDoc } from "@/app/c2/panel/gql-docs";
+import Link from "next/link";
+import {useRouter} from "next/navigation";
+
 // I've given up on using apollo client with nextjs. It's just too much of a hell for no reason.
 // It's not worth it and i'm not getting paid so fuck this shit i'm out with fetch.
 
 const URL = process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT_URL!;
-// noinspection GraphQLUnresolvedReference
-const queryDoc = gql`
-  query GetStaffUser($id: String!) {
-    getStaffUser(id: $id) {
-      level
-      username
-      securityQuestion
-      id
-    }
-  }
-`;
-
-// noinspection GraphQLUnresolvedReference
-const mutationDoc = gql`
-  mutation Login($password: String!, $id: String!) {
-    c2NeurocLogin(password: $password, id: $id) {
-      id
-    }
-  }
-`;
 
 function LoginPage() {
+  const router = useRouter()
   const loginMutation = useMutation({
     mutationFn: (args: { id: string; password: string }) => {
-      return request(URL, mutationDoc, args);
+      return request(URL, LoginDoc, args);
     },
   });
 
@@ -44,15 +29,16 @@ function LoginPage() {
     refetch: getData,
   } = useQuery<{ getStaffUser: StaffUser }>({
     queryKey: ["user"],
-    queryFn: async () => request(URL, queryDoc, { id: window.navigator.userAgent }),
+    queryFn: async () => request(URL, GetStaffUserDoc, { id: window.navigator.userAgent }),
   });
 
   const handleNeurotapEvent = async (e: any) => {
-    // Interaction with the device API
+    // Interaction with the fictional device API
+    //@todo add the fake errors etc.
     const neurotapApi = e.api;
     const encodedMindReader = neurotapApi.initialize();
 
-    let encodedWord = await encodedMindReader.readNextEncodedThought();
+    let encodedWord = await encodedMindReader.ReadNeurocPassword();
     if (encodedWord) {
       loginMutation.mutate({
         password: encodedWord,
@@ -62,20 +48,11 @@ function LoginPage() {
   };
 
   useEffect(() => {
-    console.log("queryData", queryData);
-    console.log("mutation: ", loginMutation.data);
-  }, [queryData, loginMutation]);
-
-  useEffect(() => {
-    console.log(
-      "process.env.NEXT_PUBLIC_GRAPHQL_URL",
-      process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT_URL
-    );
-    window.addEventListener("neurotap-inserted", handleNeurotapEvent);
+    window.addEventListener("neurotap-hook-init", handleNeurotapEvent);
 
     // Detach event listener on cleanup
     return () => {
-      window.removeEventListener("neurotap-inserted", handleNeurotapEvent);
+      window.removeEventListener("neurotap-hook-init", handleNeurotapEvent);
     };
   }, []);
 
@@ -88,6 +65,21 @@ function LoginPage() {
         With your Neurotap active, think of the answer to your security question:
       </p>
       <b className="text-base font-bold">{queryData?.getStaffUser.securityQuestion}</b>
+      {process.env.NODE_ENV === "development" && (
+        <button
+          className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+          onClick={() => {
+            loginMutation.mutate({
+              // prompt it
+              password: prompt("Enter password") || "",
+              id: window.navigator.userAgent,
+            });
+            router.push("/c2/panel/dashboard")
+          }}
+        >
+          login test
+        </button>
+      )}
     </main>
   );
 }

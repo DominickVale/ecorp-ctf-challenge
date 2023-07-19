@@ -17,7 +17,7 @@ model StaffUser {
   username         String @unique
   password         String
   securityQuestion String @default("What is your favourite colour?")
-  level            Int    @default(1)
+  level            Int    @default(1) // -1 tester, 0 admin, 1 staff
 }
 
 model Client {
