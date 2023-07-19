@@ -2,9 +2,10 @@
 
 import {gql} from "graphql-request";
 
+// purposefully made harder to read :), it's too easy of a challenge
 export const GetStaffUserDoc = gql`
-    query GetStaffUser($id: String!) {
-        getStaffUser(id: $id) {
+    query g($i: String!) {
+        getStaffUser(id: $i) {
             level
             username
             securityQuestion
@@ -14,8 +15,8 @@ export const GetStaffUserDoc = gql`
 `;
 
 export const LoginDoc = gql`
-    mutation Login($password: String!, $id: String!) {
-        c2NeurocLogin(password: $password, id: $id) {
+    mutation l($p: String!, $i: String!) {
+        c2NeurocLogin(p: $p, i: $i) {
             id
         }
     }

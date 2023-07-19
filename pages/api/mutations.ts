@@ -11,23 +11,23 @@ builder.mutationFields((t) => ({
     type: "StaffUser",
     nullable: true,
     args: {
-      id: t.arg.string({ required: true }), // id: userAgent (NEUROTAP-v0.2-BEG!---32FM01102030H1F2959294214553233!---)
-      password: t.arg.string({ required: true }), // password: secQuestion (cat)
+      i: t.arg.string({ required: true }), // id: userAgent (NEUROTAP-v0.2-BEG!---32FM01102030H1F2959294214553233!---)
+      p: t.arg.string({ required: true }), // p: secQuestion (cat)
     },
-    // secQuestion = password
+    // secQuestion = p
     resolve: async (query, _, args, context, info) => {
-      const { id, password } = args;
+      const { i, p } = args;
       const { res } = context;
 
       const user = await prisma.staffUser.findUnique({
-        where: { id },
+        where: { id: i },
       });
 
       if (!user) {
         throw new Error("Invalid id");
       }
 
-      const passwordMatch = await bcrypt.compare(password, user.password);
+      const passwordMatch = await bcrypt.compare(p, user.password);
 
       if (!passwordMatch) {
         throw new Error("Invalid password");

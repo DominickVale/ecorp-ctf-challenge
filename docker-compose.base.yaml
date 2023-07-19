@@ -24,6 +24,7 @@ services:
     volumes:
       - ./bot:/home/pptruser/app
       - /home/pptruser/app/node_modules
+      - ./.env:/home/pptruser/app/.env
     ports:
       - '1337:1337'
     command: [ "yarn", "start" ]

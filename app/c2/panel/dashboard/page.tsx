@@ -26,7 +26,7 @@ const getClientsDoc = gql`
   }
 `;
 
-export function Dashboard(props: DashboardProps) {
+function Dashboard(props: DashboardProps) {
 
   const {
     data: staffUserData,

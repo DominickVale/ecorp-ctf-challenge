@@ -1,16 +1,18 @@
 
 # Setup
-### DEV
 ```bash
 # Create a network, which allows containers to communicate
 # with each other, by using their container name as a hostname
 docker network create main_network #(if you change this also change the name in the Dockerfiles)
 
-yarn setup # (if first time)
+yarn setup-prod # (if first time) (or yarn setup-dev)
 # enter container terminal
 docker exec -it ecorp-ctf-challenge-web-1 sh
 # inside container terminal
 yarn db-bootstrap
+
+# after stopping the containers, you can start them again with
+yarn up-prod # (or yarn up-dev)
 ```
 
 # Meta

@@ -1,8 +1,9 @@
 import net from "net";
 import puppeteer from "puppeteer";
-import path from "path";
+import dotenv from "dotenv";
+import fs from "fs";
 
-require('dotenv').config({path: path.join(__dirname, '../.env')});
+dotenv.config()
 
 export type JobType = {
     html: string;
@@ -61,7 +62,7 @@ async function loadPage(
 
     const server: net.Server = net.createServer();
     server.listen(Number(process.env.XSSBOT_PORT || "1337"), process.env.XSSBOT_HOST || "0.0.0.0");
-    console.log(`Listening on port ${process.env.XSSBOT_PORT}`);
+    console.log(`Listening on ${process.env.XSSBOT_HOST}:${process.env.XSSBOT_PORT}`);
 
     server.on("connection", (socket) => {
       socket.on("data", (data) => {

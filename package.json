@@ -5,11 +5,12 @@
   "scripts": {
     "dev": "WATCHPACK_POLLING=true next dev",
     "setup": "docker compose -f docker-compose.base.yaml build && docker compose -f docker-compose.base.yaml up",
+    "setup-prod": "docker compose -f docker-compose.base.yaml build && docker compose -f docker-compose.base.yaml -f docker-compose.prod.yaml up",
     "db-bootstrap": "yarn prisma generate && yarn prisma migrate dev --name init && yarn prisma db seed --preview-feature",
     "up-dev": "docker compose -f docker-compose.base.yaml up",
     "down-dev": "docker compose -f docker-compose.base.yaml down",
     "build-dev": "docker compose -f docker-compose.base.yaml build",
-    "up-prod": "docker compose -f docker-compose.prod.yaml up",
+    "up-prod": "docker compose -f docker-compose.base.yaml -f docker-compose.prod.yaml up",
     "down-prod": "docker compose -f docker-compose.prod.yaml down",
     "build-prod": "docker compose -f docker-compose.prod.yaml build",
     "build": "next build",

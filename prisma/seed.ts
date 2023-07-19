@@ -21,7 +21,7 @@ async function main() {
     console.log("Creating special one")
     await prisma.staffUser.create({
         data: {
-            id: process.env.EXAMPLE_ID || "32FM01102030H1F2959294214553233",
+            id: process.env.EXAMPLE_ID || "32FM19630324809A5B1B4F1D49DAA507BBC86DC60F1C",
             level: faker.number.int(2),
             username: faker.internet.displayName({
                 firstName: faker.person.lastName(),
