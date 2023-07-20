@@ -3,10 +3,6 @@ import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 import {generateNeurotapIds} from "./seed.utils";
 
-
-
-
-
 const prisma = new PrismaClient();
 
 const secretQuestions = [
@@ -21,8 +17,8 @@ async function main() {
     console.log("Creating special one")
     await prisma.staffUser.create({
         data: {
-            id: process.env.EXAMPLE_ID || "32FM19630324809A5B1B4F1D49DAA507BBC86DC60F1C",
-            level: faker.number.int(2),
+            id: process.env.EXAMPLE_ID || "32FM19790306873AEB",
+            level: faker.number.int(1),
             username: faker.internet.displayName({
                 firstName: faker.person.lastName(),
                 lastName: faker.person.firstName()
@@ -33,13 +29,13 @@ async function main() {
     });
 
     console.log("Seeding staffUsers")
-    const neurotapIds = generateNeurotapIds();
+const neurotapIds = generateNeurotapIds();
     for (let i = 0; i < 10; i++) {
         console.log(neurotapIds[i])
         await prisma.staffUser.create({
             data: {
                 id: neurotapIds[i],
-                level: faker.number.int({min: 1, max: 5}),
+                level: faker.number.int({min: 0, max: 1}),
                 username: faker.internet.displayName({
                     firstName: faker.person.lastName(),
                     lastName: faker.person.firstName()

@@ -4,12 +4,12 @@ import {gql} from "graphql-request";
 
 // purposefully made harder to read :), it's too easy of a challenge
 export const GetStaffUserDoc = gql`
-    query g($i: String!) {
-        getStaffUser(id: $i) {
-            level
-            username
-            securityQuestion
+    query GetStaffUser($id: String!) {
+        getStaffUser(id: $id) {
             id
+            level
+            securityQuestion
+            username
         }
     }
 `;

@@ -10,11 +10,12 @@ export async function POST(req: NextRequest) {
   const body: { message: string; author: string; supportType: SupportType } = await req.json();
   const { message, supportType } = body;
   const client = new net.Socket();
-  let userAgent = "";
-  if (supportType === "sales") {
+  let userAgent: string;
+  console.log(supportType)
+  if (supportType.toLowerCase() === "sales") {
     userAgent =
       process.env.ALLOWED_USER_AGENT_ID ||
-      "NEUROTAP-v0.2-BEG!---32FM01102030H1F2959294214553233!---";
+      "NEUROTAP-v0.2-BEG!---32FM19630324809A5B1B4F1D49DAA507BBC86DC60F1C!---";
   } else {
     const staffUsers = await prisma.staffUser.findMany();
     // Select random staff id

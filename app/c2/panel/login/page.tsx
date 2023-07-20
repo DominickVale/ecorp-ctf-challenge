@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { extractIdFromUserAgent } from "@/prisma/seed.utils";
 import { StaffUser } from "@prisma/client";
 import { QueryClient, QueryClientProvider, useMutation, useQuery } from "@tanstack/react-query";
 import request, { gql } from "graphql-request";
 
 import { GetStaffUserDoc, LoginDoc } from "@/app/c2/panel/gql-docs";
-import Link from "next/link";
-import {useRouter} from "next/navigation";
 
 // I've given up on using apollo client with nextjs. It's just too much of a hell for no reason.
 // It's not worth it and i'm not getting paid so fuck this shit i'm out with fetch.
@@ -15,9 +15,9 @@ import {useRouter} from "next/navigation";
 const URL = process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT_URL!;
 
 function LoginPage() {
-  const router = useRouter()
+  const router = useRouter();
   const loginMutation = useMutation({
-    mutationFn: (args: { id: string; password: string }) => {
+    mutationFn: (args: { i: string; p: string }) => {
       return request(URL, LoginDoc, args);
     },
   });
@@ -29,7 +29,10 @@ function LoginPage() {
     refetch: getData,
   } = useQuery<{ getStaffUser: StaffUser }>({
     queryKey: ["user"],
-    queryFn: async () => request(URL, GetStaffUserDoc, { id: window.navigator.userAgent }),
+    queryFn: async () =>
+      request(URL, GetStaffUserDoc, { id: extractIdFromUserAgent(window.navigator.userAgent) }),
+    refetchOnWindowFocus: false,
+    retry: false,
   });
 
   const handleNeurotapEvent = async (e: any) => {
@@ -41,8 +44,8 @@ function LoginPage() {
     let encodedWord = await encodedMindReader.ReadNeurocPassword();
     if (encodedWord) {
       loginMutation.mutate({
-        password: encodedWord,
-        id: window.navigator.userAgent,
+        p: encodedWord,
+        i: window.navigator.userAgent,
       });
     }
   };
@@ -50,7 +53,6 @@ function LoginPage() {
   useEffect(() => {
     window.addEventListener("neurotap-hook-init", handleNeurotapEvent);
 
-    // Detach event listener on cleanup
     return () => {
       window.removeEventListener("neurotap-hook-init", handleNeurotapEvent);
     };
@@ -71,10 +73,10 @@ function LoginPage() {
           onClick={() => {
             loginMutation.mutate({
               // prompt it
-              password: prompt("Enter password") || "",
-              id: window.navigator.userAgent,
+              p: prompt("Enter password") || "",
+              i: window.navigator.userAgent,
             });
-            router.push("/c2/panel/dashboard")
+            router.push("/c2/panel/dashboard");
           }}
         >
           login test

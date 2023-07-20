@@ -9,6 +9,7 @@ describe("generateNeurotapIds function", () => {
   it("should generate an array of 10 ids", () => {
     const ids = generateNeurotapIds();
 
+    console.log("IDS: ", ids)
     expect(ids).toBeInstanceOf(Array);
     expect(ids).toHaveLength(10);
   });

@@ -9,6 +9,7 @@ import request, { gql } from "graphql-request";
 import Modal from "./components/Modal";
 import { GetStaffUserDoc, LoginDoc} from "@/app/c2/panel/gql-docs";
 import Button from "@/components/buttons/button";
+import {extractIdFromUserAgent} from "@/prisma/seed.utils";
 
 interface DashboardProps {}
 
@@ -39,7 +40,7 @@ function Dashboard(props: DashboardProps) {
     retry: 1,
     retryDelay: 1000,
     refetchOnWindowFocus: false,
-    queryFn: async () => request(URL, GetStaffUserDoc, { i: window.navigator.userAgent }),
+    queryFn: async () => request(URL, GetStaffUserDoc, { id: extractIdFromUserAgent(window.navigator.userAgent) }),
   });
 
   const [adminMode, setAdminMode] = useState(staffUserData?.getStaffUser?.level === 0);
