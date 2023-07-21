@@ -5,7 +5,7 @@ function renderPostCategory(posts: PostPreviewData[]) {
   return posts.map((props) => <BlogPostEntry {...props} />);
 }
 
-export default function Blog() {
+export default async function Blog() {
   const allPostsData = getCategorizedPostPreviews();
   return (
     <main className="grid-cols-golden-inner">

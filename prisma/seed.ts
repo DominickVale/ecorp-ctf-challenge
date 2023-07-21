@@ -20,8 +20,8 @@ async function main() {
             id: process.env.EXAMPLE_ID || "32FM19790306873AEB",
             level: faker.number.int(1),
             username: faker.internet.displayName({
-                firstName: faker.person.lastName(),
-                lastName: faker.person.firstName()
+                firstName: "Emma",
+                lastName: "Turner"
             }),
             securityQuestion: secretQuestions[2],
             password: hashedPwd
@@ -32,6 +32,7 @@ async function main() {
 const neurotapIds = generateNeurotapIds();
     for (let i = 0; i < 10; i++) {
         console.log(neurotapIds[i])
+        const hashedPwd = await bcrypt.hash(faker.internet.password(), 10);
         await prisma.staffUser.create({
             data: {
                 id: neurotapIds[i],
@@ -41,7 +42,7 @@ const neurotapIds = generateNeurotapIds();
                     lastName: faker.person.firstName()
                 }),
                 securityQuestion: faker.helpers.arrayElement(secretQuestions),
-                password: faker.internet.password()
+                password: hashedPwd
             },
         });
     }
