@@ -1,0 +1,56 @@
+version: '3.8'
+services:      
+  postgres:
+    image: 'postgres:latest'
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_DB: ${DB_NAME}
+      DATABASE_URL: postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/postgres?schema=public
+    volumes:
+      - 'postgres_data:/var/lib/postgresql/data'
+    ports:
+      - '${DB_PORT}:${DB_PORT}'
+    networks:
+      - main_network
+  bot:
+    restart: always
+    depends_on:
+      - postgres
+    build:
+      context: challenge/bot
+      dockerfile: Dockerfile
+    volumes:
+      - ./challenge/bot:/home/pptruser/app
+      - ./challenge/bot/node_modules:/home/pptruser/app/node_modules
+    ports:
+      - '${XSSBOT_PORT}:${XSSBOT_PORT}'
+    command: [ "yarn", "start" ]
+    networks:
+      - main_network
+    environment:
+      XSSBOT_PORT: '${XSSBOT_PORT}'
+      XSSBOT_HOST: '${XSSBOT_HOST}'
+  web:
+    restart: always
+    build:
+      context: challenge/web
+      dockerfile: dev.Dockerfile
+    ports:
+      - '3000:3000'
+    depends_on:
+      - postgres
+    volumes:
+      - ./challenge/web:/app
+      - ./challenge/web/node_modules:/app/node_modules
+      - ./.next:/app/.next
+    networks:
+      - main_network
+    command: ["yarn", "dev"]
+volumes:
+  postgres_data:
+
+networks:
+  main_network:
+    external: true

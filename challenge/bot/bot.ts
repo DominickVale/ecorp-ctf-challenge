@@ -1,7 +1,6 @@
 import net from "net";
 import puppeteer from "puppeteer";
 import dotenv from "dotenv";
-import fs from "fs";
 
 dotenv.config()
 

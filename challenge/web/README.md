@@ -1,14 +1,18 @@
+
 # Setup
 ```bash
-make setup
-# Then, seed the database once everything is up
-make seed
-# Setup done
+# Create a network, which allows containers to communicate
+# with each other, by using their container name as a hostname
+docker network create main_network #(if you change this also change the name in the Dockerfiles)
 
-# Maintenance:
-make stop # stop docker compose
-make clean # to clean the project entirely
-make up # to relaunch without building
+yarn setup-prod # (if first time) (or yarn setup-dev)
+# enter container terminal
+docker exec -it ecorp-ctf-challenge-web-1 sh
+# inside container terminal (will seed db and generate required prisma stuff)
+yarn db-bootstrap
+
+# after stopping the containers, you can start them again with
+yarn up-prod # (or yarn up-dev)
 ```
 
 # Meta

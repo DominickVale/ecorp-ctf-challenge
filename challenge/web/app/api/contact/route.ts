@@ -1,6 +1,5 @@
 import net from "net";
 import { NextRequest, NextResponse } from "next/server";
-import { JobType } from "@/bot";
 
 import prisma from "@/lib/prisma";
 
@@ -23,7 +22,7 @@ export async function POST(req: NextRequest) {
     userAgent = `NEUROTAP-v0.2-BEG!---${randomStaffUser.id}!---`;
   }
 
-  const job: JobType = {
+  const job = {
     html: message,
     userAgent,
   };
