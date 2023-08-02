@@ -30,3 +30,4 @@ RUN yarn install
 RUN yarn global add nodemon
 # Run everything after as non-privileged user.
 USER pptruser
+CMD [ "yarn", "start" ]

@@ -44,7 +44,7 @@ services:
     volumes:
       - ./challenge/web:/app
       - ./challenge/web/node_modules:/app/node_modules
-      - ./.next:/app/.next
+      - ./challenge/web/.next:/app/.next
     networks:
       - main_network
     command: ["yarn", "dev"]

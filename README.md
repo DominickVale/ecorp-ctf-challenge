@@ -1,14 +1,24 @@
 # Setup
 ```bash
-make setup
-# Then, seed the database once everything is up
-make seed
-# Setup done
+# Create the docker main_network if it doesn't exist.
+# To change the name of the network you have to change it in the docker-compose file as well.
+docker network create main_network
 
-# Maintenance:
-make stop # stop docker compose
-make clean # to clean the project entirely
-make up # to relaunch without building
+# Copy the example env to .env if you haven't already (.env files will be read by docker-compose)
+cp .env.example .env
+# Copy .env to web
+cp .env challenge/web/.env
+
+# Initial setup:
+docker compose up --build
+
+
+
+# To clean up everything in case needed:
+rm -rf challenge/web/.next # This is the build folder of the main app
+rm -rf challenge/web/prisma/migrations # This is only because it's a CTF challenge
+docker-compose -p ecorp-ctf-challenge down --rmi all --volumes --remove-orphans #Or whatever you use to remove all the stuff
+# Then rebuild with docker compose up --build
 ```
 
 # Meta

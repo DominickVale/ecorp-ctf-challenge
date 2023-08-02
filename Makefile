@@ -32,6 +32,8 @@ clean:
 # DEV -- IGNORE FOR PROD --
 setup-dev:
 	cp -f .env challenge/web/.env
+	cd challenge/web && yarn
+	cd challenge/bot && yarn
 	@docker network ls | grep -q ${NETWORK_NAME}|| docker network create main_network
 	docker compose -f compose-dev.yaml up --build
 start-dev:

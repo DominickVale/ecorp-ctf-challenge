@@ -15,50 +15,62 @@ async function main() {
     const hashedPwd = await bcrypt.hash("cat", 10);
     // Special one
     console.log("Creating special one")
-    await prisma.staffUser.create({
-        data: {
-            id: process.env.EXAMPLE_ID || "32FM19790306873AEB",
-            level: faker.number.int(1),
-            username: faker.internet.displayName({
-                firstName: "Emma",
-                lastName: "Turner"
-            }),
-            securityQuestion: secretQuestions[2],
-            password: hashedPwd
-        },
-    });
-
+    try {
+      await prisma.staffUser.create({
+          data: {
+              id: process.env.EXAMPLE_ID || "32FM19790306873AEB",
+              level: faker.number.int(1),
+              username: faker.internet.displayName({
+                  firstName: "Emma",
+                  lastName: "Turner"
+              }),
+              securityQuestion: secretQuestions[2],
+              password: hashedPwd
+          },
+      });
+    } catch (e: any) {
+     console.log(e);
+      
+    }
     console.log("Seeding staffUsers")
 const neurotapIds = generateNeurotapIds();
     for (let i = 0; i < 10; i++) {
         console.log(neurotapIds[i])
         const hashedPwd = await bcrypt.hash(faker.internet.password(), 10);
-        await prisma.staffUser.create({
-            data: {
-                id: neurotapIds[i],
-                level: faker.number.int({min: 0, max: 1}),
-                username: faker.internet.displayName({
-                    firstName: faker.person.lastName(),
-                    lastName: faker.person.firstName()
-                }),
-                securityQuestion: faker.helpers.arrayElement(secretQuestions),
-                password: hashedPwd
-            },
-        });
+      try {
+          await prisma.staffUser.create({
+              data: {
+                  id: neurotapIds[i],
+                  level: faker.number.int({min: 0, max: 1}),
+                  username: faker.internet.displayName({
+                      firstName: faker.person.lastName(),
+                      lastName: faker.person.firstName()
+                  }),
+                  securityQuestion: faker.helpers.arrayElement(secretQuestions),
+                  password: hashedPwd
+              },
+          });
+      } catch (e: any) {
+        console.log(e);
+      }
     }
 
     console.log("Seeding clients")
     // Seed Client
     for (let i = 0; i < 50; i++) {
-        await prisma.client.create({
-            data: {
-                name: faker.person.firstName(),
-                surname: faker.person.lastName(),
-                age: faker.number.int({min: 18, max: 90}),
-                heartrate: faker.number.int({min: 40, max: 180}),
-                o2: faker.number.int({min: 70, max: 120}),
-            },
-        });
+      try {
+          await prisma.client.create({
+              data: {
+                  name: faker.person.firstName(),
+                  surname: faker.person.lastName(),
+                  age: faker.number.int({min: 18, max: 90}),
+                  heartrate: faker.number.int({min: 40, max: 180}),
+                  o2: faker.number.int({min: 70, max: 120}),
+              },
+          });
+      } catch (e: any) {
+       console.log(e);
+      }
     }
 }
 
