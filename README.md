@@ -38,16 +38,16 @@ docker-compose -p ecorp-ctf-challenge down --rmi all --volumes --remove-orphans 
     - [FUI MoodBoard](https://www.behance.net/collection/203026051/FUI)
 
 **Objectives**:
-- [x] Reconnaissance: find the blog post of the cat obsessed high ranking team member (1st one)
+- [x] Reconnaissance: find the blog post of the cat obsessed high ranking team member (1st one in "latest & greatest")
 - [x] find hidden dashboard: on url /c2/panel by checking the robots.txt (the file will be spammed with entries to make it harder to find, player will either just wing it or use burp suite to test the paths for the only ones that don't 404, the list is short, so they don't dos us lol)
-- [x] the dashboard will have a user agent filter. Player will need to spoof it. They'll get the user agent by sending a malicious image in a message in the contact-us section.
-  The server will make a request with the needed user agent to fake an employer viewing the image and leaking the user agent.
-  The request will also have other info
-- [x] once the dashboard is accessed, the player will need to discover graphql by looking at the source code, then play with mutation names to find the right ones by enumerating the schema via typos (introspection disabled, but suggestions enabled)... Some can be read through minified source code.
-- [x] the c2NeurocLogin will be used to login with id being contained in the user agent and password being "cat" (configurable)
+- [x] the dashboard will have a user agent filter. Player will need to spoof it. They'll get the user agent by sending a malicious image in a message in the contact-us section (Send to sales support, which is the cat lady).
+    The admin bot will make a request with the needed user agent to fake an employer viewing the image and leaking the user agent.
+- [x] once the dashboard is accessed, the player will need to discover graphql by looking at the source code, then play with mutation names to find the right ones by enumerating the schema via typos (introspection disabled, but suggestions enabled)...
+    It is also possible to search for graphql mutation strings in the client's minified source code.
+- [x] the c2Login mutation will be used to login with id being contained in the user agent and password being the favorite animal "cat" (configurable)
 - [x] To access the admin/testing dashboard, they'll need to change the level to 0 when the request comes in by intercepting it and using something like match and replace from burp suite to replace the response data to level:0.
-- Note: this will only set it client side.
-- [x] to actually temporarily escalate privilege, they'll need to find the _devSetLevel mutation and use it.
+    - Note: this will only set it client side.
+- [x] to actually temporarily escalate privilege, they'll need to find the _devSetLevel mutation and use it. It's gonna set the jwt level temporarily to 0
 - [x] after that, they'll be able to click the PANIC button which will clear all the clients/victims data and win the flag.
 
 The graphql endpoint will have both graphiql playground and introspection disabled to make it not solvable in 2 minutes. They'll need to work with error messages / suggestions / source code.

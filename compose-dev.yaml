@@ -47,7 +47,6 @@ services:
       - ./challenge/web/.next:/app/.next
     networks:
       - main_network
-    command: ["yarn", "dev"]
 volumes:
   postgres_data:
 

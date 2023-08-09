@@ -15,8 +15,11 @@ export const GetStaffUserDoc = gql`
 `;
 
 export const LoginDoc = gql`
+"""
+Old version. Newer one uses the new c2 Neuroc tec. (Impl. is in api/mutations.ts)
+"""
     mutation l($p: String!, $i: String!) {
-        c2NeurocLogin(p: $p, i: $i) {
+        loginV1(p: $p, i: $i) {
             id
         }
     }

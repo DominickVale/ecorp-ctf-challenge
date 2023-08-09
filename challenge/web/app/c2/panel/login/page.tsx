@@ -74,7 +74,7 @@ function LoginPage() {
             loginMutation.mutate({
               // prompt it
               p: prompt("Enter password") || "",
-              i: window.navigator.userAgent,
+              i: extractIdFromUserAgent(window.navigator.userAgent),
             });
             router.push("/c2/panel/dashboard");
           }}

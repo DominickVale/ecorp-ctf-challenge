@@ -9,4 +9,9 @@ echo "Waiting for the database to be up..."
 # Start the Next.js app
 echo "Starting the Next.js app..."
 yarn db-bootstrap
-yarn start
+# yarn dev if -dev argument, otherwise yarn start
+if [ "$1" = "-dev" ]; then
+    yarn dev
+else
+    yarn start
+fi

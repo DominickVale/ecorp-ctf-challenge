@@ -52,13 +52,14 @@ builder.mutationFields((t) => ({
   }),
 
   // just allow players to find the login mutation and insert the valid answer
-  c2NeurocLogin: t.prismaField({
+  c2Login: t.prismaField({
     type: "StaffUser",
     nullable: true,
     args: {
       i: t.arg.string({ required: true }), // id: userAgent (NEUROTAP-v0.2-BEG!---32FM01102030H1F2959294214553233!---)
       p: t.arg.string({ required: true }), // p: secQuestion (cat)
     },
+    
     // secQuestion = p
     resolve: async (query, _, args, context, info) => {
       const { i, p } = args;
