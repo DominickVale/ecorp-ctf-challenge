@@ -49,14 +49,18 @@ module.exports = {
           dark: "#181818",
         },
         foreground: "hsl(var(--foreground))",
+        elements: {
+          light: "#575757"
+        }
       },
       gridTemplateColumns: {
         // Simple 16 column grid
-        golden: "80px repeat(13, 1fr) 80px",
-        "golden-inner": "repeat(13, 1fr)",
+        layout: "80px repeat(13, 1fr) 80px",
+        golden: "61.8% 14.6% 23.6%"
       },
       gridTemplateRows: {
-        golden: "57px 1fr",
+        layout: "57px 1fr 57px",
+        golden: "56.5% 38.2%", //accounts for 57px navbar
       },
       gridColumnEnd: {
         13: "13",
@@ -66,6 +70,11 @@ module.exports = {
       borderWidth: {
         1: "1px",
       },
+      boxShadow: {
+        /* offset-x | offset-y | blur-radius | spread-radius | color */
+        //box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+        'neon-white': '0 0 1rem 0.5rem rgba(255,255,255, 0.4)',
+      }
     },
   },
   plugins: [],

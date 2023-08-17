@@ -2,13 +2,13 @@ import "./globals.css";
 
 import { Chakra_Petch } from "next/font/google";
 import localFont from "next/font/local";
-import Image from "next/image";
-import Link from "next/link";
-import ecorpLogo from "@/assets/svg/ecorp-logo.svg";
 
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 import { Line } from "@/components/decorations/line";
+import { Footer } from "@/components/Footer";
+import { LayoutLines } from "@/components/layout-lines";
+import { Navbar } from "@/components/Navbar";
 
 const fontSans = Chakra_Petch({
   subsets: ["latin"],
@@ -62,51 +62,24 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head />
       <body
         className={cn(
-          "min-h-screen bg-background-light font-sans antialiased grid grid-cols-golden grid-rows-golden max-w-[160rem] outline outline-1 outline-gray-400 mx-auto",
+          "relative min-h-screen bg-background-light font-sans antialiased grid grid-cols-layout grid-rows-layout max-w-[160rem] outline outline-1 outline-gray-400 mx-auto",
           fontSans.variable,
           fontHeading.variable
         )}
       >
-        <section className="col-start-1 row-start-2 row-span-full">
+        <section className="fixed left-0 top-14 h-screen w-20">
           <div className="relative h-[calc(100vh-57px)] overflow-hidden">
             <span className="absolute py-8 bottom-0 left-7 flex flex-col justify-around h-full">
-              <p className="h-max rotate-marquee">⋅&nbsp;&nbsp;14/02/2030 -30% DISCOUNT FOR KIDS UNDER 16</p>
+              <p className="h-max rotate-marquee">
+                ⋅&nbsp;&nbsp;14/02/2030 -30% DISCOUNT FOR KIDS UNDER 16
+              </p>
               <p className="h-max rotate-marquee">
                 ⋅&nbsp;&nbsp;CHECK OUT THE NEW NEUROTAP T-SHIRTS ON OUR SHOP
               </p>
             </span>
           </div>
         </section>
-        <nav className="relative col-start-2 col-end-15 grid grid-cols-[8rem_repeat(13,1fr)] content-end pb-2 text-xs">
-          <Line o="bottom" />
-          <ul className="col-start-2 flex flex-row gap-11">
-            <li>
-              <a href="/">HOME</a>
-            </li>
-            <li>
-              <Link href={"/blog"}>BLOG</Link>
-            </li>
-          </ul>
-          <div className="absolute right-0 top-0 h-full w-[61.8%] mr-[38.2%]">
-            <Line o="right" />
-            <Image
-              className="absolute right-[-2.4rem] top-[32.4%] z-10"
-              src={ecorpLogo}
-              alt="E-corp logo"
-            />
-          </div>
-          <ul className="flex flex-row col-start-10 pl-4 col-span-5 justify-start gap-11">
-            <li>
-              <a href="/contact-us">ABOUT</a>
-            </li>
-            <li>
-              <a href="/contact-us">SHOP</a>
-            </li>
-            <li>
-              <a href="/contact-us">CONTACTS</a>
-            </li>
-          </ul>
-        </nav>
+        <Navbar />
         <div className="col-start-1 col-end-1 row-start-1 row-end-1 relative">
           <Line o="bottom" />
           <Line o="right" />
@@ -116,9 +89,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </div>
 
         <div className="relative col-start-2 col-end-[15]">
-          <Line o="left" className="ml-[61.8%]" />
-          <Line o="left" className="ml-[76.39999999999%] mt-[calc(61.8vh-57px)]" />
-          <Line o="top" className="mt-[calc(61.8vh-57px)] ml-[61.8%] w-[38.2%]" />
           {children}
         </div>
 
@@ -130,12 +100,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div className="col-start-[15] col-span-1 row-start-2 row-span-full relative">
           <Line o="left" />
         </div>
-        <div className="col-start-2 col-end-15 grid grid-cols-[repeat(13,1fr)] content-end border-t-1 border-t-gray-500 pt-2 text-xs">
+        <div className="col-start-2 col-end-15 grid grid-cols-[repeat(13,1fr)] content-center border-t-1 border-t-gray-500 text-xs">
           <p className="col-start-2 col-span-2 flex flex-row gap-11">
             © 2030 Neurotap. All rights reserved.
           </p>
           <p className="col-start-9 pl-16 col-span-5 justify-start gap-11">
-            By Dominick Vale — have fun :)
+            By{" "}
+            <a
+              href="https://domenicovale.netlify.app"
+              className="font-bold cursor-pointer"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Dominick Vale
+            </a>{" "}
+            — have fun :)
           </p>
         </div>
       </body>

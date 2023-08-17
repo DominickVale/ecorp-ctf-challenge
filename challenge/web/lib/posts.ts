@@ -1,24 +1,30 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import { remark } from "remark";
-import html from "remark-html";
+import { serialize } from 'next-mdx-remote/serialize'
+import {MDXRemoteSerializeResult} from "next-mdx-remote";
 
 
 const postsDirectory = path.join(process.cwd(), 'posts')
 
+export type PostCategory = 'latest' | 'productivity' | 'changelog'
 export type PostData = {
     id: string
-    date: string
-    title: string
-    author: string
-    category: "latest" | "productivity" | "changelog"
-    contentHtml: string
+    mdxSource: MDXRemoteSerializeResult<Record<string, unknown>, Record<string, unknown>>
+    // frontmatter
+    data: {
+        date: string
+        title: string
+        author: string
+        category: PostCategory
+        preview: string
+        previewImg: string
+    }
 }
 
-export type PostPreviewData = Omit<PostData, 'contentHtml'> & { preview: string}
+export type PostPreviewData = Omit<PostData, 'mdxSource'>
 
-export function getSortedPostPreviews() {
+export function getSortedPostPreviews(): PostPreviewData[]{
     const fileNames = fs.readdirSync(postsDirectory)
 
     const allPostsData = fileNames.map((filename) => {
@@ -30,12 +36,12 @@ export function getSortedPostPreviews() {
 
         return {
             id,
-            ...matterResult.data
-        } as PostPreviewData
+            data: matterResult.data as PostData['data']
+        }
     })
 
     return allPostsData.sort((a, b) => {
-        if (a.date < b.date) {
+        if (a.data.date < b.data.date) {
             return 1
         } else {
             return -1
@@ -46,7 +52,7 @@ export function getSortedPostPreviews() {
 export function getCategorizedPostPreviews() {
     const postsData = getSortedPostPreviews()
     return postsData.reduce((acc, post) => {
-        const category = post.category
+        const category = post.data.category
         if (acc[category]) {
             acc[category].push(post)
         } else {
@@ -68,14 +74,12 @@ export async function getPostData(id: string) {
     const fullPath = fs.existsSync(mdFullPath) ? mdFullPath : mdxFullPath
 
     const fileContents = fs.readFileSync(fullPath, 'utf8')
-    const matterResult = matter(fileContents)
-    const processedContent = await remark()
-        .use(html)
-        .process(matterResult.content)
-    const contentHtml = processedContent.toString()
+    const { data, content} = matter(fileContents)
+    const mdxSource = await serialize(content)
+
     return {
         id,
-        contentHtml,
-        ...matterResult.data,
+        mdxSource,
+        data,
     } as PostData
 }

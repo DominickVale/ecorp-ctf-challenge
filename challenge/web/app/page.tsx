@@ -1,104 +1,89 @@
 import Image from "next/image";
+import brainProto from "@/assets/images/brain-proto.jpg";
+import photo1 from "@/assets/images/device1.png";
+import photo2 from "@/assets/images/device2.png";
 
-import brainProto from "@/assets/images/brain-proto.jpg"
 import Button from "@/components/buttons/button";
+import { Footer } from "@/components/Footer";
+import { LayoutLines } from "@/components/layout-lines";
 
 export default function Home() {
   return (
-    <main>
-      <section className="h-screen ml-32 mt-28">
-        <h1 className="text-black text-2xl 3xl:text-[clamp(6.854rem,6vw,11.09rem)] font-heading tracking-display leading-[1.18]">
-          TRANSCEND<br/>ORDINARY \\<br/>EVOLVE
-        </h1>
-        <p className="max-w-2xl text-base font-light leading-9 mt-20">
-          E-Corp pioneers the convergence of mind and machine, unleashing the limitless potential
-          within each individual. With Neurotap, we revolutionize human experiences, and shape a
-          future beyond imagination.
-        </p>
-        <div className="brain-proto absolute right-0 top-0 mix-blend-darken w-[38.2%] mr-28 mt-20 scale-125">
-          <Image src={brainProto} alt="brain-proto" />
-        </div>
-        <Button className="mt-14" variant="display">
-          ORDER NOW
-        </Button>
-        <div className="absolute left-[61.8%] top-0 h-screen bg-red-200">
-          <span className="">SCROLL</span>
-        </div>
-      </section>
-
-      <section className="h-screen">
-        <div className="p-2 max-w-xl border-gray-500 border-1">
-          <h3>// ELEGANCE & DURABILITY</h3>
-          <p className="p-4">
-            Embrace the future of human-machine symbiosis. Experience the elegance of Neurotap, the
-            brain-machine implant designed to empower you in ways never thought possible and
-            withstand the test of time.
-          </p>
-        </div>
-        <div className="p-2 max-w-xl border-gray-500 border-1">
-          <h3>// ELEGANCE & DURABILITY</h3>
-          <p className="p-4">
-            Embrace the future of human-machine symbiosis. Experience the elegance of Neurotap, the
-            brain-machine implant designed to empower you in ways never thought possible and
-            withstand the test of time.
-          </p>
-        </div>
-        <div className="p-2 max-w-xl border-gray-500 border-1">
-          <h3>// ELEGANCE & DURABILITY</h3>
-          <p className="p-4">
-            Embrace the future of human-machine symbiosis. Experience the elegance of Neurotap, the
-            brain-machine implant designed to empower you in ways never thought possible and
-            withstand the test of time.
-          </p>
-        </div>
-        <footer className="bg-black h-[90vh] flex flex-col">
-          <section>
-            <h2 className="text-xl">
-              JOIN THE
+    <>
+      <main className="relative">
+        <LayoutLines />
+        <section className="h-screen grid grid-cols-golden grid-rows-golden">
+          <div className="ml-32 mt-28">
+            <h1 className="text-black text-2xl 3xl:text-[clamp(6.854rem,6vw,11.09rem)] font-heading tracking-display leading-[1.18]">
+              TRANSCEND
               <br />
-              R_EVOLUTION
-            </h2>
-            <Button className="mt-3">ORDER NOW</Button>
-          </section>
-          <section className="flex flex-row justify-between my-[10vh]">
-            <ul>
-              <li>123 Futuristic Street, New York</li>
-              <li>Phone: +1 (123) 456-7890</li>
-              <li>Email: info@neurotap.com</li>
-            </ul>
-            <ul>
-              <li>
-                <a href="#">Terms & Conditions</a>
-              </li>
-              <li>
-                <a href="#">Privacy Polici</a>
-              </li>
-              <li>
-                <a href="#">Security</a>
-              </li>
-            </ul>
-            <ul>
-              <li>
-                <a href="#">Careers</a>
-              </li>
-              <li>
-                <a href="#">Refund policy</a>
-              </li>
-              <li>
-                <a href="#">Help Center</a>
-              </li>
-            </ul>
-          </section>
-        </footer>
-      </section>
-      <div className="col-start-2 col-end-15 grid grid-cols-[repeat(13,1fr)] content-end border-t-1 border-t-gray-500 pt-2 text-xs">
-        <p className="col-start-2 col-span-2 flex flex-row gap-11">
-          © 2030 Neurotap. All rights reserved.
-        </p>
-        <p className="col-start-9 pl-16 col-span-5 justify-start gap-11">
-          By Dominick Vale — have fun :)
-        </p>
-      </div>
-    </main>
+              ORDINARY&nbsp;\\
+              <br />
+              EVOLVE
+            </h1>
+            <p className="max-w-2xl text-base font-light leading-9 mt-20">
+              E-Corp pioneers the convergence of mind and machine, unleashing the limitless
+              potential within each individual. With Neurotap, we revolutionize human experiences,
+              and shape a future beyond imagination.
+            </p>
+            <Button className="mt-14">
+              ORDER NOW
+            </Button>
+          </div>
+          <div className="relative col-start-2 col-span-2">
+            <Image
+              className="mix-blend-darken scale-150 absolute left-[-14.6%] bottom-[-23.6%]"
+              src={brainProto}
+              alt="brain-proto"
+            />
+          </div>
+          <div className="col-start-2 row-start-2 flex justify-center place-items-center mt-16">
+            <span className="">SCROLL</span>
+          </div>
+        </section>
+
+        <section className="h-screen grid grid-cols-golden grid-rows-golden">
+          <Image className="mix-blend-darken" src={brainProto} alt="brain-proto" />
+          <Image
+            className="opacity-30 col-start-2 row-start-2 h-[40%] object-cover object-right-top"
+            src={photo2}
+            alt="brain-proto"
+          />
+          <Image
+            className="opacity-30 col-start-3 h-full object-cover"
+            src={photo1}
+            alt="brain-proto"
+          />
+
+          <div className="popups absolute">
+            <div className="p-2 max-w-xl border-gray-500 border-1">
+              <h3>// ELEGANCE & DURABILITY</h3>
+              <p className="p-4">
+                Embrace the future of human-machine symbiosis. Experience the elegance of Neurotap,
+                the brain-machine implant designed to empower you in ways never thought possible and
+                withstand the test of time.
+              </p>
+            </div>
+            <div className="p-2 max-w-xl border-gray-500 border-1">
+              <h3>// ELEGANCE & DURABILITY</h3>
+              <p className="p-4">
+                Embrace the future of human-machine symbiosis. Experience the elegance of Neurotap,
+                the brain-machine implant designed to empower you in ways never thought possible and
+                withstand the test of time.
+              </p>
+            </div>
+            <div className="p-2 max-w-xl border-gray-500 border-1">
+              <h3>// ELEGANCE & DURABILITY</h3>
+              <p className="p-4">
+                Embrace the future of human-machine symbiosis. Experience the elegance of Neurotap,
+                the brain-machine implant designed to empower you in ways never thought possible and
+                withstand the test of time.
+              </p>
+            </div>
+          </div>
+        </section>
+      </main>
+      <Footer />
+    </>
   );
 }
