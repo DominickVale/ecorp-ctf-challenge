@@ -6,6 +6,7 @@ import photo2 from "@/assets/images/device2.png";
 import Button from "@/components/buttons/button";
 import { Footer } from "@/components/Footer";
 import { LayoutLines } from "@/components/layout-lines";
+import {H1} from "@/components/typography";
 
 export default function Home() {
   return (
@@ -14,13 +15,13 @@ export default function Home() {
         <LayoutLines />
         <section className="h-screen grid grid-cols-golden grid-rows-golden">
           <div className="ml-32 mt-28">
-            <h1 className="text-black text-2xl 3xl:text-[clamp(6.854rem,6vw,11.09rem)] font-heading tracking-display leading-[1.18]">
+            <H1>
               TRANSCEND
               <br />
               ORDINARY&nbsp;\\
               <br />
               EVOLVE
-            </h1>
+            </H1>
             <p className="max-w-2xl text-base font-light leading-9 mt-20">
               E-Corp pioneers the convergence of mind and machine, unleashing the limitless
               potential within each individual. With Neurotap, we revolutionize human experiences,

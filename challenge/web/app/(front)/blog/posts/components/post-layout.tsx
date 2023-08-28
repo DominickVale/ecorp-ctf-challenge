@@ -5,8 +5,8 @@ import Image, { ImageProps } from "next/image";
 import { MDXRemote } from "next-mdx-remote";
 
 import { PostCategory, PostData, PostPreviewData } from "@/lib/posts";
-import { BlogPostEntry } from "@/app/blog/posts/components/blog-post-entry";
-import Date from "@/app/blog/posts/components/date";
+import { BlogPostEntry } from "@/app/(front)/blog/posts/components/blog-post-entry";
+import Date from "@/app/(front)/blog/posts/components/date";
 
 // using any: because next/image has literally no compatible types with a normal image, even though the props are identical
 const ResponsiveImage = (props: any) => (

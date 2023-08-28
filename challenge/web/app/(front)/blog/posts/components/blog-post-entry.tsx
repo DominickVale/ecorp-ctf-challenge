@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { PostPreviewData } from "@/lib/posts";
 
-import Date from "../components/date";
+import Date from "./date";
 
 interface BlogPostEntryProps extends PostPreviewData {
   showPreview?: boolean;

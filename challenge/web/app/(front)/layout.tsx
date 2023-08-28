@@ -1,4 +1,4 @@
-import "./globals.css";
+import "../globals.css";
 
 import { Chakra_Petch } from "next/font/google";
 import localFont from "next/font/local";
@@ -6,8 +6,6 @@ import localFont from "next/font/local";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 import { Line } from "@/components/decorations/line";
-import { Footer } from "@/components/Footer";
-import { LayoutLines } from "@/components/layout-lines";
 import { Navbar } from "@/components/Navbar";
 
 const fontSans = Chakra_Petch({
@@ -18,7 +16,7 @@ const fontSans = Chakra_Petch({
 
 // Font files can be colocated inside of `pages`
 const fontHeading = localFont({
-  src: "../assets/fonts/nulshock.woff2",
+  src: "../../assets/fonts/nulshock.woff2",
   variable: "--font-heading",
 });
 
@@ -67,13 +65,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           fontHeading.variable
         )}
       >
-        <section className="fixed left-0 top-14 h-screen w-20">
-          <div className="relative h-[calc(100vh-57px)] overflow-hidden">
-            <span className="absolute py-8 bottom-0 left-7 flex flex-col justify-around h-full">
-              <p className="h-max rotate-marquee">
+        <section className="absolute left-0 top-0 h-full w-20">
+          <div className="sticky top-0 h-[calc(100vh-57px)] overflow-hidden">
+            <span className="py-8 pt-16 flex flex-col justify-around place-items-center h-full">
+              <p className="h-max rotate-marquee tracking-display">
                 ⋅&nbsp;&nbsp;14/02/2030 -30% DISCOUNT FOR KIDS UNDER 16
               </p>
-              <p className="h-max rotate-marquee">
+              <p className="h-max rotate-marquee tracking-display">
                 ⋅&nbsp;&nbsp;CHECK OUT THE NEW NEUROTAP T-SHIRTS ON OUR SHOP
               </p>
             </span>

@@ -19,7 +19,7 @@ export function Navbar(props: NavbarProps) {
           <Link href={"/blog"}>BLOG</Link>
         </li>
       </ul>
-      <Image className="absolute right-[36%] top-[32.4%] z-10" src={ecorpLogo} alt="E-corp logo" />
+      <Image className="absolute right-[calc(38.2%-2.4rem)] top-[1.25rem] z-10" src={ecorpLogo} alt="E-corp logo" />
       <Line o="right" className="right-[38.2%]" />
       <ul className="col-span-5 col-start-10 flex flex-row justify-start gap-11 pl-4">
         <li>

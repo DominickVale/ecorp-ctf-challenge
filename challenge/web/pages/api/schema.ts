@@ -9,8 +9,13 @@ builder.prismaObject("Client", {
         name: t.exposeString('name'),
         surname: t.exposeString('surname'),
         age: t.exposeInt('age'),
-        heartrate: t.exposeInt('heartrate'),
-        o2: t.exposeInt('o2'),
+        gender: t.exposeString("gender"),
+        bank: t.exposeInt("bank"),
+        friends: t.exposeInt("friends"),
+        status: t.exposeString("status"),
+        healthy: t.exposeBoolean("healthy"),
+        mood: t.exposeString("mood"),
+        photo: t.exposeString("photo"),
     }),
 });
 

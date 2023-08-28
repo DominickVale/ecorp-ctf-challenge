@@ -16,7 +16,8 @@
     }
 }
 
-body { }
+body {
+}
 
 .rotate-marquee {
     writing-mode: vertical-lr;
@@ -26,6 +27,11 @@ body { }
 .marquee {
     bottom: 0;
     animation: marquee 10s linear infinite;
+}
+
+.stripes-decor {
+    background-image: linear-gradient(45deg, #181818 25%, #282828 25%, #282828 50%, #181818 50%, #181818 75%, #282828 75%, #282828 100%);
+    background-size: 1rem 1rem;
 }
 
 @keyframes marquee {

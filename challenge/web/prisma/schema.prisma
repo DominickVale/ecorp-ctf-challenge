@@ -21,10 +21,15 @@ model StaffUser {
 }
 
 model Client {
-  id        String @id @default(uuid())
-  name      String
-  surname   String
-  age       Int
-  heartrate Int
-  o2        Int
+  id      String  @id @default(uuid())
+  name    String
+  surname String
+  age     Int
+  gender  String
+  bank    Int
+  friends Int
+  status  String
+  healthy Boolean
+  mood    String
+  photo   String
 }

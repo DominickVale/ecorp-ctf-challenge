@@ -1,7 +1,7 @@
 import { getCategorizedPostPreviews, PostPreviewData } from "@/lib/posts";
 import { Footer } from "@/components/Footer";
 import { LayoutLines } from "@/components/layout-lines";
-import { BlogPostEntry } from "@/app/blog/posts/components/blog-post-entry";
+import { BlogPostEntry } from "@/app/(front)/blog/posts/components/blog-post-entry";
 
 function renderPostCategory(posts: PostPreviewData[], showPreview?: boolean) {
   return posts.map((props) => <BlogPostEntry {...props} showPreview={showPreview} />);

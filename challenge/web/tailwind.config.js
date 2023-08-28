@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+const { letterSpacing: defaultLetterSpacing} = require("tailwindcss/defaultTheme")
 module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -11,7 +12,9 @@ module.exports = {
     // golden ratio
     fontSize: {
       xs: ".7rem", // 0.618rem would be too small (9px)
+      smaller: ".75rem", // dashboard, 12px
       sm: "1rem",
+      md: "1.125rem", //dashboard, 18px
       base: "1.618rem",
       lg: "2.618rem",
       xl: "4.236rem",
@@ -19,6 +22,7 @@ module.exports = {
       "3xl": "11.09rem",
     },
     letterSpacing: {
+      ...defaultLetterSpacing,
       action: "0.12em",
       display: "0.141em",
     },

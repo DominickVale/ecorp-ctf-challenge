@@ -15,12 +15,27 @@ export const GetStaffUserDoc = gql`
 `;
 
 export const LoginDoc = gql`
-"""
-Old version. Newer one uses the new c2 Neuroc tec. (Impl. is in api/mutations.ts)
-"""
     mutation l($p: String!, $i: String!) {
-        loginV1(p: $p, i: $i) {
+        oldLogin(p: $p, i: $i) {
             id
         }
     }
+`;
+
+export const getClientsDoc = gql`
+  query GetClientsList {
+    getClientsList {
+      id
+      name
+      surname
+      age
+      gender 
+      bank   
+      friends
+      status 
+      healthy
+      mood   
+      photo  
+    }
+  }
 `;
