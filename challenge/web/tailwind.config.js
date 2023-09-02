@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-const { letterSpacing: defaultLetterSpacing} = require("tailwindcss/defaultTheme")
+const { letterSpacing: defaultLetterSpacing } = require("tailwindcss/defaultTheme");
 module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -23,17 +23,20 @@ module.exports = {
     },
     letterSpacing: {
       ...defaultLetterSpacing,
-      action: "0.12em",
+      action: "0.18em",
       display: "0.141em",
     },
     screens: {
-      'sm': '640px',
-      'md': '768px',
-      'lg': '1024px',
-      'xl': '1280px',
-      '2xl': '1536px',
-      '3xl': '1920px',
-      '4xl': '2560px'
+      sm: "640px",
+      md: "768px",
+      lg: "1024px",
+      xl: "1280px",
+      "2xl": "1536px",
+      "3xl": "1920px",
+      "4xl": "2560px",
+      short: { raw: "(min-height: 600px)" },
+      tall: { raw: "(min-height: 800px)" },
+      taller: { raw: "(min-height: 1000px)" },
     },
     container: {
       center: true,
@@ -54,13 +57,13 @@ module.exports = {
         },
         foreground: "hsl(var(--foreground))",
         elements: {
-          light: "#575757"
-        }
+          light: "#575757",
+        },
       },
       gridTemplateColumns: {
         // Simple 16 column grid
         layout: "80px repeat(13, 1fr) 80px",
-        golden: "61.8% 14.6% 23.6%"
+        golden: "61.8% 14.6% 23.6%",
       },
       gridTemplateRows: {
         layout: "57px 1fr 57px",
@@ -77,8 +80,8 @@ module.exports = {
       boxShadow: {
         /* offset-x | offset-y | blur-radius | spread-radius | color */
         //box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
-        'neon-white': '0 0 1rem 0.5rem rgba(255,255,255, 0.4)',
-      }
+        "neon-white": "0 0 1rem 0.5rem rgba(255,255,255, 0.4)",
+      },
     },
   },
   plugins: [],

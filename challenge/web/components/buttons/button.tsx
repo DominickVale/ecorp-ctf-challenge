@@ -20,7 +20,7 @@ const buttonVariants = cva(
       size: {
         sm: "w-full text-xs font-bold min-w-max px-3 py-1 outline outline-background-light outline-1 tracking-wide",
         display: "w-96 h-20 text-sm",
-        fluid: "h-auto w-full",
+        fluid: "h-full w-full",
       },
       disabled: {
         true: "opacity-50 cursor-not-allowed shadow-none",
@@ -52,7 +52,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => 
   const { className, variant, disabled, size, theme, destructive, ...rest } = props;
   return (
     <button
-      className={cn(className, buttonVariants({ variant, disabled, size, theme, destructive }))}
+      className={cn(buttonVariants({ variant, disabled, size, theme, destructive }), className)}
       ref={ref}
       disabled={!!disabled}
       {...rest}

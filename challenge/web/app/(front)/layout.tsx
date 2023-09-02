@@ -60,53 +60,51 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head />
       <body
         className={cn(
-          "relative min-h-screen bg-background-light font-sans antialiased grid grid-cols-layout grid-rows-layout max-w-[160rem] outline outline-1 outline-gray-400 mx-auto",
+          "relative md:px-0 mx-auto md:grid min-h-screen max-w-[160rem] grid-cols-layout grid-rows-layout bg-background-light font-sans antialiased md:outline outline-1 outline-gray-400",
           fontSans.variable,
           fontHeading.variable
         )}
       >
-        <section className="absolute left-0 top-0 h-full w-20">
+        <section className="hidden md:block absolute left-0 top-0 h-full w-20">
           <div className="sticky top-0 h-[calc(100vh-57px)] overflow-hidden">
-            <span className="py-8 pt-16 flex flex-col justify-around place-items-center h-full">
-              <p className="h-max rotate-marquee tracking-display">
+            <span className="text-[1.2vh] taller:text-xs taller:2xl:text-smaller flex h-full flex-col place-items-center justify-around py-8 pt-16">
+              <p className="rotate-marquee h-max tracking-display">
                 ⋅&nbsp;&nbsp;14/02/2030 -30% DISCOUNT FOR KIDS UNDER 16
               </p>
-              <p className="h-max rotate-marquee tracking-display">
+              <p className="rotate-marquee h-max tracking-display">
                 ⋅&nbsp;&nbsp;CHECK OUT THE NEW NEUROTAP T-SHIRTS ON OUR SHOP
               </p>
             </span>
           </div>
         </section>
         <Navbar />
-        <div className="col-start-1 col-end-1 row-start-1 row-end-1 relative">
+        <div className="relative col-start-1 col-end-1 row-start-1 row-end-1 hidden md:block">
           <Line o="bottom" />
           <Line o="right" />
         </div>
-        <div className="col-start-1 col-span-1 row-start-2 row-span-full relative">
+        <div className="relative col-span-1  col-start-1 row-span-full row-start-2 hidden md:block">
           <Line o="right" />
         </div>
 
-        <div className="relative col-start-2 col-end-[15]">
-          {children}
-        </div>
+        <div className="relative col-start-2 col-end-[15]">{children}</div>
 
-        <div className="col-start-[15] col-span-1 row-start-1 row-end-1 relative flex justify-center place-items-center">
-          <Line o="bottom" />
-          <small className="text-stone-500 text-xs font-medium">420.666</small>
+        <div className="hidden md:flex relative col-span-1 col-start-[15] row-start-1 row-end-1 place-items-center justify-center">
+          <Line o="bottom" className="hidden md:block" />
+          <small className="text-xs font-medium text-stone-500">420.666</small>
+          <Line o="left" className="hidden md:block" />
+        </div>
+        <div className="hidden md:block relative col-span-1 col-start-[15] row-span-full row-start-2">
           <Line o="left" />
         </div>
-        <div className="col-start-[15] col-span-1 row-start-2 row-span-full relative">
-          <Line o="left" />
-        </div>
-        <div className="col-start-2 col-end-15 grid grid-cols-[repeat(13,1fr)] content-center border-t-1 border-t-gray-500 text-xs">
-          <p className="col-start-2 col-span-2 flex flex-row gap-11">
+        <div className="flex flex-col justify-center items-center mb-12 md:mb-0 col-start-2 col-end-15 md:grid grid-cols-[repeat(13,1fr)] content-center md:border-t-1 border-t-gray-500 text-xs">
+          <p className="col-span-2 col-start-2 flex flex-row gap-11">
             © 2030 Neurotap. All rights reserved.
           </p>
-          <p className="col-start-9 pl-16 col-span-5 justify-start gap-11">
+          <p className="col-span-5 col-start-9 justify-start gap-11 md:pl-16">
             By{" "}
             <a
               href="https://domenicovale.netlify.app"
-              className="font-bold cursor-pointer"
+              className="cursor-pointer font-bold"
               target="_blank"
               rel="noopener noreferrer"
             >

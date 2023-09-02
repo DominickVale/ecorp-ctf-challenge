@@ -5,18 +5,22 @@ import Image, { ImageProps } from "next/image";
 import { MDXRemote } from "next-mdx-remote";
 
 import { PostCategory, PostData, PostPreviewData } from "@/lib/posts";
+import { Line } from "@/components/decorations/line";
+import { Footer } from "@/components/Footer";
+import { LayoutLines } from "@/components/layout-lines";
+import { H1 } from "@/components/typography";
 import { BlogPostEntry } from "@/app/(front)/blog/posts/components/blog-post-entry";
 import Date from "@/app/(front)/blog/posts/components/date";
 
 // using any: because next/image has literally no compatible types with a normal image, even though the props are identical
 const ResponsiveImage = (props: any) => (
-    <Image
-        src={props.src}
-        alt={props.alt || "image"}
-        width={804}
-        height={0}
-        className="rounded-2xl my-12"
-    />
+  <Image
+    src={props.src}
+    alt={props.alt || "image"}
+    width={804}
+    height={0}
+    className="my-12 rounded-2xl"
+  />
 );
 
 type FurtherReadingsData = { [key: string]: PostPreviewData[] };
@@ -47,41 +51,46 @@ export default function PostLayout(props: Props) {
   const { title, date, author, category } = data;
 
   return (
-    <main className="grid grid-cols-golden grid-rows-golden mb-40">
-      <section className="mx-40">
-        <div className="absolute left-1 top-1">
-          <div className="text-gray-500 font-medium mb-5">
-            <span className="py-1 pl-40 pr-8 bg-elements-light rounded-br-xl rounded-tr-md text-background-light uppercase text-xs font-bold">
-              {author}
-            </span>
-            <div className="absolute top-[-2.1rem] left-2">
-              <div className="absolute left-[-0.2rem] top-[0.618rem] w-[0.35rem] h-[0.35rem] bg-elements-light rounded-full"></div>
-              <Date dateString={date} className="text-xs ml-4 text-background-dark" />
+    <>
+      <main className="relative mt-[-2.4rem] pt-8 md:mt-0 md:pt-0 grid-cols-golden grid-rows-golden bg-white lg:grid">
+        <LayoutLines className="z-10" />
+        <section className="px-4 lg:ml-12 xl:mx-12 2xl:mx-40 row-span-3 pb-40">
+          <div className="absolute left-1 top-16 md:top-8 lg:top-2">
+            <div className="mb-5 font-medium text-gray-500">
+              <span className="rounded-br-xl rounded-tr-md bg-elements-light py-1 pl-20 pr-8 text-xs font-bold uppercase text-background-light lg:pl-40">
+                {author}
+              </span>
+              <div className="absolute left-2 top-[-1.5rem] lg:top-[-2.1rem]">
+                <div className="absolute left-[-0.2rem]  top-[0.618rem] hidden h-[0.35rem] w-[0.35rem] rounded-full bg-elements-light"></div>
+                <Date dateString={date} className="ml-4 text-xs text-background-dark" />
+              </div>
+              <span className="ml-6 text-xs">{translateCategory(category)}</span>
             </div>
-            <span className="ml-6 text-xs">{translateCategory(category)}</span>
           </div>
-        </div>
-
-        <h1 className="text-lg font-heading mt-20 mb-6">{title}</h1>
-        <div className="bg-gray-500 opacity-60 z-[-1] h-[1px] mb-6 w-1/2 relative ml-6" />
-        {/* Post Content */}
-        <MDXRemote
-          components={{
-            img: ResponsiveImage,
-            h3: (p) => <h3 {...p} className="text-sm font-bold mt-6 mb-2" />,
-            p: (p) => <p {...p} className="mb-2 text-sm" />,
-          }}
-          {...mdxSource}
-        />
-      </section>
-      <section className="col-span-2 mx-20 mt-20 row-span-2 transition-opacity duration-200 opacity-50 hover:opacity-100">
-        <h3 className="mb-12 text-background-dark text-lg font-bold font-heading tracking-wide">
-          FURTHER \\
-          <br />
-          READINGS
-        </h3>
-        {renderFurtherReadings(furtherReadingsData, id)}
-      </section>
-    </main>
+          <H1 smaller className="mb-6 mt-24 inline-block lg:block">
+            {title}
+          </H1>
+          <div className="relative z-[-1] mb-6 ml-6 h-[1px] w-1/2 bg-gray-500 opacity-60" />
+          {/* Post Content */}
+          <MDXRemote
+            components={{
+              img: ResponsiveImage,
+              h3: (p) => <h3 {...p} className="mb-2 mt-6 text-sm font-bold" />,
+              p: (p) => <p {...p} className="mb-2 text-sm" />,
+            }}
+            {...mdxSource}
+          />
+        </section>
+        <section className="col-span-2 col-start-2 row-span-3 row-start-1 bg-background-light px-4 pt-28 lg:opacity-50 transition-opacity duration-200 hover:opacity-100 lg:px-20">
+          <h3 className="mb-12 font-heading text-base font-bold tracking-wide text-background-dark lg:text-lg">
+            FURTHER&nbsp;\\
+            <br />
+            READINGS
+          </h3>
+          {renderFurtherReadings(furtherReadingsData, id)}
+        </section>
+      </main>
+      <Footer />
+    </>
   );
 }

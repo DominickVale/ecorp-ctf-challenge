@@ -2,6 +2,7 @@ import { getCategorizedPostPreviews, PostPreviewData } from "@/lib/posts";
 import { Footer } from "@/components/Footer";
 import { LayoutLines } from "@/components/layout-lines";
 import { BlogPostEntry } from "@/app/(front)/blog/posts/components/blog-post-entry";
+import {H1} from "@/components/typography";
 
 function renderPostCategory(posts: PostPreviewData[], showPreview?: boolean) {
   return posts.map((props) => <BlogPostEntry {...props} showPreview={showPreview} />);
@@ -11,22 +12,22 @@ export default async function Blog() {
   const allPostsData = getCategorizedPostPreviews();
   return (
     <>
-      <main className="relative grid h-screen grid-cols-golden grid-rows-golden">
+      <main className="relative flex flex-wrap flex-col md:grid grid-cols-2 grid-rows-[1fr_0.75fr_0.3fr] min-h-screen lg:grid-cols-golden lg:grid-rows-golden">
         <LayoutLines />
-        <section className="pt-20">
-          <h1 className="mb-28 pl-20 font-heading text-2xl leading-[1.18] tracking-display text-black 3xl:text-[clamp(6.854rem,6vw,11.09rem)]">
-            LATEST & GREATEST
-          </h1>
+        <section className="lg:min-w-[20rem] col-span-2 lg:col-span-1 px-4 xl:px-0 pt-20">
+          <H1 className="mb-12 lg:ml-16 lg:text-[clamp(3rem,4.7vw,3.7rem)] xl:text-[clamp(4.1rem,6vw,6.7rem)]">
+            LATEST&nbsp;&<br/>GREATEST
+          </H1>
           {renderPostCategory(allPostsData.latest, true)}
         </section>
-        <section className="col-span-2 col-start-2 px-20 pt-28">
+        <section className="row-start-2 lg:row-start-1 lg:col-span-2 lg:col-start-2 px-4 lg:px-12 xl:px-20 pt-12 md:pt-28">
           <h3 className="tracking-wide mb-12 font-heading text-base font-bold text-background-dark">
             NEUROTAP &<br />
             PRODUCTIVITY
           </h3>
           {renderPostCategory(allPostsData.productivity)}
         </section>
-        <section className="col-span-2 col-start-2 row-start-2 mx-1 mt-3 bg-background-light px-20 pt-12">
+        <section className="row-start-2 mb-16 lg:mb-0 lg:col-span-2 lg:col-start-2 lg:row-start-2 mx-1 mt-3 bg-background-light px-4 lg:px-12 xl:px-20 pt-12 md:pt-28 lg:pt-0">
           <h3 className="tracking-wide mb-12 font-heading text-base font-bold text-background-dark">
             SOFTWARE \\
             <br />
@@ -35,7 +36,9 @@ export default async function Blog() {
           {renderPostCategory(allPostsData.changelog)}
         </section>
       </main>
-      <Footer />
+      <div className="row-start-3">
+        <Footer />
+      </div>
     </>
   );
 }

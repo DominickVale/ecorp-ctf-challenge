@@ -11,6 +11,8 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/c
 import { Textarea } from "@/components/inputs/textarea";
 import { LayoutLines } from "@/components/layout-lines";
 import { SupportType } from "@/app/api/contact/route";
+import {H2} from "@/components/typography";
+import {FooterLinks} from "@/components/Footer";
 
 export default function ContactUs() {
   const [isSending, setIsSending] = useState(false);
@@ -67,10 +69,10 @@ export default function ContactUs() {
   }
 
   return (
-    <main className="relative grid grid-cols-golden grid-rows-golden border-t-1 border-elements-light items-end h-[calc(100vh-114px)] justify-end place-content-end">
+    <main className="my-12 relative h-max lg:grid grid-cols-golden grid-rows-golden items-end min-h-screen justify-end place-content-end">
       <LayoutLines />
-      <div className="relative bg-background-dark h-full rounded-[5%] pt-40 px-32 pb-20 flex flex-col row-span-2 justify-between">
-        <section>
+      <div className="relative bg-background-dark md:min-h-[80vh] rounded-[3.168rem] md:rounded-[5%] pt-40 px-4 md:px-32 pb-20 flex flex-col row-span-2 justify-between">
+        <section className="mb-16">
           <Image
             className="absolute left-14 top-14"
             src={decorativeFooter}
@@ -81,31 +83,32 @@ export default function ContactUs() {
             src={decorativeFooter}
             alt="decorative element"
           />
-          <h2 className="text-background-light text-xl font-heading tracking-display leading-[1.18]">
-            CONTACT US
-          </h2>
+          <H2>
+            CONTACT&nbsp;US
+          </H2>
           <p className="text-zinc-400 mt-8 text-sm font-normal tracking-wide max-w-xl">
             We deeply care about our customers, so please don't hesitate to contact us for any
             questions, feedback, or in the rare event that you encounter any issues.
           </p>
 
-          <form className="max-w-4xl" onSubmit={onSubmit} onChange={onFormChange}>
+          <form className="md:max-w-4xl" onSubmit={onSubmit} onChange={onFormChange}>
             <div className="flex flex-col gap-6 mt-12">
-              <div className="flex gap-6">
+              <div className="flex gap-6 flex-wrap xl:flex-nowrap">
                 <Input id="name" name="name" type="text" placeholder="Your full name" />
-                <Input id="name" name="name" type="text" placeholder="Your full name" />
+                <Input id="name" name="name" type="email" placeholder="Your e-mail" />
               </div>
               <Textarea id="message" name="message" placeholder="Your message" />
-              <div className="flex gap-6">
+              <div className="flex flex-wrap-reverse gap-6 xl:flex-nowrap">
                 <Button
                   type="submit"
                   theme="neon"
                   size="fluid"
+                  className="h-14 rounded-lg"
                   disabled={isSending || isSent || !isDirty}
                 >
                   SEND
                 </Button>
-                <Select>
+                <Select name="support-type">
                   <SelectTrigger className="h-auto">
                     <SelectValue placeholder="Choose support type" />
                   </SelectTrigger>
@@ -131,41 +134,7 @@ export default function ContactUs() {
             )}
           </form>
         </section>
-        <section>
-          <div className="text-zinc-400 flex flex-row justify-between text-sm">
-            <ul>
-              <li>
-                <b className="text-background-light mr-2">Email:</b>info@neurotap.com
-              </li>
-              <li>
-                <b className="text-background-light mr-2">Phone:</b>+1 (123) 456-7890
-              </li>
-              <li>123 Futuristic Street, New York</li>
-            </ul>
-            <ul>
-              <li>
-                <a href="#">Terms & Conditions</a>
-              </li>
-              <li>
-                <a href="#">Privacy Polici</a>
-              </li>
-              <li>
-                <a href="#">Security</a>
-              </li>
-            </ul>
-            <ul>
-              <li>
-                <a href="#">Careers</a>
-              </li>
-              <li>
-                <a href="#">Refund policy</a>
-              </li>
-              <li>
-                <a href="#">Help Center</a>
-              </li>
-            </ul>
-          </div>
-        </section>
+        <FooterLinks />
       </div>
       <Image
         className="mix-blend-darken scale-[0.8] absolute right-[-8%] top-12"

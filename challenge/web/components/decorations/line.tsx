@@ -15,7 +15,7 @@ const lineVariants = cva("relative rounded-full", {
       true: "absolute bg-gray-500 opacity-60 z-[-1]",
     },
     dark: {
-      true: "bg-background-dark",
+      true: "bg-elements-light",
     },
     light: {
       true: "bg-background-light",
