@@ -2,15 +2,15 @@ import React from "react";
 import Image from "next/image";
 import { Client } from "@prisma/client";
 
-interface ClientPreviewProps {
+interface ClientPreviewProps extends React.HTMLAttributes<HTMLDivElement>{
   clientData: Client;
 }
 
 export function ClientPreview(props: ClientPreviewProps) {
-  const { clientData } = props;
+  const { clientData, ...rest } = props;
   const fullName = clientData.name + " " + clientData.surname;
   return (
-    <div className="relative grid grid-cols-[theme(spacing.14)_1fr_1fr_1fr]">
+    <div className="relative grid grid-cols-[theme(spacing.14)_1fr_1fr_1fr]" {...rest}>
       <div className="relative h-11 w-11">
         <Image
           className="rounded-xl grayscale filter transition-all duration-700 hover:grayscale-0"

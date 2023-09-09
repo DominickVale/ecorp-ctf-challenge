@@ -7,7 +7,7 @@ import { MDXRemote } from "next-mdx-remote";
 import { PostCategory, PostData, PostPreviewData } from "@/lib/posts";
 import { Line } from "@/components/decorations/line";
 import { Footer } from "@/components/Footer";
-import { LayoutLines } from "@/components/layout-lines";
+import { GoldenLayoutLines } from "@/components/golden-layout-lines";
 import { H1 } from "@/components/typography";
 import { BlogPostEntry } from "@/app/(front)/blog/posts/components/blog-post-entry";
 import Date from "@/app/(front)/blog/posts/components/date";
@@ -53,7 +53,7 @@ export default function PostLayout(props: Props) {
   return (
     <>
       <main className="relative mt-[-2.4rem] pt-8 md:mt-0 md:pt-0 grid-cols-golden grid-rows-golden bg-white lg:grid">
-        <LayoutLines className="z-10" />
+        <GoldenLayoutLines className="z-10" />
         <section className="px-4 lg:ml-12 xl:mx-12 2xl:mx-40 row-span-3 pb-40">
           <div className="absolute left-1 top-16 md:top-8 lg:top-2">
             <div className="mb-5 font-medium text-gray-500">
@@ -75,8 +75,8 @@ export default function PostLayout(props: Props) {
           <MDXRemote
             components={{
               img: ResponsiveImage,
-              h3: (p) => <h3 {...p} className="mb-2 mt-6 text-sm font-bold" />,
-              p: (p) => <p {...p} className="mb-2 text-sm" />,
+              h3: (p) => <h3 {...p} className="mb-2 mt-6 text-sm 2xl:text-lg 2xl:mt-12 font-bold" />,
+              p: (p) => <p {...p} className="mb-2 text-sm 2xl:text-base" />,
             }}
             {...mdxSource}
           />

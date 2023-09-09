@@ -24,7 +24,7 @@ module.exports = {
     letterSpacing: {
       ...defaultLetterSpacing,
       action: "0.18em",
-      display: "0.141em",
+      display: "0.195em",
     },
     screens: {
       sm: "640px",
@@ -57,6 +57,7 @@ module.exports = {
         },
         foreground: "hsl(var(--foreground))",
         elements: {
+          lightest: "#D2D2D2",
           light: "#575757",
         },
       },

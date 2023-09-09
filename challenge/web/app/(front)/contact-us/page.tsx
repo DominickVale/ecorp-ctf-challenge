@@ -9,7 +9,7 @@ import Button from "@/components/buttons/button";
 import { Input } from "@/components/inputs/input";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/inputs/selectbox";
 import { Textarea } from "@/components/inputs/textarea";
-import { LayoutLines } from "@/components/layout-lines";
+import { GoldenLayoutLines } from "@/components/golden-layout-lines";
 import { SupportType } from "@/app/api/contact/route";
 import {H2} from "@/components/typography";
 import {FooterLinks} from "@/components/Footer";
@@ -70,7 +70,7 @@ export default function ContactUs() {
 
   return (
     <main className="my-12 relative h-max lg:grid grid-cols-golden grid-rows-golden items-end min-h-screen justify-end place-content-end">
-      <LayoutLines />
+      <GoldenLayoutLines />
       <div className="relative bg-background-dark md:min-h-[80vh] rounded-[3.168rem] md:rounded-[5%] pt-40 px-4 md:px-32 pb-20 flex flex-col row-span-2 justify-between">
         <section className="mb-16">
           <Image
@@ -137,7 +137,7 @@ export default function ContactUs() {
         <FooterLinks />
       </div>
       <Image
-        className="mix-blend-darken scale-[0.8] absolute right-[-8%] top-12"
+        className="hidden lg:block absolute mix-blend-darken scale-[0.8] right-[-8%] top-12 3xl:scale-100 3xl:right-12 3xl:top-24"
         src={brainProto}
         alt="brain-proto"
       />

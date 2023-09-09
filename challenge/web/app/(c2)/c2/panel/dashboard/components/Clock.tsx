@@ -1,7 +1,8 @@
-"use client"
-import React, { useEffect, useState } from "react";
+"use client";
 
-const Clock: React.FC = () => {
+import { useEffect, useState } from "react";
+
+function Clock() {
   const [time, setTime] = useState(new Date());
 
   useEffect(() => {
@@ -24,6 +25,6 @@ const Clock: React.FC = () => {
   };
 
   return <span>{formatTime(time)}</span>;
-};
+}
 
 export default Clock;

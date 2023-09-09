@@ -39,7 +39,7 @@ export function BlogPostEntry(props: BlogPostEntryProps) {
           {showPreview && <p className="xl:mx-20 max-w-[100%] xl:max-w-3xl">{preview}</p>}
         </div>
       ) : (
-        <div className="p-2 flex flex-col max-w-xl hover:opacity-90 cursor-pointer xl:grid grid-cols-[0.168fr_1fr]">
+        <div className="p-2 flex flex-col max-w-xl hover:opacity-90 cursor-pointer 2xl:grid grid-cols-[0.168fr_1fr]">
           <span className="flex gap-4 xl:gap-0 mb-2 xl:mb-0 xl:flex-col justify-center min-w-max w-32">
             <small className="font-xs text-neutral-500">
               <Date dateString={date} />

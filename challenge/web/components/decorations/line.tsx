@@ -3,19 +3,19 @@ import { cva, VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 
-const lineVariants = cva("relative rounded-full", {
+const lineVariants = cva("relative rounded-full will-change-transform", {
   variants: {
     o: {
-      top: "h-[1px] w-full",
-      bottom: "h-[1px] w-full",
-      left: "w-[1px] h-full",
-      right: "w-[1px] h-full",
+      top: "h-[1px] w-full origin-left",
+      bottom: "h-[1px] w-full origin-left",
+      left: "w-[1px] h-full origin-top",
+      right: "w-[1px] h-full origin-top",
     },
     isBg: {
-      true: "absolute bg-gray-500 opacity-60 z-[-1]",
+      true: "absolute bg-gray-500 z-[-1]",
     },
     dark: {
-      true: "bg-elements-light",
+      true: "bg-elements-lightest",
     },
     light: {
       true: "bg-background-light",
@@ -54,8 +54,8 @@ interface LinesProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof lineVariants> {}
 
-export function Line(props: LinesProps) {
-  const { o, isBg, dark, light } = props;
+export const Line = React.forwardRef<HTMLDivElement, LinesProps>((props, ref) => {
+  const { o, isBg, dark, light, className, ...rest } = props;
 
-  return <div className={cn(lineVariants({ o, isBg, dark, light }), props.className)} />;
-}
+  return <div className={cn(lineVariants({ o, isBg, dark, light }),className)} {...rest} ref={ref}/>;
+})

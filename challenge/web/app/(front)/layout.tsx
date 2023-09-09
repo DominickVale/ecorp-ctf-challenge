@@ -5,8 +5,9 @@ import localFont from "next/font/local";
 
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
-import { Line } from "@/components/decorations/line";
 import { Navbar } from "@/components/Navbar";
+import { OuterLayoutLines } from "@/components/outer-layout-lines";
+import SmoothScroll from "@/components/SmoothScroll";
 
 const fontSans = Chakra_Petch({
   subsets: ["latin"],
@@ -58,62 +59,51 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head />
-      <body
-        className={cn(
-          "relative md:px-0 mx-auto md:grid min-h-screen max-w-[160rem] grid-cols-layout grid-rows-layout bg-background-light font-sans antialiased md:outline outline-1 outline-gray-400",
-          fontSans.variable,
-          fontHeading.variable
-        )}
-      >
-        <section className="hidden md:block absolute left-0 top-0 h-full w-20">
-          <div className="sticky top-0 h-[calc(100vh-57px)] overflow-hidden">
-            <span className="text-[1.2vh] taller:text-xs taller:2xl:text-smaller flex h-full flex-col place-items-center justify-around py-8 pt-16">
-              <p className="rotate-marquee h-max tracking-display">
-                ⋅&nbsp;&nbsp;14/02/2030 -30% DISCOUNT FOR KIDS UNDER 16
-              </p>
-              <p className="rotate-marquee h-max tracking-display">
-                ⋅&nbsp;&nbsp;CHECK OUT THE NEW NEUROTAP T-SHIRTS ON OUR SHOP
-              </p>
-            </span>
+        <body
+          className={cn(
+            "relative mx-auto min-h-screen max-w-[160rem] grid-cols-layout grid-rows-layout bg-background-light font-sans antialiased md:grid md:px-0",
+            fontSans.variable,
+            fontHeading.variable
+          )}
+        >
+        <SmoothScroll />
+          <section className="absolute left-0 top-0 hidden h-full w-20 md:block">
+            <div className="sticky top-0 h-[calc(100vh-57px)] overflow-hidden">
+              <span className="flex h-full flex-col place-items-center justify-around py-8 pt-16 text-[1.2vh] taller:text-xs taller:2xl:text-smaller">
+                <p className="rotate-marquee h-max tracking-display">
+                  ⋅&nbsp;&nbsp;14/02/2030 -30% DISCOUNT FOR KIDS UNDER 16
+                </p>
+                <p className="rotate-marquee h-max tracking-display">
+                  ⋅&nbsp;&nbsp;CHECK OUT THE NEW NEUROTAP T-SHIRTS ON OUR SHOP
+                </p>
+              </span>
+            </div>
+          </section>
+          <Navbar />
+          <OuterLayoutLines />
+          <div className="relative col-start-2 col-end-[15]">{children}</div>
+
+          <div className="relative col-span-1 col-start-[15] row-start-1 row-end-1 hidden place-items-center justify-center md:flex">
+            <small className="text-xs font-medium text-stone-500">420.666</small>
           </div>
-        </section>
-        <Navbar />
-        <div className="relative col-start-1 col-end-1 row-start-1 row-end-1 hidden md:block">
-          <Line o="bottom" />
-          <Line o="right" />
-        </div>
-        <div className="relative col-span-1  col-start-1 row-span-full row-start-2 hidden md:block">
-          <Line o="right" />
-        </div>
-
-        <div className="relative col-start-2 col-end-[15]">{children}</div>
-
-        <div className="hidden md:flex relative col-span-1 col-start-[15] row-start-1 row-end-1 place-items-center justify-center">
-          <Line o="bottom" className="hidden md:block" />
-          <small className="text-xs font-medium text-stone-500">420.666</small>
-          <Line o="left" className="hidden md:block" />
-        </div>
-        <div className="hidden md:block relative col-span-1 col-start-[15] row-span-full row-start-2">
-          <Line o="left" />
-        </div>
-        <div className="flex flex-col justify-center items-center mb-12 md:mb-0 col-start-2 col-end-15 md:grid grid-cols-[repeat(13,1fr)] content-center md:border-t-1 border-t-gray-500 text-xs">
-          <p className="col-span-2 col-start-2 flex flex-row gap-11">
-            © 2030 Neurotap. All rights reserved.
-          </p>
-          <p className="col-span-5 col-start-9 justify-start gap-11 md:pl-16">
-            By{" "}
-            <a
-              href="https://domenicovale.netlify.app"
-              className="cursor-pointer font-bold"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Dominick Vale
-            </a>{" "}
-            — have fun :)
-          </p>
-        </div>
-      </body>
+          <div className="col-start-2 col-end-15 mb-12 flex grid-cols-[repeat(13,1fr)] flex-col content-center items-center justify-center border-t-gray-500 text-xs md:mb-0 md:grid md:border-t-1">
+            <p className="col-span-2 col-start-2 flex min-w-max flex-row gap-11">
+              © 2030 Neurotap. All rights reserved.
+            </p>
+            <p className="col-span-5 col-start-9 justify-start gap-11 md:pl-16">
+              By{" "}
+              <a
+                href="https://domenicovale.netlify.app"
+                className="cursor-pointer font-bold"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Dominick Vale
+              </a>{" "}
+              — have fun :)
+            </p>
+          </div>
+        </body>
     </html>
   );
 }

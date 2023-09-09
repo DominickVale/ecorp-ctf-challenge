@@ -1,6 +1,6 @@
 "use client";
 
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import Head from "next/head";
 import Image from "next/image";
 import commitmentDeco from "@/assets/svg/commitment-decoration.svg";
@@ -17,7 +17,6 @@ import {Line} from "@/components/decorations/line";
 import {Input} from "@/components/inputs/input";
 import {H1} from "@/components/typography";
 import {ClientPreview} from "@/app/(c2)/c2/panel/dashboard/components/ClientPreview";
-import Clock from "@/app/(c2)/c2/panel/dashboard/components/Clock";
 import {MassCtrl} from "@/app/(c2)/c2/panel/dashboard/components/MassCtrl";
 import {NewsPanel} from "@/app/(c2)/c2/panel/dashboard/components/NewsPanel";
 import {SymmetricPanel} from "@/app/(c2)/c2/panel/dashboard/components/SymmetricPanel";
@@ -25,7 +24,9 @@ import {VIPSearch} from "@/app/(c2)/c2/panel/dashboard/components/VIPSearch";
 import {getClientsDoc, GetStaffUserDoc, LoginDoc} from "@/app/(c2)/c2/panel/gql-docs";
 
 import Modal from "./components/Modal";
+import dynamic from "next/dynamic";
 
+const Clock = dynamic(() => import('./components/Clock'), {ssr: false})
 interface DashboardProps {
 }
 
@@ -48,6 +49,7 @@ const NavElement = ({children, className, ...props}: NavElementProps) => (
 
 const DiagonalStripesDecoration = () => <div className="stripes-decor h-8 w-24"/>;
 
+
 function Dashboard(props: DashboardProps) {
     const {
         data: staffUserData,
@@ -69,7 +71,6 @@ function Dashboard(props: DashboardProps) {
     const [filters, setFilters] = useState(["healthy", "anarchist", "high iq", "bad mood"]);
     const [orderBy, setOrderBy] = useState("wealth");
 
-    console.log("adminMode", adminMode, "level: ", staffUserData?.getStaffUser?.level);
     useEffect(() => {
         setAdminMode(staffUserData?.getStaffUser?.level === 0);
     }, [staffUserData?.getStaffUser?.level]);
@@ -205,6 +206,7 @@ function Dashboard(props: DashboardProps) {
                             <div className="flex max-w-xs flex-wrap gap-3">
                                 {filters.map((f) => (
                                     <button
+                                        key={f}
                                         onClick={() => alert("out of scope, sorry, didn't have time to do this :)")}
                                         className="rounded-md bg-white px-4 py-1 text-xs uppercase text-background-dark hover:opacity-70"
                                     >
@@ -240,7 +242,7 @@ function Dashboard(props: DashboardProps) {
                         <div className="mr-[-3rem] mt-8 overflow-hidden">
                             <div className="relative flex max-h-[28vh] flex-col gap-3 overflow-y-scroll">
                                 {clientsData.getClientsList.map((client) => (
-                                    <ClientPreview clientData={client}/>
+                                    <ClientPreview clientData={client} key={client.id}/>
                                 ))}
                             </div>
                         </div>
