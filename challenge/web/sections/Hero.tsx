@@ -10,9 +10,9 @@ interface HeroProps {}
 
 export function Hero(props: HeroProps) {
   return (
-    <section className="relative min-h-screen grid-cols-golden grid-rows-golden px-6 md:px-0 lg:grid">
+    <section className="relative min-h-screen grid-cols-golden grid-rows-golden px-6 md:px-0 lg:grid" id="hero">
       <GoldenLayoutLines />
-      <div className="mx-auto mt-14 sm:max-w-[80vw] md:mx-14 md:mt-28 xl:ml-32">
+      <div className="mx-auto mt-14 sm:max-w-[80vw] md:mx-14 md:mt-28">
         <H1>
           TRANSCEND
           <br />

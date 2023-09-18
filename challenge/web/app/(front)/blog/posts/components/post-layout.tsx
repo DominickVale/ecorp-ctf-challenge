@@ -76,7 +76,7 @@ export default function PostLayout(props: Props) {
             components={{
               img: ResponsiveImage,
               h3: (p) => <h3 {...p} className="mb-2 mt-6 text-sm 2xl:text-lg 2xl:mt-12 font-bold" />,
-              p: (p) => <p {...p} className="mb-2 text-sm 2xl:text-base" />,
+              p: (p) => <p {...p} className="mb-2 text-sm 2xl:text-md 3xl:text-base text-stone-700" />,
             }}
             {...mdxSource}
           />

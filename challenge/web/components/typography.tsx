@@ -11,7 +11,7 @@ export function H1({ className, small, smaller, ...props }: H1Props) {
   return (
     <h1
       className={cn(
-        "font-heading text-[clamp(1.5rem,8.054vw,3.4rem)] lg:text-xl xl:text-[clamp(3.4rem,7vw,9.054rem)] 4xl:text-[clamp(6.854rem,4vw,11.09rem)] leading-[1.18] tracking-display text-black",
+        "font-heading text-[clamp(1.5rem,8.054vw,3.4rem)] lg:text-xl xl:text-[clamp(3.4rem,5.8vw,9.054rem)] 4xl:text-[clamp(6.854rem,4vw,11.09rem)] leading-[1.18] tracking-display text-black",
         small && "lg:text-[clamp(2.1rem,2vw,2.7rem)] xl:text-[clamp(3.4rem,4vw,3.7rem)] 3xl:text-[clamp(3rem,2.8vw,3.7rem)] 4xl:text-[clamp(4.4rem,4vw,7.09rem)]",
           smaller && "lg:text-[clamp(1.5rem,1.5vw,2rem)] xl:text-[clamp(1.8rem,5vw,3rem)] 3xl:text-[clamp(3rem,2.8vw,3.7rem)] 4xl:text-[clamp(4.4rem,4vw,7.09rem)]",
         className

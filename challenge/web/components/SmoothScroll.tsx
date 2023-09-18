@@ -3,6 +3,8 @@
 import { useEffect, useLayoutEffect, useRef } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import Lenis from "@studio-freight/lenis";
+import gsap from "gsap"
+import ScrollTrigger from "gsap/ScrollTrigger";
 // @ts-ignore
 import Tempus from "@studio-freight/tempus";
 
@@ -16,7 +18,17 @@ export default function SmoothScroll() {
   }, [pathname, searchParams, lenis]);
 
   useLayoutEffect(() => {
-    lenis.current = new Lenis();
+    lenis.current = new Lenis({
+      duration: 2.5,
+      smoothWheel: true,
+    });
+    lenis.current.on('scroll', ScrollTrigger.update)
+
+    gsap.ticker.add((time) => {
+      lenis.current?.raf(time * 1000)
+    })
+
+    gsap.ticker.lagSmoothing(0)
 
     const resize = setInterval(() => {
       lenis.current!.resize();

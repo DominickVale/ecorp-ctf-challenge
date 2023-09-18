@@ -26,7 +26,7 @@ export const FooterLinks = () => (
             <a href="#">Terms & Conditions</a>
           </li>
           <li>
-            <a href="#">Privacy Polici</a>
+            <a href="#">Privacy Policy</a>
           </li>
           <li>
             <a href="#">Security</a>
