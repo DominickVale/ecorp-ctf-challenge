@@ -59,7 +59,7 @@ export function ShowcaseItem(props: ShowcaseItemProps) {
             </div>
           </h3>
         </span>
-        <p className="p-8">{description}</p>
+        <p className="p-8 bg-background-light rounded-lg">{description}</p>
       </div>
     </div>
   );

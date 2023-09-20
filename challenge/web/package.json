@@ -59,7 +59,8 @@
     "tailwindcss": "^3.3.3",
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "zustand": "^4.4.1"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.1",

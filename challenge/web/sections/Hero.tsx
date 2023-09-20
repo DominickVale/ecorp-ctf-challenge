@@ -12,7 +12,7 @@ export function Hero(props: HeroProps) {
   return (
     <section className="relative min-h-screen grid-cols-golden grid-rows-golden px-6 md:px-0 lg:grid" id="hero">
       <GoldenLayoutLines />
-      <div className="mx-auto mt-14 sm:max-w-[80vw] md:mx-14 md:mt-28">
+      <div className="mx-auto mt-14 sm:max-w-[80vw] md:mx-14 md:ml-32 md:mt-[8vh]">
         <H1>
           TRANSCEND
           <br />
@@ -20,7 +20,7 @@ export function Hero(props: HeroProps) {
           <br />
           EVOLVE
         </H1>
-        <p className="mt-12 max-w-2xl text-sm font-light leading-tight sm:text-base md:mt-20 md:leading-9">
+        <p className="mt-12 max-w-2xl text-sm font-light leading-tight sm:text-md 2xl:text-base md:mt-[6vh] 2xl:leading-9">
           E-Corp pioneers the convergence of mind and machine, unleashing the limitless potential
           within each individual. With Neurotap, we revolutionize human experiences, and shape a
           future beyond imagination.

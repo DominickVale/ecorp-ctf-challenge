@@ -1,4 +1,5 @@
 import { usePathname } from "next/navigation";
+import { createContext, useContext } from "react";
 
 const pages = ["home", "blog", "contact-us", "blog-post"] as const;
 export type Page = (typeof pages)[number];
@@ -14,4 +15,13 @@ export function usePageFromPathname() {
       return page as Page;
     }
   }
+}
+
+export const GlobalContext = createContext<{ isLoaded: boolean }>({ isLoaded: false });
+GlobalContext.displayName = "GlobalContext";
+
+export function useIsLoaded() {
+  const { isLoaded } = useContext(GlobalContext);
+
+  return isLoaded;
 }

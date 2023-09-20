@@ -37,7 +37,6 @@ export function Parallax({
         trigger: trigger.current,
         scrub: true,
         start: 'top bottom',
-        markers: true,
         end: bottomOffset ? `+=${bottomOffset}` : 'bottom top',
         onUpdate: (e) => {
           if (position === 'top') {

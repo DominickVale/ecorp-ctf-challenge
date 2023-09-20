@@ -61,7 +61,8 @@ export function Showcase(props: ShowcaseProps) {
           console.error("no el");
           return;
         }
-        console.log("breakpoint: ", breakpoint);
+        console.log("break", breakpoint);
+        
         
         if (breakpoint === "Laptop") {
           if (i === activeItem - 1) {
@@ -92,7 +93,6 @@ export function Showcase(props: ShowcaseProps) {
       start: "top top",
       end: "+=5000 top",
       scrub: true,
-      markers: true,
       pin: true,
       onUpdate: (self) => {
         const progress = Number(self.progress.toFixed(3));

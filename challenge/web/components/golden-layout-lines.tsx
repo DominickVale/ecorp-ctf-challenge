@@ -6,12 +6,15 @@ import gsap from 'gsap'
 
 import { Line } from "@/components/decorations/line";
 import { cn } from "@/lib/utils";
+import { useIsUiLoaded } from "./preloader/preloader.hooks";
 
 interface LayoutLinesProps extends React.HTMLAttributes<HTMLDivElement> { }
 
 export function GoldenLayoutLines(props: LayoutLinesProps) {
   const { className, ...rest } = props
   const page = usePageFromPathname();
+
+  const isUiLoaded = useIsUiLoaded();
 
   const line1 = useRef<HTMLDivElement>(null);
   const line2 = useRef<HTMLDivElement>(null);
@@ -21,6 +24,7 @@ export function GoldenLayoutLines(props: LayoutLinesProps) {
   const isBlogPost = page === "blog-post"
 
   useLayoutEffect(() => {
+    if (!isUiLoaded) return
     const ctx = gsap.context((self) => {
       const tl = gsap.timeline({})
       tl.fromTo(
@@ -50,7 +54,7 @@ export function GoldenLayoutLines(props: LayoutLinesProps) {
       )
     });
     return () => ctx.revert(); // <- Cleanup!
-  }, [])
+  }, [isUiLoaded])
 
   return (
     <div className={cn("hidden lg:block layout-lines-1 pointer-events-none absolute h-full w-full overflow-hidden", className)} {...rest}>

@@ -21,12 +21,9 @@ const NavLink = (props: React.ComponentProps<typeof Link>) => (
 
 export function Navbar(props: NavbarProps) {
   const page = usePageFromPathname();
-  const [showMenu, setShowMenu] = useState(false);
   const comp = useRef<HTMLDivElement>(null);
   const underline = useRef<HTMLDivElement>(null);
   const leftNav = useRef(null);
-
-  useLayoutEffect(() => {}, [page]);
 
   useLayoutEffect(() => {
       // position the underline under the active link element
@@ -38,8 +35,6 @@ export function Navbar(props: NavbarProps) {
       }
 
       if (activeLink) {
-      
-        // animate with gsap
         gsap.to(underline.current, {
           duration: 0.5,
           ease: "power2.out",
@@ -47,23 +42,18 @@ export function Navbar(props: NavbarProps) {
           width: activeLink.clientWidth,
         });
       }
-  }, [page]);
-
-  function closeMenu() {
-    setShowMenu(false);
-  }
+  }, [page])
 
   return (
-    <nav
-      ref={comp}
+    <nav ref={comp}
       className={cn(
-        "relative z-20 col-start-2 col-end-15 mx-4 grid-cols-[8rem_repeat(13,1fr)] content-end text-xs md:mx-0 md:mt-0 md:grid md:pb-2",
-        page === "home" ? "mt-[10vh]" : "mt-[5vh]"
+        "relative z-20 col-start-2 col-end-15 mx-4 grid-cols-[8rem_repeat(13,1fr)] content-end text-xs md:mx-0 md:mt-0 md:grid md:pb-1",
+        page === "home" ? "pt-[6.2vh]" : "pt-[5vh]"
       )}
     >
       <div
         ref={underline}
-        className="absolute bottom-1 left-0 h-1 w-10 rounded-full bg-background-dark"
+        className="absolute bottom-[1px] left-0 h-[2px] w-10 rounded-full bg-background-dark"
       />
       <MobileMenu />
       <div className="absolute left-0 top-0 z-[-1] flex h-full w-full items-center justify-center opacity-20 md:hidden">
@@ -79,12 +69,12 @@ export function Navbar(props: NavbarProps) {
         <NavLink href="/">HOME</NavLink>
         <NavLink href="/blog">BLOG</NavLink>
       </ul>
-      <div className="top-[1.25rem] z-20 mx-auto flex items-center justify-center md:absolute md:right-[calc(38.2%-2.4rem)]">
+      <div className="top-[1.2rem] z-20 mx-auto flex items-center justify-center md:absolute md:right-[calc(38.2%-2.35rem)]">
         <Link href="/">
           <Image src={ecorpLogo} alt="E-corp logo" />
         </Link>
       </div>
-      <Line o="right" className="right-[38.2%] hidden md:inline-block" />
+      <Line o="right" className="right-[38.15%] hidden md:inline-block" />
       <ul className="desktop col-span-5 col-start-9 hidden flex-row justify-start gap-[2vw] pl-8 font-medium md:flex lg:col-start-10 lg:gap-11 lg:pl-4">
         <NavLink href="/">ABOUT</NavLink>
         <NavLink href="/#">SHOP</NavLink>

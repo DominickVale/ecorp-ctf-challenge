@@ -46,7 +46,6 @@ const MobileMenu = (props: MobileMenuProps) => {
           ease: "power4.in",
         });
     })
-
     ctx.add("hide", () => {
       gsap.timeline()
         .to(ctx.selector?.('[data-animate-opacity="true"]'), {
@@ -80,7 +79,7 @@ const MobileMenu = (props: MobileMenuProps) => {
       <div
         ref={comp}
         className={cn(
-          "fixed left-0 top-0 z-20 flex h-[84vh] w-full flex-col justify-between rounded-b-3xl bg-background-dark font-medium text-background-light",
+          "fixed left-0 top-0 z-10 flex h-[84vh] w-full flex-col justify-between rounded-b-3xl bg-background-dark font-medium text-background-light",
         )}
       >
         <div className="" data-animate-opacity="true">
