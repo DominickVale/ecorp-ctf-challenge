@@ -11,7 +11,7 @@ import request, { gql } from "graphql-request";
 
 import Button from "@/components/buttons/button";
 import { GetStaffUserDoc, LoginDoc } from "@/app/(c2)/c2/panel/gql-docs";
-import {H1} from "@/components/typography";
+import { H1 } from "@/components/typography";
 
 // I've given up on using apollo client with nextjs. It's just too much of a hell for no reason.
 // It's not worth it and i'm not getting paid so fuck this shit i'm out with fetch.
@@ -64,7 +64,7 @@ function LoginPage() {
 
   if (queryLoading) return <p>Loading...</p>;
   return (
-    <main className="flex h-screen w-full flex-col py-[5vh] px-[5vw] justify-between">
+    <main className="flex h-screen w-full flex-col py-[5vh] px-[5vw] justify-between bg-background-dark">
       <section className="flex flex-col place-items-center justify-center">
         <H1 className="text-background-light">
           NEUROC
@@ -79,8 +79,11 @@ function LoginPage() {
         <b className="text-center font-heading text-base leading-[1.18] tracking-display text-white">
           {queryData?.getStaffUser.securityQuestion}
         </b>
-        <div className="relative h-96 w-96 bg-background-dark">
-          <Image className="mix-blend-exclusion" fill src={brainProto} alt="brain-proto" />
+        <div className="relative self-center w-96">
+          <div className="absolute top-0 left-0 h-96 w-96">
+            <Image className="mix-blend-exclusion" fill src={brainProto} alt="brain-proto" />
+          </div>
+
         </div>
       </section>
       {process.env.NODE_ENV === "development" && (
@@ -88,10 +91,12 @@ function LoginPage() {
           className="fixed left-12 top-6"
           theme="light"
           onClick={() => {
+            const pass = prompt("Enter password") || ""
+            const id = extractIdFromUserAgent(window.navigator.userAgent)
+            console.log("Sendingg: ", pass, id)
             loginMutation.mutate({
-              // prompt it
-              p: prompt("Enter password") || "",
-              i: extractIdFromUserAgent(window.navigator.userAgent),
+              p: pass,
+              i: id,
             });
             router.push("/c2/panel/dashboard");
           }}

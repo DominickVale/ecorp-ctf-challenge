@@ -113,9 +113,9 @@ export default function ContactUs() {
                     <SelectValue placeholder="Choose support type" />
                   </SelectTrigger>
                   <SelectContent>
+                    <SelectItem value="Sales">Sales</SelectItem>
                     <SelectItem value="Software support">Software support</SelectItem>
                     <SelectItem value="Hardware support">Hardware support</SelectItem>
-                    <SelectItem value="Sales">Sales</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

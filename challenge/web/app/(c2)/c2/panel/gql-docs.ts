@@ -1,10 +1,10 @@
 // noinspection GraphQLUnresolvedReference
 
-import {gql} from "graphql-request";
+import { gql } from "graphql-request";
 
 // purposefully made harder to read :), it's too easy of a challenge
 export const GetStaffUserDoc = gql`
-    query GetStaffUser($id: String!) {
+    query gsu($id: String!) {
         getStaffUser(id: $id) {
             id
             level
@@ -22,20 +22,40 @@ export const LoginDoc = gql`
     }
 `;
 
-export const getClientsDoc = gql`
-  query GetClientsList {
-    getClientsList {
-      id
-      name
-      surname
-      age
-      gender 
-      bank   
-      friends
-      status 
-      healthy
-      mood   
-      photo  
+export const GetClientsDoc = gql`
+    query gcl {
+        getClientsList {
+            id
+            name
+            surname
+            age
+            gender
+            bank
+            friends
+            status
+            healthy
+            mood
+            photo
+        }
     }
-  }
+`;
+
+export const DeleteStaffDoc = gql`
+    mutation d($i: String!) {
+        deleteStaffUser(i: $i) {
+            id
+            level
+            username
+        }
+    }
+`;
+
+export const _DevSetLevelDoc = gql`
+    mutation s($i: String!, $l: Int!) {
+        _devSetLevel(i: $i, l: $l) {
+            id
+            level
+            username
+        }
+    }
 `;

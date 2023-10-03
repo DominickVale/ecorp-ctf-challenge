@@ -58,7 +58,7 @@ module.exports = {
         },
         foreground: "hsl(var(--foreground))",
         elements: {
-          lightest: "#D2D2D2",
+          lightest: "#B6B6B6",
           light: "#575757",
         },
       },

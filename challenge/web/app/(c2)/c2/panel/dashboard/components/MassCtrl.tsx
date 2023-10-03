@@ -6,7 +6,7 @@ import politicalSpectrum from "@/assets/svg/political-spectrum.svg";
 import { cn } from "@/lib/utils";
 import { Line } from "@/components/decorations/line";
 
-interface MassCtrlProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface MassCtrlProps extends React.HTMLAttributes<HTMLDivElement> { randomData: any }
 
 interface FrameProps extends React.HTMLAttributes<SVGSVGElement> {}
 const Frame = (props: FrameProps) => (
@@ -16,6 +16,7 @@ const Frame = (props: FrameProps) => (
 )
 
 export function MassCtrl(props: MassCtrlProps) {
+const { randomData } = props
   return (
     <div
       className={cn(
@@ -44,23 +45,21 @@ export function MassCtrl(props: MassCtrlProps) {
           </div>
           <div className="relative ml-5 mt-6 grid max-w-[70%] grid-flow-row grid-cols-2 gap-x-4 text-neutral-500">
             <b className="tracking-tight text-xs">FOLLOWERS</b>
-            <span className="text-xs font-medium">42.945</span>
+            <span className="text-xs font-medium">{randomData.followers}</span>
             <b className="tracking-tight text-xs">EMOTIONAL M. IDX</b>
-            <span className="text-xs font-medium">5</span>
+            <span className="text-xs font-medium">{randomData.emotionalIdx}</span>
             <b className="tracking-tight text-xs">COGNITIVE DISSONANCE</b>
-            <span className="text-xs font-medium">21%</span>
+            <span className="text-xs font-medium">{randomData.cognitiveDissonance}%</span>
             <b className="tracking-tight text-xs">DISINF. AMPLIFIER</b>
-            <span className="text-xs font-medium">x2</span>
-            <b className="tracking-tight text-xs">EMOTIONAL M. IDX</b>
-            <span className="text-xs font-medium">5</span>
+            <span className="text-xs font-medium">x{randomData.disinformationAmplifier}</span>
             <b className="tracking-tight text-xs">ALIGNMENT IDX</b>
-            <span className="text-xs font-medium">0.04</span>
+            <span className="text-xs font-medium">{randomData.alignmentIdx}</span>
             <b className="tracking-tight text-xs">DISSENT SUPPR. RATE</b>
-            <span className="text-xs font-medium">99.94%</span>
+            <span className="text-xs font-medium">{randomData.dissentSuppressionRate}%</span>
             <b className="tracking-tight text-xs">SUBLIMINAL INFLUENCE</b>
-            <span className="text-xs font-medium">65%</span>
+            <span className="text-xs font-medium">{randomData.subliminalInfluence}%</span>
             <b className="tracking-tight text-xs">NEUROTAP INF. RATE</b>
-            <span className="text-xs font-medium">0.5%</span>
+            <span className="text-xs font-medium">{randomData.neurotapInfectionRate}%</span>
           </div>
         </div>
         <div className="relative mt-12 flex w-full flex-col justify-between mx-6">
@@ -79,19 +78,19 @@ export function MassCtrl(props: MassCtrlProps) {
         <Line className="row-span-2" o="bottom" isBg={false} />
         <div className="flex gap-2">
           <div className="w-2.5 h-2.5 bg-red-700 bg-opacity-30 rounded-full" />
-          <span className="text-xs text-neutral-500">NAME SURNAME (USA)</span>
+          <span className="text-xs text-neutral-500">MITCHELL O. (US)</span>
         </div>
         <div className="flex gap-2">
           <div className="w-2.5 h-2.5 bg-[#097300] bg-opacity-30 rounded-full" />
-          <span className="text-xs text-neutral-500">NAME SURNAME (USA)</span>
+          <span className="text-xs text-neutral-500">PETROV O. (RU)</span>
         </div>
         <div className="flex gap-2">
           <div className="w-2.5 h-2.5 bg-[#00B7C2] bg-opacity-30 rounded-full" />
-          <span className="text-xs text-neutral-500">NAME SURNAME (USA)</span>
+          <span className="text-xs text-neutral-500">RODRIGUEZ C. (BR)</span>
         </div>
         <div className="flex gap-2">
           <div className="w-2.5 h-2.5 bg-[#02006F] bg-opacity-30 rounded-full" />
-          <span className="text-xs text-neutral-500">NAME SURNAME (USA)</span>
+          <span className="text-xs text-neutral-500">CHEN XI (CN)</span>
         </div>
       </div>
     </div>

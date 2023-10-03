@@ -33,8 +33,8 @@ export function ClientPreview(props: ClientPreviewProps) {
         <span>{clientData.bank}</span>
         <b>FRIENDS: </b>
         <span>{clientData.friends}</span>
-        <b>BANK$$: </b>
-        <span>{clientData.bank}</span>
+        <b>IS STAFF: </b>
+        <span>NO</span>
       </div>
       <div className="grid grid-cols-2 grid-rows-2 text-xs text-neutral-400">
         <b>STATUS$: </b>
