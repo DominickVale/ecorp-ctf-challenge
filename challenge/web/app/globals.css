@@ -72,3 +72,16 @@ html.lenis {
 .lenis.lenis-scrolling iframe {
     pointer-events: none;
 }
+
+.neon--white {
+  color: #fff;
+  text-shadow:
+      0 0 4px rgba(255,255,255,0.5),
+      0 0 16px rgba(255,255,255,0.5)
+}
+.neon--red {
+  color: #f00;
+  text-shadow:
+      0 0 4px rgba(255,0,0,0.5),
+      0 0 16px rgba(255,0,0,0.5)
+}

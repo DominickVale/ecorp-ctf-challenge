@@ -76,7 +76,7 @@ function LoginPage(props: LoginPageProps) {
     return (
         <main className="flex h-screen w-full flex-col justify-between bg-background-dark px-[5vw] py-[5vh]">
             <section className="flex flex-col place-items-center justify-center">
-                <H1 className="text-background-light">NEUROC</H1>
+                <H1 className="neon--white">NEUROC</H1>
                 <small className="text-xs text-neutral-400">LOG-IN SYSTEM</small>
                 <p className="mb-12 mt-16 max-w-xl text-center text-md font-light">
                     With your Neurotap active, think of the answer to your security&nbsp;question:
@@ -85,7 +85,7 @@ function LoginPage(props: LoginPageProps) {
                     {queryData?.getStaffUser.securityQuestion}
                 </b>
                 {showWarning && (
-                    <small className="mb-4 animate-pulse text-xs font-bold text-red-500">
+                    <small className="mb-4 animate-pulse text-xs font-bold neon--red">
                         IF YOU'RE HAVING ISSUES, CONTACT LEVEL 0
                     </small>
                 )}
@@ -157,7 +157,7 @@ function LoginPage(props: LoginPageProps) {
                             }}
                         />
                     </small>
-                    <small className="text-xs text-red-500">
+                    <small className="text-xs neon--red">
                         <Typewriter
                             options={{
                                 delay: 1,

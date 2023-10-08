@@ -43,7 +43,7 @@ const { randomData } = props
             <div className="h-1 w-1 rounded-full bg-elements-light" />
             <Line className="left-4 z-10 w-1/2" o="bottom" dark />
           </div>
-          <div className="relative ml-5 mt-6 grid max-w-[70%] grid-flow-row grid-cols-2 gap-x-4 text-neutral-500">
+          <div className="relative ml-5 mt-6 grid max-w-[77%] grid-flow-row grid-cols-2 gap-x-4 text-neutral-500">
             <b className="tracking-tight text-xs">FOLLOWERS</b>
             <span className="text-xs font-medium">{randomData.followers}</span>
             <b className="tracking-tight text-xs">EMOTIONAL M. IDX</b>

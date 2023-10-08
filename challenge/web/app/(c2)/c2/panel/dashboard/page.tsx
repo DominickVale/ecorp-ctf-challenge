@@ -344,7 +344,7 @@ function Dashboard(props: DashboardProps) {
                     <div className="relative mt-[-1.3rem] h-24 w-24">
                         <Image className="" src={logo} alt="logo" fill />
                     </div>
-                    <H1 small className="text-background-light">
+                    <H1 small className="neon--white text-background-light">
                         NEUROC
                     </H1>
                     <small className="text-center text-xs font-bold text-[#AAAAAA]">

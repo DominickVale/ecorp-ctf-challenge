@@ -146,13 +146,13 @@ const BackgroundDecoration = React.forwardRef<SVGSVGElement, Props>((props, ref)
                         <small className="absolute right-[22%] top-[25%]">SATELLITES: 666</small>
                         <BackgroundDecoLowerText className="left-[18%] top-[71%]" o="left">
                             <small>SOCIAL INFLUENCE</small>
-                            <small className="text-md font-bold tracking-[0.3em] text-white">
+                            <small className="text-md font-bold tracking-[0.3em] neon--white">
                                 {fakeGlobalData.socialInfluence}
                             </small>
                         </BackgroundDecoLowerText>
                         <BackgroundDecoLowerText className="right-[18%] top-[71%]" o="right">
                             <small>AVG. SAT. HEALTH</small>
-                            <small className="mr-[-0.2rem] text-md font-bold tracking-[0.3em] text-white">
+                            <small className="mr-[-0.2rem] text-md font-bold tracking-[0.3em] neon--white">
                                 {fakeGlobalData.avgSatHealth}%
                             </small>
                         </BackgroundDecoLowerText>
