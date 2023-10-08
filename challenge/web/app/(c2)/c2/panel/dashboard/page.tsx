@@ -32,6 +32,7 @@ import {
 } from "@/app/(c2)/c2/panel/gql-docs";
 
 import Modal from "./components/Modal";
+import BackgroundDecoration from "./components/BackgroundDecoration";
 
 const Clock = dynamic(() => import("./components/Clock"), { ssr: false });
 interface DashboardProps {}
@@ -195,6 +196,7 @@ function Dashboard(props: DashboardProps) {
                 <title>E-Corp C2 Dashboard</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
+            <BackgroundDecoration />
 
             <section className="relative flex h-full w-full flex-col content-between justify-between">
                 <nav className="mb-8 flex items-center">
@@ -301,7 +303,7 @@ function Dashboard(props: DashboardProps) {
                     </div>
 
                     {isLoading ? (
-                        <p>Loading...</p>
+                        <p className="h-[28vh] mt-8">Loading...</p>
                     ) : isError ? (
                         <p className="text-red-500">Error fetching data.</p>
                     ) : (

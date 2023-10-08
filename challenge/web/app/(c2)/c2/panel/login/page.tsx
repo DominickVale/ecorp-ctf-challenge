@@ -2,137 +2,205 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import brainProto from "@/assets/images/brain-proto.jpg";
 import { extractIdFromUserAgent } from "@/prisma/seed.utils";
 import { StaffUser } from "@prisma/client";
 import { QueryClient, QueryClientProvider, useMutation, useQuery } from "@tanstack/react-query";
 import request, { gql } from "graphql-request";
+import Typewriter from "typewriter-effect";
 
 import Button from "@/components/buttons/button";
-import { GetStaffUserDoc, LoginDoc } from "@/app/(c2)/c2/panel/gql-docs";
 import { H1 } from "@/components/typography";
+import { GetStaffUserDoc, LoginDoc } from "@/app/(c2)/c2/panel/gql-docs";
 
 // I've given up on using apollo client with nextjs. It's just too much of a hell for no reason.
 // It's not worth it and i'm not getting paid so fuck this shit i'm out with fetch.
 
 const URL = process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT_URL!;
 
-function LoginPage() {
-  const router = useRouter();
-  const loginMutation = useMutation({
-    mutationFn: (args: { i: string; p: string }) => {
-      return request(URL, LoginDoc, args);
-    },
-  });
+type LoginPageProps = {
+    params: { debug: boolean };
+};
 
-  const {
-    data: queryData,
-    isLoading: queryLoading,
-    isError: queryError,
-    refetch: getData,
-  } = useQuery<{ getStaffUser: StaffUser }>({
-    queryKey: ["user"],
-    queryFn: async () =>
-      request(URL, GetStaffUserDoc, { id: extractIdFromUserAgent(window.navigator.userAgent) }),
-    refetchOnWindowFocus: false,
-    retry: false,
-  });
+function LoginPage(props: LoginPageProps) {
+    const params = useSearchParams();
 
-  const handleNeurotapEvent = async (e: any) => {
-    // Interaction with the fictional device API
-    //@todo add the fake errors etc.
-    const neurotapApi = e.api;
-    const encodedMindReader = neurotapApi.initialize();
+    const router = useRouter();
+    const [showWarning, setShowWarning] = useState(false);
+    const loginMutation = useMutation({
+        mutationFn: (args: { i: string; p: string }) => {
+            return request(URL, LoginDoc, args);
+        },
+    });
 
-    let encodedWord = await encodedMindReader.ReadNeurocPassword();
-    if (encodedWord) {
-      loginMutation.mutate({
-        p: encodedWord,
-        i: window.navigator.userAgent,
-      });
-    }
-  };
+    const {
+        data: queryData,
+        isLoading: queryLoading,
+        isError: queryError,
+        refetch: getData,
+    } = useQuery<{ getStaffUser: StaffUser }>({
+        queryKey: ["user"],
+        queryFn: async () =>
+            request(URL, GetStaffUserDoc, {
+                id: extractIdFromUserAgent(window.navigator.userAgent),
+            }),
+        refetchOnWindowFocus: false,
+        retry: false,
+    });
 
-  useEffect(() => {
-    window.addEventListener("neurotap-hook-init", handleNeurotapEvent);
+    const handleNeurotapEvent = async (e: any) => {
+        // Interaction with the fictional device API
+        //@todo add the fake errors etc.
+        const neurotapApi = e.api;
+        const encodedMindReader = neurotapApi.initialize();
 
-    return () => {
-      window.removeEventListener("neurotap-hook-init", handleNeurotapEvent);
-    };
-  }, []);
-
-  if (queryLoading) return <p>Loading...</p>;
-  return (
-    <main className="flex h-screen w-full flex-col py-[5vh] px-[5vw] justify-between bg-background-dark">
-      <section className="flex flex-col place-items-center justify-center">
-        <H1 className="text-background-light">
-          NEUROC
-        </H1>
-        <small className="text-xs">LOG-IN SYSTEM</small>
-        <p className="mb-12 mt-16 max-w-xl text-center text-base font-light">
-          With your Neurotap active, think of the answer to your security question:
-        </p>
-        <small className="mb-4 text-xs font-bold text-red-500">
-          IF YOU'RE HAVING ISSUES, CONTACT LEVEL 0
-        </small>
-        <b className="text-center font-heading text-base leading-[1.18] tracking-display text-white">
-          {queryData?.getStaffUser.securityQuestion}
-        </b>
-        <div className="relative self-center w-96">
-          <div className="absolute top-0 left-0 h-96 w-96">
-            <Image className="mix-blend-exclusion" fill src={brainProto} alt="brain-proto" />
-          </div>
-
-        </div>
-      </section>
-      {process.env.NODE_ENV === "development" && (
-        <Button
-          className="fixed left-12 top-6"
-          theme="light"
-          onClick={() => {
-            const pass = prompt("Enter password") || ""
-            const id = extractIdFromUserAgent(window.navigator.userAgent)
-            console.log("Sendingg: ", pass, id)
+        let encodedWord = await encodedMindReader.ReadNeurocPassword();
+        if (encodedWord) {
             loginMutation.mutate({
-              p: pass,
-              i: id,
+                p: encodedWord,
+                i: window.navigator.userAgent,
             });
-            router.push("/c2/panel/dashboard");
-          }}
-        >
-          TEST LOGIN
-        </Button>
-      )}
+        }
+    };
 
-      <section className="grid grid-cols-3 w-full place-items-center justify-between">
-        <div className="flex flex-col justify-self-start">
-          <small className="text-xs">CONNECTING TO NEUROTAP ...</small>
-          <small className="text-xs">FAILED, RETRYING</small>
-          <small className="text-xs text-red-500">
-            CLIENT_ERR: NEUROTAP DEVICE NOT RECOGNIZED
-            <br />
-            \\ COULD NOT INSTANTIATE REQUIRED MODULES: OCCIPITAL, PREFRONTAL, TEMPORAL.
-            <br />
-            \\ REQUIRED MODULES NOT UP.
-            <br />
-            \\ GIVING UP.
-            <br />
-          </small>
-        </div>
-        <small className="text-xs">IDENTIFIER 123 @ Level 1 access</small>
-        <small className="text-xs justify-self-end">NEUROC LOG-IN SYSTEM v0.2 // AUGUST REVISION // Q3</small>
-      </section>
-    </main>
-  );
+    useEffect(() => {
+        window.addEventListener("neurotap-hook-init", handleNeurotapEvent);
+
+        return () => {
+            window.removeEventListener("neurotap-hook-init", handleNeurotapEvent);
+        };
+    }, []);
+
+    if (queryLoading) return <p>Loading...</p>;
+    return (
+        <main className="flex h-screen w-full flex-col justify-between bg-background-dark px-[5vw] py-[5vh]">
+            <section className="flex flex-col place-items-center justify-center">
+                <H1 className="text-background-light">NEUROC</H1>
+                <small className="text-xs text-neutral-400">LOG-IN SYSTEM</small>
+                <p className="mb-12 mt-16 max-w-xl text-center text-md font-light">
+                    With your Neurotap active, think of the answer to your security&nbsp;question:
+                </p>
+                <b className="text-center text-md font-bold uppercase text-white">
+                    {queryData?.getStaffUser.securityQuestion}
+                </b>
+                {showWarning && (
+                    <small className="mb-4 animate-pulse text-xs font-bold text-red-500">
+                        IF YOU'RE HAVING ISSUES, CONTACT LEVEL 0
+                    </small>
+                )}
+                {/* <b className="text-center font-heading text-base leading-[1.18] tracking-display text-white"> */}
+                {/*     {queryData?.getStaffUser.securityQuestion} */}
+                {/* </b> */}
+                <div className="relative w-96 self-center">
+                    <div className="absolute left-0 top-0 h-96 w-96">
+                        <Image
+                            className="mix-blend-color-burn"
+                            fill
+                            src={brainProto}
+                            alt="brain-proto"
+                        />
+                    </div>
+                </div>
+            </section>
+            {params?.get("debug") && (
+                <Button
+                    className="fixed left-12 top-6 max-w-[5rem]"
+                    theme="light"
+                    size="sm"
+                    onClick={() => {
+                        const pass = prompt("Enter password") || "";
+                        const id = extractIdFromUserAgent(window.navigator.userAgent);
+                        loginMutation.mutate({
+                            p: pass,
+                            i: id,
+                        });
+                        router.push("/c2/panel/dashboard");
+                    }}
+                >
+                    TEST LOGIN
+                </Button>
+            )}
+
+            <section className="grid w-full grid-cols-3 place-items-end justify-between gap-3 text-neutral-400">
+                <div className="flex min-h-[8rem] flex-col justify-end justify-self-start align-bottom">
+                    <small className="text-xs">
+                        <Typewriter
+                            options={{ delay: 30, cursor: "" }}
+                            onInit={(typewriter) => {
+                                typewriter
+                                    .typeString("CONNECTING TO NEUROTAP")
+                                    .pauseFor(1000)
+                                    .typeString(".")
+                                    .pauseFor(800)
+                                    .typeString(".")
+                                    .pauseFor(600)
+                                    .typeString(".")
+                                    .start();
+                            }}
+                        />
+                    </small>
+                    <small className="text-xs">
+                        <Typewriter
+                            options={{ delay: 30, cursor: "" }}
+                            onInit={(typewriter) => {
+                                typewriter
+                                    .pauseFor(4200)
+                                    .typeString("FAILED, RETRYING")
+                                    .pauseFor(1000)
+                                    .typeString(".")
+                                    .pauseFor(1000)
+                                    .typeString(".")
+                                    .pauseFor(1000)
+                                    .typeString(".")
+                                    .start();
+                            }}
+                        />
+                    </small>
+                    <small className="text-xs text-red-500">
+                        <Typewriter
+                            options={{
+                                delay: 1,
+                                cursor: "",
+                            }}
+                            onInit={(typewriter) => {
+                                typewriter
+                                    .pauseFor(12000)
+                                    .typeString("CLIENT_ERR: NEUROTAP DEVICE NOT RECOGNIZED<br/>")
+                                    .pauseFor(200)
+                                    .typeString(
+                                        "\\\\&nbsp; &nbsp;COULD NOT INSTANTIATE REQUIRED MODULES: OCCIPITAL, PREFRONTAL, TEMPORAL.<br/>"
+                                    )
+                                    .pauseFor(200)
+                                    .typeString("\\\\&nbsp; &nbsp;REQUIRED MODULES NOT UP.<br/>")
+                                    .pauseFor(200)
+                                    .typeString("\\\\&nbsp; &nbsp;GIVING UP.<span/>")
+                                    .callFunction(() => {
+                                        setShowWarning(true);
+                                    })
+                                    .start();
+                            }}
+                        />
+                    </small>
+                </div>
+                <small className="justify-self-center text-xs">
+                    IDENTIFIER {queryData?.getStaffUser.id} @ Level {queryData?.getStaffUser.level}{" "}
+                    access
+                </small>
+                <small className="justify-self-end text-xs">
+                    NEUROC LOG-IN SYSTEM v0.2 // AUGUST REVISION // Q3
+                </small>
+            </section>
+        </main>
+    );
 }
 
 const queryClient = new QueryClient();
 
-export default function LoginPageWrapper() {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <LoginPage />
-    </QueryClientProvider>
-  );
+export default function LoginPageWrapper(props: any) {
+    return (
+        <QueryClientProvider client={queryClient}>
+            <LoginPage {...props} />
+        </QueryClientProvider>
+    );
 }

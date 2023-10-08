@@ -1,7 +1,7 @@
 import { setCookie } from "@/common/utils/setCookie";
 import builder from "@/pages/api/builder";
 import bcrypt from "bcrypt";
-import { sign } from "jsonwebtoken";
+import { SignJWT } from "jose";
 
 import prisma from "@/lib/prisma";
 
@@ -33,10 +33,11 @@ builder.mutationFields((t) => ({
         throw new Error("Invalid id");
       }
 
-      const jwtToken = sign({ userId: i, level: l }, process.env.JWT_SECRET!, {
-        expiresIn: "1h",
-        algorithm: "HS256",
-      });
+      const jwtToken = await new SignJWT({ userId: user.id, level: l })
+                        .setProtectedHeader({ alg: 'HS256' })
+                        .setIssuedAt()
+                        .setExpirationTime('1d')
+                        .sign(new TextEncoder().encode(process.env.JWT_SECRET!));
 
       setCookie(res, "t", jwtToken, {
         httpOnly: true,
@@ -80,10 +81,11 @@ builder.mutationFields((t) => ({
       }
 
       // Sign with HS256 algorithm
-      const jwtToken = sign({ userId: user.id, level: user.level }, process.env.JWT_SECRET!, {
-        expiresIn: "1h",
-        algorithm: "HS256",
-      });
+      const jwtToken = await new SignJWT({ userId: user.id, level: user.level })
+                        .setProtectedHeader({ alg: 'HS256' })
+                        .setIssuedAt()
+                        .setExpirationTime('1h')
+                        .sign(new TextEncoder().encode(process.env.JWT_SECRET!));
 
       setCookie(res, "t", jwtToken, {
         httpOnly: true,
