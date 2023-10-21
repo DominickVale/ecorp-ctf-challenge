@@ -1,15 +1,17 @@
 "use client";
 
-import React, { forwardRef, Ref, SVGProps, useLayoutEffect, useRef } from "react";
+import React, { forwardRef, Ref, SVGProps, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 
 interface Props extends SVGProps<SVGSVGElement> {}
 
 const circleTargets = "circle[data-animate=true]";
 const ScrollIndicator = (props: Props) => {
+const [visible, setVisible] = useState(false);
     const svgRef = useRef<SVGSVGElement>(null);
 
     useLayoutEffect(() => {
+    setVisible(true)
         const ctx = gsap.context(() => {
             gsap.timeline({
                 repeat: -1,
@@ -34,7 +36,7 @@ const ScrollIndicator = (props: Props) => {
                         scaleY: 2,
                         duration: 1.5,
                         stagger: 0.15,
-                        ease: "power2.in"
+                        ease: "power2.in",
                     },
                     "<"
                 )
@@ -44,18 +46,15 @@ const ScrollIndicator = (props: Props) => {
                         scaleY: 1,
                         duration: 1.5,
                         stagger: 0.15,
-                        ease: "power2.out"
+                        ease: "power2.out",
                     },
                     "<50%"
                 )
-                .to(
-                    circleTargets,
-                    {
-                        duration: 1,
-                        autoAlpha: 0,
-                        ease: "power1.inOut",
-                    },
-                );
+                .to(circleTargets, {
+                    duration: 1,
+                    autoAlpha: 0,
+                    ease: "power1.inOut",
+                });
         });
 
         return () => ctx.revert();
@@ -63,6 +62,7 @@ const ScrollIndicator = (props: Props) => {
 
     return (
         <svg
+            className={visible ? "blink__appear" : "" }
             width={37}
             height={75}
             viewBox="0 0 37 75"

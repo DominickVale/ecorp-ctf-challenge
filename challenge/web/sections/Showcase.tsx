@@ -3,7 +3,6 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import brainProto from "@/assets/images/brain-proto.jpg";
 import photo1 from "@/assets/images/device1.png";
 import photo2 from "@/assets/images/device2.png";
 import gsap from "gsap";
@@ -11,6 +10,7 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 
 import { ShowcaseItem } from "@/components/ShowcaseItem";
 import { createBreakpoint } from "react-use";
+import { GoldenLayoutLines } from "@/components/golden-layout-lines";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -122,7 +122,6 @@ export function Showcase(props: ShowcaseProps) {
 
       const masterTimeline = gsap
         .timeline({ scrollTrigger })
-        .fromTo(brain.current, { scale: 0.8 }, { scale: 1 })
         .add(tl1, "<")
         .add(tl2, "<50%");
     }, comp);
@@ -132,7 +131,7 @@ export function Showcase(props: ShowcaseProps) {
   // @todo: refactor into smaller components
   return (
     <section className="relative grid h-screen grid-cols-golden grid-rows-golden z-20" ref={comp}>
-      <Image className="mix-blend-darken" src={brainProto} alt="brain-proto" ref={brain} />
+    <GoldenLayoutLines layoutType="2-col" scrollTriggered/>
       <div className="absolute left-[61.8%] top-[130vh] h-[16%] w-[14.6%]" ref={imgSm1}>
         <div className="relative h-full w-full">
           <Image
