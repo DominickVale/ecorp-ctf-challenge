@@ -1,38 +1,37 @@
 "use client";
 
-import React, { useEffect, useLayoutEffect, useRef } from "react";
-import { Float } from "@react-three/drei";
-import { Canvas, extend, useFrame, useLoader, useThree } from "@react-three/fiber";
+import React, { Suspense, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { Float, useGLTF } from "@react-three/drei";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import gsap from "gsap";
-import { useControls } from "leva";
-import { useMount } from "react-use";
 import * as THREE from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { GLTF } from "three/examples/jsm/loaders/GLTFLoader";
 
-const { degToRad } = THREE.MathUtils;
-
-const debugRot = { value: 0, min: -360, max: 360, step: 1 };
-const speed = 1;
-const rotationIntensity = 0.5;
-const floatIntensity = 1;
-const floatingRange = [-0.1, 0.1];
+type GLTFResult = {
+    nodes: {
+        brain: THREE.Mesh;
+    };
+} & GLTF;
 
 function BrainModel() {
-    const brainRef = useRef<THREE.Mesh | null>(null);
-    // const { xPos, yPos, zPos } = useControls({
+    const { camera } = useThree();
+    const { nodes } = useGLTF("/brain.gltf") as GLTFResult;
+    // const {
+    // xPos, yPos, zPos
+    // brainColor
+    // } = useControls({
     //     xPos: debugRot,
     //     yPos: debugRot,
     //     zPos: debugRot,
+    // brainColor: { value: "#DDDFDF"}
     // });
-    const planeRef = useRef<THREE.Plane>(new THREE.Plane(new THREE.Vector3(0, 0, 1), -200));
+    const [brainLoaded, setBrainLoaded] = useState(false);
+
+    const brainRef = useRef<THREE.Mesh | null>(null);
+    const planeRef = useRef(new THREE.Plane(new THREE.Vector3(0, 0, 1), -200));
     const raycasterRef = useRef(new THREE.Raycaster());
     const pointOfIntersectionRef = useRef(new THREE.Vector3());
     const mouseRef = useRef(new THREE.Vector2());
-    const rotationAppliedRef = useRef(false);
-
-    const { camera, gl } = useThree();
-    const { nodes, ...gltf } = useLoader(GLTFLoader, "/brain.gltf");
 
     function handleMouseMove(e: MouseEvent) {
         mouseRef.current.x = (e.clientX / window.innerWidth) * 2 - 1;
@@ -42,17 +41,12 @@ function BrainModel() {
     useEffect(() => {
         // "hack" since useFrame's mouse doesn't update when canvas loses focus.
         window.addEventListener("mousemove", handleMouseMove);
-        if (nodes) {
-            const brainGeometry = (nodes["brain"] as THREE.Mesh).geometry;
-            if (brainGeometry && !rotationAppliedRef.current) {
-                brainGeometry.applyMatrix4(new THREE.Matrix4().makeRotationY(Math.PI / 2));
-                // needed to prevent unneeded rotation after hot reload
-                rotationAppliedRef.current = true;
-            }
-        }
-
         return () => window.removeEventListener("mousemove", handleMouseMove);
     }, []);
+
+    useEffect(() => {
+        if (brainRef.current) setBrainLoaded(true);
+    }, [brainRef.current]);
 
     useFrame(({ clock }) => {
         if (!brainRef.current || !mouseRef.current) return;
@@ -66,6 +60,11 @@ function BrainModel() {
             pointOfIntersectionRef.current.y,
             pointOfIntersectionRef.current.z
         );
+        if (brainRef.current && pointsRef.current) {
+            pointsRef.current.position.copy(brainRef.current.position);
+            pointsRef.current.rotation.copy(brainRef.current.rotation);
+            pointsRef.current.scale.copy(brainRef.current.scale);
+        }
     });
 
     useLayoutEffect(() => {
@@ -103,20 +102,44 @@ function BrainModel() {
         return () => ctx.revert();
     }, [camera]);
 
+    const pointsRef = useRef<THREE.Points | null>(null);
+
     return (
         <Float speed={3} rotationIntensity={0.1} floatIntensity={1} floatingRange={[-10, 10]}>
-            <mesh
-                ref={brainRef}
-                geometry={(nodes["brain"] as THREE.Mesh).geometry}
-                position={[180, 20, -20]}
-            >
-                <meshStandardMaterial color="##DDDFDF" wireframe />
-            </mesh>
+            <group>
+                <mesh
+                    ref={brainRef}
+                    geometry={(nodes["brain"] as THREE.Mesh).geometry}
+                    position={[180, 20, -20]}
+                >
+                    <meshBasicMaterial color="#969494" wireframe />
+                </mesh>
+                {brainLoaded && (
+                    <points ref={pointsRef}>
+                        <bufferGeometry>
+                            <bufferAttribute
+                                attach="attributes-position"
+                                count={brainRef.current?.geometry.attributes.position.count || 0}
+                                array={
+                                    brainRef.current?.geometry.attributes.position.array ||
+                                    undefined
+                                }
+                                itemSize={3}
+                            />
+                        </bufferGeometry>
+                        <pointsMaterial
+                            size={3}
+                            color="#000000"
+                            sizeAttenuation
+                            depthWrite={false}
+                        />
+                    </points>
+                )}
+            </group>
         </Float>
     );
 }
 
-extend({ OrbitControls });
 function BrainBackground() {
     return (
         <Canvas
@@ -125,8 +148,9 @@ function BrainBackground() {
                 position: [0, 0, 360],
             }}
         >
-            <ambientLight />
-            <BrainModel />
+            <Suspense fallback={null}>
+                <BrainModel />
+            </Suspense>
         </Canvas>
     );
 }

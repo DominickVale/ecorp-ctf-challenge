@@ -44,7 +44,6 @@ const showcases: Array<ShowcaseItem> = [
 const useBreakpoint = createBreakpoint({ Phone: 768, Laptop: 1280 });
 
 export function Showcase(props: ShowcaseProps) {
-  const brain = useRef(null);
   const comp = useRef(null);
   const imgSm1 = useRef(null);
   const imgBig1 = useRef(null);

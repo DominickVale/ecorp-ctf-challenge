@@ -160,4 +160,7 @@ html.lenis {
   95% {
     opacity: 1;
   }
+  100% {
+    opacity: 1;
+  }
 }

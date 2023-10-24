@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import brainProto from "@/assets/images/brain-proto.jpg";
 import decorativeFooter from "@/assets/svg/decorative-footer-1.svg";
 
 import Button from "@/components/buttons/button";
@@ -87,11 +86,6 @@ export function Footer(props: FooterProps) {
         </section>
         <FooterLinks />
       </div>
-      <Image
-        className="hidden lg:block absolute mix-blend-darken scale-[0.8] right-[-8%] top-12 3xl:scale-100 3xl:right-12 3xl:top-24"
-        src={brainProto}
-        alt="brain-proto"
-      />
     </footer>
   );
 }
