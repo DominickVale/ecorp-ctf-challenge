@@ -48,7 +48,7 @@ export const FooterLinks = () => (
 
 export function Footer(props: FooterProps) {
   return (
-    <footer className="my-12 lg:my-0 h-max relative lg:grid grid-cols-golden grid-rows-golden lg:border-t-1 border-elements-lightest items-end min-h-screen justify-end place-content-end">
+    <footer className="my-12 mb-6 lg:my-0 h-max relative lg:grid grid-cols-golden grid-rows-golden lg:border-t-1 border-elements-lightest items-end lg:min-h-screen justify-end place-content-end">
       <GoldenLayoutLines />
       <div className="relative bg-background-dark h-max md:px-16 lg:min-h-[80vh] rounded-[3.168rem] lg:rounded-[5%] pt-40 px-4 lg:px-12 2xl:px-28 pb-20 flex flex-col row-span-2 justify-between">
         <section className="mb-16 lg:mb-12 ">

@@ -41,10 +41,10 @@ function getPositionByNumber(number: string | number) {
 export function ShowcaseItem(props: ShowcaseItemProps) {
   const { title, description, number, className, ...rest } = props;
   return (
-    <div className={cn("fixed md:absolute w-screen h-max md:w-max md:max-w-xl left-0 bottom-0", getPositionByNumber(number))}>
+    <div className={cn("fixed md:absolute w-full h-max md:w-max md:max-w-xl left-0 bottom-0", getPositionByNumber(number))}>
       <div
         className={cn(
-          "relative flex w-full h-full flex-col rounded-lg rounded-tr-none border border-neutral-800 bg-background-light",
+          "relative flex w-full h-full flex-col lg:rounded-lg rounded-tr-none border border-neutral-800 bg-background-light",
           className
         )}
         {...rest}

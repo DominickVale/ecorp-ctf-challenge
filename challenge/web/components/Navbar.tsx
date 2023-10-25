@@ -56,7 +56,7 @@ export function Navbar(props: NavbarProps) {
         className="absolute bottom-[1px] left-0 h-[2px] w-10 rounded-full bg-background-dark"
       />
       <MobileMenu />
-      <div className="absolute left-0 top-0 z-[-1] flex h-full w-full items-center justify-center opacity-20 md:hidden">
+      <div className="absolute left-0 top-0 z-[-1] flex h-full w-full items-center justify-center opacity-80 md:hidden">
         <Line o="bottom" isBg={false} />
       </div>
       <ul
@@ -69,7 +69,7 @@ export function Navbar(props: NavbarProps) {
         <NavLink href="/">HOME</NavLink>
         <NavLink href="/blog">BLOG</NavLink>
       </ul>
-      <div className="top-[1.2rem] z-20 mx-auto flex items-center justify-center md:absolute md:right-[calc(38.2%-2.35rem)]">
+      <div className="relative top-[-1.57rem] lg:top-[1.2rem] z-20 mx-auto flex items-center justify-center md:absolute md:right-[calc(38.2%-2.35rem)]">
         <Link href="/">
           <Image src={ecorpLogo} alt="E-corp logo" />
         </Link>
