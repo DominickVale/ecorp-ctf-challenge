@@ -29,13 +29,13 @@ const Frame = () => (
 function getPositionByNumber(number: string | number) {
   switch (number) {
     case 1:
-        return "md:left-[45vw] md:top-[20vh]";
+        return "md:left-[25vw] lg:left-[45vw] md:top-[20vh]";
     case 2:
-        return "md:left-[25vw] md:top-[30vh]";
+        return "md:left-[5vw] lg:left-[25vw] md:top-[30vh]";
     case 3:
-        return "md:left-[35vw] md:top-[50vh]";
+        return "md:left-[15vw] lg:left-[35vw] md:top-[50vh]";
     default:
-      return "md:left-[45vw] md:top-[20vh]"
+      return "md:left-[15vw] lg:left-[45vw] md:top-[20vh]"
   }
 }
 export function ShowcaseItem(props: ShowcaseItemProps) {
@@ -44,7 +44,7 @@ export function ShowcaseItem(props: ShowcaseItemProps) {
     <div className={cn("fixed md:absolute w-full h-max md:w-max md:max-w-xl left-0 bottom-0", getPositionByNumber(number))}>
       <div
         className={cn(
-          "relative flex w-full h-full flex-col lg:rounded-lg rounded-tr-none border border-neutral-800 bg-background-light",
+          "relative flex w-full h-full flex-col lg:rounded-lg lg:rounded-tr-none border border-neutral-800 bg-background-light",
           className
         )}
         {...rest}

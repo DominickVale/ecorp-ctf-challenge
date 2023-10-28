@@ -12,10 +12,11 @@ import { useIsUiLoaded } from "./preloader/preloader.hooks";
 interface LayoutLinesProps extends React.HTMLAttributes<HTMLDivElement> {
     layoutType?: "golden" | "2-col";
     scrollTriggered?: boolean;
+    forceShowAll?: boolean;
 }
 
 export function GoldenLayoutLines(props: LayoutLinesProps) {
-    const { className, layoutType, scrollTriggered, ...rest } = props;
+    const { className, layoutType, scrollTriggered, forceShowAll, ...rest } = props;
     const page = usePageFromPathname();
 
     const isUiLoaded = useIsUiLoaded();
@@ -85,8 +86,8 @@ export function GoldenLayoutLines(props: LayoutLinesProps) {
                     o="bottom"
                     className={cn(
                         "right-0 top-[calc(61.8vh-57px)] w-[38.2%] scale-x-0",
-                        isBlog && "hidden 2xl:block",
-                        isBlogPost && "hidden"
+                        isBlog && !forceShowAll && "hidden 2xl:block",
+                        isBlogPost && !forceShowAll && "hidden"
                     )}
                     ref={line2}
                 />
@@ -96,7 +97,7 @@ export function GoldenLayoutLines(props: LayoutLinesProps) {
                 className={cn(
                     "left-[76.39999999999%] hidden scale-y-0",
                     layoutType !== "2-col" && "top-[calc(61.8vh-57px)] ",
-                    isBlog || isBlogPost ? "hidden" : "lg:block"
+                    (isBlog || isBlogPost) && !forceShowAll ? "hidden" : "lg:block"
                 )}
                 ref={line3}
             />

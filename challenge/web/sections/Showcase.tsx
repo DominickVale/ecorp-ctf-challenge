@@ -1,18 +1,17 @@
 "use client";
 
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
-import dynamic from "next/dynamic";
 import Image from "next/image";
 import photo1 from "@/assets/images/device1.png";
 import photo2 from "@/assets/images/device2.png";
+import photo3 from "@/assets/images/device3.png";
+import photo4 from "@/assets/images/device4.png";
 import gsap from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
 import { createBreakpoint } from "react-use";
 
 import { GoldenLayoutLines } from "@/components/golden-layout-lines";
 import { ShowcaseItem } from "@/components/ShowcaseItem";
 
-gsap.registerPlugin(ScrollTrigger);
 
 interface ShowcaseProps {}
 
@@ -56,13 +55,14 @@ export function Showcase(props: ShowcaseProps) {
                     console.error("no el");
                     return;
                 }
-                console.log("break", breakpoint);
 
                 if (breakpoint === "Laptop") {
                     if (i === activeItem - 1) {
                         gsap.to(el, { opacity: 1, duration: 0.5 });
+                        gsap.set(el, { display: "block"})
                     } else {
                         gsap.to(el, { opacity: 0, duration: 0.5 });
+                        gsap.set(el, { display: "none"})
                     }
                 } else {
                     if (i === activeItem - 1) {
@@ -74,7 +74,7 @@ export function Showcase(props: ShowcaseProps) {
             });
         } else {
             if (breakpoint === "Laptop") {
-                gsap.set("[data-animate-id]", { opacity: 0 });
+                gsap.set("[data-animate-id]", { opacity: 0, display: "none" });
             } else {
                 gsap.set("[data-animate-id]", { left: "-180vw" });
             }
@@ -159,7 +159,7 @@ export function Showcase(props: ShowcaseProps) {
                 <div className="relative h-full w-full">
                     <Image
                         className="object-cover object-right-top opacity-30 transition-opacity duration-1000 hover:opacity-50"
-                        src={photo1}
+                        src={photo3}
                         alt="neurotap prototype small2"
                         fill
                     />
@@ -172,7 +172,7 @@ export function Showcase(props: ShowcaseProps) {
                 <div className="relative h-full w-full">
                     <Image
                         className="object-cover opacity-30 transition-opacity duration-1000 hover:opacity-50"
-                        src={photo2}
+                        src={photo4}
                         alt="neurotap prototype big2"
                         fill
                     />

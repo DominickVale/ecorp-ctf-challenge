@@ -18,7 +18,7 @@ export function BlogPostEntry(props: BlogPostEntryProps) {
   return (
     <Link href={`blog/posts/${id}`}>
       {showPreview ? (
-        <div className="group relative p-2 hover:opacity-90 cursor-pointer flex flex-col py-8 overflow-hidden">
+        <div className="group relative p-2 hover:opacity-80 cursor-pointer flex flex-col py-8 overflow-hidden">
           {previewImg && (
             <img
               src={previewImg}

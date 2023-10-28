@@ -3,6 +3,7 @@ import { Footer } from "@/components/Footer";
 import { GoldenLayoutLines } from "@/components/golden-layout-lines";
 import { BlogPostEntry } from "@/app/(front)/blog/posts/components/blog-post-entry";
 import {H1} from "@/components/typography";
+import BlogScene from "@/components/3d/BlogScene";
 
 function renderPostCategory(posts: PostPreviewData[], showPreview?: boolean) {
   return posts.map((props) => <BlogPostEntry {...props} showPreview={showPreview} />);
@@ -39,6 +40,7 @@ export default async function Blog() {
       <div className="row-start-3">
         <Footer />
       </div>
+      <BlogScene/>
     </>
   );
 }

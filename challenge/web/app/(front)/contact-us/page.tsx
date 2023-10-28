@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import brainProto from "@/assets/images/brain-proto.jpg";
 import decorativeFooter from "@/assets/svg/decorative-footer-1.svg";
 
 import Button from "@/components/buttons/button";
@@ -13,6 +12,7 @@ import { GoldenLayoutLines } from "@/components/golden-layout-lines";
 import { SupportType } from "@/app/api/contact/route";
 import {H2} from "@/components/typography";
 import {FooterLinks} from "@/components/Footer";
+import ContactUsScene from "@/components/3d/ContactUsScene";
 
 export default function ContactUs() {
   const [isSending, setIsSending] = useState(false);
@@ -69,7 +69,7 @@ export default function ContactUs() {
   }
 
   return (
-    <main className="my-12 relative h-max lg:grid grid-cols-golden grid-rows-golden items-end min-h-screen justify-end place-content-end">
+    <main className="my-12 relative h-max lg:grid grid-cols-golden grid-rows-golden items-end min-h-screen justify-end place-content-end lg:mb-0">
       <GoldenLayoutLines />
       <div className="relative bg-background-dark md:min-h-[80vh] rounded-[3.168rem] md:rounded-[5%] pt-40 px-4 md:px-32 pb-20 flex flex-col row-span-2 justify-between">
         <section className="mb-16">
@@ -136,11 +136,7 @@ export default function ContactUs() {
         </section>
         <FooterLinks />
       </div>
-      <Image
-        className="hidden lg:block absolute mix-blend-darken scale-[0.8] right-[-8%] top-12 3xl:scale-100 3xl:right-12 3xl:top-24"
-        src={brainProto}
-        alt="brain-proto"
-      />
+      <ContactUsScene />
     </main>
   );
 }
