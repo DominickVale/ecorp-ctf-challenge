@@ -89,7 +89,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <p className="col-span-2 col-start-2 flex min-w-max flex-row gap-11">
             © 2030 Neurotap. All rights reserved.
           </p>
-          <p className="col-span-5 col-start-9 justify-start gap-11 md:pl-16">
+          <p className="col-span-5 col-start-9 justify-start gap-11 md:pl-14">
             By{" "}
             <a
               href="https://domenicovale.netlify.app"

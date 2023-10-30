@@ -1,17 +1,18 @@
 "use client";
 
 import { Suspense, useEffect, useLayoutEffect, useRef } from "react";
+import { View } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
-import { useWindowSize } from "react-use";
+import { useIsomorphicLayoutEffect, useWindowSize } from "react-use";
 import { degToRad } from "three/src/math/MathUtils";
 
 import BrainModel from "./Brain";
 
 const commonScrollTrigger: ScrollTrigger.Vars = {
     scrub: 1,
-    invalidateOnRefresh: true,
+    // invalidateOnRefresh: true,
     immediateRender: false,
 };
 
@@ -24,7 +25,6 @@ function BrainScene() {
     const isDesktop = width > 1000;
 
     const onResize = (e: any) => {
-        ScrollTrigger.refresh();
     };
 
     useEffect(() => {
@@ -39,8 +39,7 @@ function BrainScene() {
         []
     );
 
-    useLayoutEffect(() => {
-
+    useIsomorphicLayoutEffect(() => {
         const ctx = gsap.context(() => {
             if (!brainRef.current) return;
 
@@ -100,7 +99,7 @@ function BrainScene() {
                         end: "top top",
                     },
                 });
-            } else if(brainMeshRef.current){
+            } else if (brainMeshRef.current) {
                 gsap.set("canvas", { autoAlpha: 0.3 });
                 tl.to(brainMeshRef.current.rotation, {
                     y: 2,
@@ -144,7 +143,7 @@ function BrainScene() {
                         duration: 0.5,
                         ease: "sine.inOut",
                         scrollTrigger: {
-                        ...commonScrollTrigger,
+                            ...commonScrollTrigger,
                             trigger: "footer",
                             start: "5% bottom",
                             end: "top top",
@@ -157,10 +156,12 @@ function BrainScene() {
         return () => ctx.revert();
     }, []);
 
-    return <BrainModel ref={brainRef}/>;
+    return <BrainModel ref={brainRef} />;
 }
 
 function FrontPageScene() {
+    // const globeViewRef = useRef<HTMLDivElement>(document.querySelector("#footerGlobe")!);
+
     return (
         <div className="pointer-events-none fixed bottom-0 left-0 right-0 top-0 z-[-1] h-full w-full">
             <Canvas
@@ -171,6 +172,9 @@ function FrontPageScene() {
             >
                 <Suspense fallback={null}>
                     <BrainScene />
+                    {/* <View track={globeViewRef}> */}
+                    {/*     <Globe /> */}
+                    {/* </View> */}
                 </Suspense>
             </Canvas>
         </div>

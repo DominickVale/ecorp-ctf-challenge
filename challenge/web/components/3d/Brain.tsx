@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Float, FloatProps, useGLTF } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useWindowSize } from "react-use";
@@ -12,12 +12,17 @@ type GLTFResult = {
     };
 } & GLTF;
 
-type BrainModelProps = {} & FloatProps;
+type BrainModelProps = {
+    wireframeColor?: string;
+    dotsColor?: string;
+    followMouse?: boolean;
+} & FloatProps;
 
 const ANIM_DAMPEN_RATIO = 0.4;
 const ANIM_DAMPEN_TSTEP = 0.1;
 
 const BrainModel = React.forwardRef<THREE.Group, BrainModelProps>((props, ref) => {
+    const { wireframeColor, dotsColor, followMouse = true } = props;
     const { camera } = useThree();
     const { nodes } = useGLTF("/brain.gltf") as GLTFResult;
     const [brainLoaded, setBrainLoaded] = useState(false);
@@ -85,7 +90,7 @@ const BrainModel = React.forwardRef<THREE.Group, BrainModelProps>((props, ref) =
 
         brainRef.current.scale.set(scaleFactor, scaleFactor, scaleFactor);
 
-        if (isDesktop) {
+        if (isDesktop && followMouse) {
             // Intersect with plane
             raycasterRef.current.setFromCamera(mouse, camera);
             raycasterRef.current.ray.intersectPlane(
@@ -140,7 +145,7 @@ const BrainModel = React.forwardRef<THREE.Group, BrainModelProps>((props, ref) =
                     position={isDesktop ? [200, 25, -20] : [0, height / 10, 0]}
                     rotation={isDesktop ? undefined : [0, degToRad(-85), 0]}
                 >
-                    <meshBasicMaterial color="#969494" wireframe />
+                    <meshBasicMaterial color={wireframeColor || "#969494" } wireframe />
                 </mesh>
 
                 {brainLoaded && (
@@ -153,7 +158,7 @@ const BrainModel = React.forwardRef<THREE.Group, BrainModelProps>((props, ref) =
                         ]}
                     >
                         <icosahedronGeometry args={[1.2, 4]} />
-                        <meshBasicMaterial color="#333" />
+                        <meshBasicMaterial color={dotsColor || "#333" } />
                     </instancedMesh>
                 )}
             </group>

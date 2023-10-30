@@ -33,6 +33,7 @@ import {
 
 import Modal from "./components/Modal";
 import BackgroundDecoration from "./components/BackgroundDecoration";
+import C2Scene from "@/components/3d/C2Scene";
 
 const Clock = dynamic(() => import("./components/Clock"), { ssr: false });
 interface DashboardProps {}
@@ -171,7 +172,6 @@ function Dashboard(props: DashboardProps) {
         const id = prompt("Enter staff user id to change");
         if (!id) return;
         const lvl = Number(prompt("Enter new level"));
-        console.log(typeof lvl);
 
         if (typeof lvl === "number") _devSetLvlMutation.mutate({ i: id, l: lvl });
     };
@@ -199,6 +199,7 @@ function Dashboard(props: DashboardProps) {
             <BackgroundDecoration />
 
             <section className="relative flex h-full w-full flex-col content-between justify-between">
+            <C2Scene />
                 <nav className="mb-8 flex items-center">
                     <NavElement>
                         <Clock />

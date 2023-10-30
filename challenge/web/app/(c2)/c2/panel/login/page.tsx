@@ -13,6 +13,7 @@ import Typewriter from "typewriter-effect";
 import Button from "@/components/buttons/button";
 import { H1 } from "@/components/typography";
 import { GetStaffUserDoc, LoginDoc } from "@/app/(c2)/c2/panel/gql-docs";
+import LoginScene from "@/components/3d/LoginScene";
 
 // I've given up on using apollo client with nextjs. It's just too much of a hell for no reason.
 // It's not worth it and i'm not getting paid so fuck this shit i'm out with fetch.
@@ -75,10 +76,11 @@ function LoginPage(props: LoginPageProps) {
     if (queryLoading) return <p>Loading...</p>;
     return (
         <main className="flex h-screen w-full flex-col justify-between bg-background-dark px-[5vw] py-[5vh]">
-            <section className="flex flex-col place-items-center justify-center">
+                <LoginScene error={showWarning} />
+            <section className="flex flex-col place-items-center justify-center z-30">
                 <H1 className="neon--white">NEUROC</H1>
                 <small className="text-xs text-neutral-400">LOG-IN SYSTEM</small>
-                <p className="mb-12 mt-16 max-w-xl text-center text-md font-light">
+                <p className="mb-8 mt-16 max-w-xl text-center text-md font-light">
                     With your Neurotap active, think of the answer to your security&nbsp;question:
                 </p>
                 <b className="text-center text-md font-bold uppercase text-white">
@@ -92,16 +94,6 @@ function LoginPage(props: LoginPageProps) {
                 {/* <b className="text-center font-heading text-base leading-[1.18] tracking-display text-white"> */}
                 {/*     {queryData?.getStaffUser.securityQuestion} */}
                 {/* </b> */}
-                <div className="relative w-96 self-center">
-                    <div className="absolute left-0 top-0 h-96 w-96">
-                        <Image
-                            className="mix-blend-color-burn"
-                            fill
-                            src={brainProto}
-                            alt="brain-proto"
-                        />
-                    </div>
-                </div>
             </section>
             {params?.get("debug") && (
                 <Button
