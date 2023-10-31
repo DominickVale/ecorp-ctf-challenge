@@ -7,7 +7,7 @@ import { Footer } from "@/components/Footer";
 
 export default function Home() {
     return (
-        <div id="scrollContainer1">
+        <div>
             <main className="relative">
                 <FixedButton />
                 <Hero />

@@ -1,9 +1,6 @@
 import { usePathname } from "next/navigation";
-import { createContext, useContext, useEffect, useLayoutEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
-
-export const useIsomorphicLayoutEffect =
-  typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
 const pages = ["home", "blog", "contact-us", "blog-post"] as const;
 export type Page = (typeof pages)[number];

@@ -10,11 +10,7 @@ import { degToRad } from "three/src/math/MathUtils";
 
 import BrainModel from "./Brain";
 
-const commonScrollTrigger: ScrollTrigger.Vars = {
-    scrub: 1,
-    // invalidateOnRefresh: true,
-    immediateRender: false,
-};
+const commonScrollTrigger: ScrollTrigger.Vars = {};
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -25,6 +21,7 @@ function BrainScene() {
     const isDesktop = width > 1000;
 
     const onResize = (e: any) => {
+        ScrollTrigger.refresh();
     };
 
     useEffect(() => {
@@ -43,113 +40,135 @@ function BrainScene() {
         const ctx = gsap.context(() => {
             if (!brainRef.current) return;
 
-            const tl = gsap.timeline();
-
-            tl.fromTo(
-                "canvas",
-                {
-                    autoAlpha: isDesktop ? 0.3 : 0.2,
-                },
-                {
-                    autoAlpha: 1,
-                    duration: 0.5,
-                    ease: "linear",
-                    scrollTrigger: {
-                        ...commonScrollTrigger,
-                        trigger: "#hero",
-                        start: "-30% top",
-                        end: "bottom center",
-                    },
-                }
-            );
-
             if (isDesktop) {
-                tl.to(brainRef.current.position, {
-                    x: -380,
-                    duration: 0.5,
-                    ease: "sine.inOut",
+                gsap.timeline({
                     scrollTrigger: {
-                        ...commonScrollTrigger,
                         trigger: "#hero",
-                        start: "-5% top",
-                        end: "bottom top",
+                        scrub: 1,
+                        start: "top top",
+                        end: "bottom+=100% bottom",
+                        invalidateOnRefresh: true,
+                        immediateRender: false,
                     },
-                });
-                tl.to(brainRef.current.position, {
-                    x: 80,
-                    duration: 0.5,
-                    ease: "sine.inOut",
+                })
+                    .fromTo(
+                        "canvas",
+                        {
+                            autoAlpha: isDesktop ? 0.3 : 0.2,
+                        },
+                        {
+                            autoAlpha: 1,
+                            duration: 2,
+                            ease: "linear",
+                        }
+                    )
+                    .fromTo(
+                        brainRef.current.scale,
+                        {
+                            x: 0.8,
+                            y: 0.8,
+                            z: 0.8,
+                        },
+                        {
+                            x: 1,
+                            y: 1,
+                            z: 1,
+                            duration: 1,
+                            ease: "sine.inOut",
+                        },
+                        "<"
+                    )
+                    .to(
+                        brainRef.current.position,
+                        {
+                            x: -380,
+                            duration: 2,
+                            ease: "sine.inOut",
+                        },
+                        "<"
+                    );
+
+                gsap.timeline({
                     scrollTrigger: {
-                        ...commonScrollTrigger,
                         trigger: "footer",
-                        start: "top bottom",
-                        end: "top top",
+                        scrub: 1,
+                        start: "top-=50% center",
+                        end: "bottom bottom",
+                        invalidateOnRefresh: true,
+                        immediateRender: false,
                     },
-                });
-                tl.to(brainRef.current.scale, {
-                    x: 0.8,
-                    y: 0.8,
-                    z: 0.8,
-                    duration: 0.5,
-                    ease: "sine.inOut",
-                    scrollTrigger: {
-                        ...commonScrollTrigger,
-                        trigger: "footer",
-                        start: "top bottom",
-                        end: "top top",
-                    },
-                });
-            } else if (brainMeshRef.current) {
-                gsap.set("canvas", { autoAlpha: 0.3 });
-                tl.to(brainMeshRef.current.rotation, {
-                    y: 2,
-                    duration: 1,
-                    ease: "linear",
-                    scrollTrigger: {
-                        ...commonScrollTrigger,
-                        trigger: "#hero",
-                        start: "5% top",
-                        end: "bottom top",
-                    },
-                });
-                tl.to(brainMeshRef.current.rotation, {
-                    y: degToRad(-90),
-                    ease: "linear",
-                    scrollTrigger: {
-                        ...commonScrollTrigger,
-                        trigger: "footer",
-                        start: "top bottom",
-                        end: "top top",
-                    },
-                });
-                tl.to(brainRef.current.position, {
-                    x: -20,
-                    duration: 0.5,
-                    ease: "sine.inOut",
-                    scrollTrigger: {
-                        ...commonScrollTrigger,
-                        trigger: "footer",
-                        start: "top bottom",
-                        end: "top top",
-                    },
-                });
-                tl.fromTo(
-                    "canvas",
-                    {
-                        autoAlpha: 1,
-                    },
-                    {
-                        autoAlpha: 0,
+                })
+                    .to(brainRef.current.position, {
+                        x: 80,
                         duration: 0.5,
                         ease: "sine.inOut",
-                        scrollTrigger: {
-                            ...commonScrollTrigger,
-                            trigger: "footer",
-                            start: "5% bottom",
-                            end: "top top",
+                    })
+                    .to(
+                        brainRef.current.scale,
+                        {
+                            x: 0.8,
+                            y: 0.8,
+                            z: 0.8,
+                            duration: 0.5,
+                            ease: "sine.inOut",
                         },
-                    }
-                );
+                        "<"
+                    );
+            } else {
+                gsap.set("canvas", { autoAlpha: 0.3 });
+                gsap.timeline({
+                    scrollTrigger: {
+                        trigger: "#hero",
+                        scrub: 1,
+                        start: "top top",
+                        end: "bottom+=100% bottom",
+                        invalidateOnRefresh: true,
+                        immediateRender: false,
+                    },
+                })
+                    .fromTo(
+                        "canvas",
+                        {
+                            autoAlpha: isDesktop ? 0.3 : 0.2,
+                        },
+                        {
+                            autoAlpha: 1,
+                            duration: 0.5,
+                            ease: "linear",
+                        }
+                    )
+
+                    .to(brainRef.current.rotation, {
+                        y: 2,
+                        duration: 1,
+                        ease: "linear",
+                    });
+
+                gsap.timeline({
+                    scrollTrigger: {
+                        trigger: "footer",
+                        scrub: 1,
+                        start: "top-=50% center",
+                        end: "bottom bottom",
+                        invalidateOnRefresh: true,
+                        immediateRender: false,
+                    },
+                })
+                    .to(brainRef.current.rotation, {
+                        y: degToRad(-90),
+                        ease: "linear",
+                    })
+                    .to(
+                        brainRef.current.scale,
+                        {
+                            x: 0.8,
+                            y: 0.8,
+                            z: 0.8,
+                            duration: 0.5,
+                            ease: "sine.inOut",
+                        },
+                        "<"
+                    );
             }
         });
 

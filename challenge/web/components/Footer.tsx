@@ -62,7 +62,7 @@ export const Footer = React.forwardRef<HTMLDivElement, FooterProps>((props, ref)
             <div className="relative row-span-2 flex h-max flex-col justify-between rounded-[3.168rem] bg-background-dark px-4 pb-20 pt-40 md:px-16 lg:min-h-[80vh] lg:rounded-[5%] lg:px-12 2xl:px-28">
                 <div
                     id="footerGlobe"
-                    className="pointer-events-none absolute right-[10%] top-[16%] h-[16rem] w-[16rem] z-10 opacity-30 lg:opacity-100"
+                    className="pointer-events-none absolute right-[10%] top-[16%] z-10 h-[16rem] w-[16rem] opacity-30 lg:opacity-100"
                 >
                     <Canvas
                         camera={{
@@ -76,7 +76,7 @@ export const Footer = React.forwardRef<HTMLDivElement, FooterProps>((props, ref)
                         </Suspense>
                     </Canvas>
                 </div>
-                <section className="mb-16 lg:mb-12 z-30">
+                <section className="z-30 mb-16 lg:mb-12">
                     <Image
                         className="absolute left-14 top-14"
                         src={decorativeFooter}
@@ -105,7 +105,7 @@ export const Footer = React.forwardRef<HTMLDivElement, FooterProps>((props, ref)
                             ORDER NOW
                         </Button>
                         <small className="mt-4 text-stone-400">
-                            Lorem ipsum dolor sit amet consectetur. Tellus metus duis.
+                            Ordering indicates acceptance of Neurotap's T&Cs
                         </small>
                     </div>
                 </section>

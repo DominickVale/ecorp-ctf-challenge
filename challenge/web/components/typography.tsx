@@ -1,6 +1,4 @@
 import React, { useRef } from "react";
-import ScrambleText from "@/common/utils/scramble";
-import { useMount } from "react-use";
 
 import { cn } from "@/lib/utils";
 

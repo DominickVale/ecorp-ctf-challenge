@@ -1,12 +1,9 @@
 import React from "react";
-import Image from "next/image";
-import brainProto from "@/assets/images/brain-proto.jpg";
 
 import Button from "@/components/buttons/button";
 import ScrollIndicator from "@/components/decorations/scroll-indicator";
 import { GoldenLayoutLines } from "@/components/golden-layout-lines";
 import { H1 } from "@/components/typography";
-import BrainBackground from "@/components/Brain";
 
 interface HeroProps {}
 

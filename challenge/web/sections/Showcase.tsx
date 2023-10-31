@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import photo1 from "@/assets/images/device1.png";
 import photo2 from "@/assets/images/device2.png";
 import photo3 from "@/assets/images/device3.png";
 import photo4 from "@/assets/images/device4.png";
 import gsap from "gsap";
-import { createBreakpoint } from "react-use";
+import { createBreakpoint, useIsomorphicLayoutEffect } from "react-use";
 
 import { GoldenLayoutLines } from "@/components/golden-layout-lines";
 import { ShowcaseItem } from "@/components/ShowcaseItem";
@@ -24,15 +24,15 @@ const showcases: Array<ShowcaseItem> = [
     },
     {
         number: 2,
-        title: "// ELEGANCE — DURABILITY",
+        title: "// FREEDOM - CONNECTIVITY",
         description:
-            "Embrace the future of human-machine symbiosis. \nExperience the elegance of Neurotap, the brain-machine implant designed to empower you in ways never thought possible and withstand the test of time with grace and \nNeurotap's durability ensures it endures the challenges of an ever-changing world. As technology advances, Neurotap evolves alongside, safeguarding its users from obsolescence.",
+            "Discover unparalleled freedom in the realm of the mind. Neurotap seamlessly merges your consciousness with the digital world, ensuring uninterrupted connectivity to knowledge, memories, and experiences. Whether you're diving into a virtual realm or accessing memories with pin-point precision, Neurotap's unparalleled integration ensures you're never more than a thought away from your digital self.",
     },
     {
         number: 3,
-        title: "// ELEGANCE — DURABILITY",
+        title: "// PRIVACY - ASSURANCE",
         description:
-            "Embrace the future of human-machine symbiosis. \nExperience the elegance of Neurotap, the brain-machine implant designed to empower you in ways never thought possible and withstand the test of time with grace and \nNeurotap's durability ensures it endures the challenges of an ever-changing world. As technology advances, Neurotap evolves alongside, safeguarding its users from obsolescence.",
+            "Dive deep into the digital domain with the confidence that your deepest thoughts and dreams remain private. Neurotap's state-of-the-art encryption technology guarantees a fortress of protection around your neural data. As the guardians of your mental realm, we prioritize your security and peace of mind above all else. Trust in Neurotap, trust in yourself.",
     },
 ];
 
@@ -48,7 +48,7 @@ export function Showcase(props: ShowcaseProps) {
     const scrollProgres = useRef(0);
     const [activeItem, setActiveItem] = useState(0);
 
-    useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         if (activeItem) {
             gsap.utils.toArray("[data-animate-id]").forEach((el, i) => {
                 if (!el) {
@@ -81,12 +81,12 @@ export function Showcase(props: ShowcaseProps) {
         }
     }, [activeItem, breakpoint]);
 
-    useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         const scrollTrigger: ScrollTrigger.Vars = {
             trigger: comp.current,
             start: "top top",
             end: "+=5000 top",
-            scrub: true,
+            scrub: 1,
             pin: true,
             onUpdate: (self) => {
                 const progress = Number(self.progress.toFixed(3));
@@ -122,6 +122,7 @@ export function Showcase(props: ShowcaseProps) {
     // @todo: refactor into smaller components
     return (
         <section
+            id="showcase"
             className="relative z-20 grid h-screen grid-cols-golden grid-rows-golden"
             ref={comp}
         >

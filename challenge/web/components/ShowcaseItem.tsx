@@ -41,7 +41,7 @@ function getPositionByNumber(number: string | number) {
 export function ShowcaseItem(props: ShowcaseItemProps) {
   const { title, description, number, className, ...rest } = props;
   return (
-    <div className={cn("fixed md:absolute w-full h-max md:w-max md:max-w-xl left-0 bottom-0", getPositionByNumber(number))}>
+    <div className={cn("fixed md:absolute w-full h-max md:w-max md:max-w-[60vw] left-0 bottom-0", getPositionByNumber(number))}>
       <div
         className={cn(
           "relative flex w-full h-full flex-col lg:rounded-lg lg:rounded-tr-none border border-neutral-800 bg-background-light",
@@ -50,16 +50,16 @@ export function ShowcaseItem(props: ShowcaseItemProps) {
         {...rest}
       >
         <Frame />
-        <span className="relative flex justify-between bg-background-dark px-4 py-2 text-md font-bold tracking-display text-background-light">
-          <h3>{title}</h3>
-          <h3 className="flex gap-3">
+        <span className="relative flex justify-between bg-background-dark px-4 py-2 text-md lg:text-base font-bold tracking-display text-background-light">
+          <h3 className="mr-3">{title}</h3>
+          <h3 className="flex gap-3 align-middle items-center">
             {number}
             <div className="flex h-full w-6 items-center">
               <div className="h-[2px] w-full rounded-full bg-background-light" />
             </div>
           </h3>
         </span>
-        <p className="p-8 bg-background-light rounded-lg">{description}</p>
+        <p className="p-8 bg-background-light rounded-lg text-smaller lg:text-sm">{description}</p>
       </div>
     </div>
   );
