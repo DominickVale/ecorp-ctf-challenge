@@ -1,11 +1,13 @@
 import React, { forwardRef, Ref, SVGProps, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import CustomEase from "gsap/CustomEase";
-import { useInterval } from "react-use";
+import { useInterval, useIsomorphicLayoutEffect } from "react-use";
 
 import { cn, random } from "@/lib/utils";
 
-interface Props extends SVGProps<SVGSVGElement> {}
+interface Props extends SVGProps<SVGSVGElement> {
+    isStopped?: boolean;
+}
 
 type BackgroundDecoLowerTextProps = {
     o: "left" | "right";
@@ -44,6 +46,7 @@ const BackgroundDecoLowerText = ({ o, children, ...props }: BackgroundDecoLowerT
 };
 
 const BackgroundDecoration = React.forwardRef<SVGSVGElement, Props>((props, ref) => {
+    const { isStopped } = props;
     const linesRef = useRef<SVGGElement>(null);
     const diagonalLineRef = useRef<SVGLineElement>(null);
     const circleRef = useRef<SVGGElement>(null);
@@ -58,12 +61,12 @@ const BackgroundDecoration = React.forwardRef<SVGSVGElement, Props>((props, ref)
 
     useInterval(() => {
         setFakeGlobalData({
-            socialInfluence: (random(420.000, 430.000)).toFixed(4),
-            avgSatHealth: (random(35, 36)).toFixed(3),
+            socialInfluence: random(420.0, 430.0).toFixed(4),
+            avgSatHealth: random(35, 36).toFixed(3),
         });
     }, 3400);
 
-    useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         const ctx = gsap.context(() => {
             gsap.fromTo(
                 linesRef.current,
@@ -130,30 +133,51 @@ const BackgroundDecoration = React.forwardRef<SVGSVGElement, Props>((props, ref)
                 }
             );
         });
+
+        if (isStopped) {
+            ctx.kill();
+        }
         return () => ctx.revert();
-    }, []);
+    }, [isStopped]);
 
     return (
         <div className="fixed left-0 top-24 flex h-screen w-screen justify-center align-middle">
             <div className="relative">
                 <div className="absolute left-0 top-0 h-full w-full">
-                    <div className="relative h-full w-full text-xs text-neutral-500">
+                    <div
+                        className={cn(
+                            "relative h-full w-full text-xs text-neutral-500",
+                            isStopped && "text-red-500"
+                        )}
+                    >
                         <small className="absolute left-[22%] top-[24.4%]">
                             LAT: {fakeCoords.LAT}
                             <br />
                             LON: {fakeCoords.LON}
                         </small>
-                        <small className="absolute right-[22%] top-[25%]">SATELLITES: 666</small>
+                        <small className="absolute right-[22%] top-[25%]">
+                            SATELLITES: {isStopped ? 0 : 666}
+                        </small>
                         <BackgroundDecoLowerText className="left-[18%] top-[71%]" o="left">
                             <small>SOCIAL INFLUENCE</small>
-                            <small className="text-md font-bold tracking-[0.3em] neon--white">
-                                {fakeGlobalData.socialInfluence}
+                            <small
+                                className={cn(
+                                    "text-md font-bold tracking-[0.3em]",
+                                    isStopped ? "neon--red" : "neon--white"
+                                )}
+                            >
+                                {isStopped ? "???" : fakeGlobalData.socialInfluence}
                             </small>
                         </BackgroundDecoLowerText>
                         <BackgroundDecoLowerText className="right-[18%] top-[71%]" o="right">
                             <small>AVG. SAT. HEALTH</small>
-                            <small className="mr-[-0.2rem] text-md font-bold tracking-[0.3em] neon--white">
-                                {fakeGlobalData.avgSatHealth}%
+                            <small
+                                className={cn(
+                                    "mr-[-0.2rem] text-md font-bold tracking-[0.3em]",
+                                    isStopped ? "neon--red" : "neon--white"
+                                )}
+                            >
+                                {isStopped ? 0 : fakeGlobalData.avgSatHealth}%
                             </small>
                         </BackgroundDecoLowerText>
                     </div>

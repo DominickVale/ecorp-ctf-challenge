@@ -4,15 +4,17 @@ import { AdditiveBlending, Vector3 } from "three";
 
 type GlobeProps = {
     position?: [number, number, number];
+    isStopped?: boolean;
 };
 
 function GlobeNetwork(props: GlobeProps) {
+    const { isStopped } = props;
     const groupRef = useRef<THREE.Group>(null);
     const particlesRef = useRef<THREE.BufferGeometry>(null);
     const linesGeometryRef = useRef<THREE.BufferGeometry>(null);
 
-    const maxParticleCount = 1000;
-    const particleCount = 666;
+    const maxParticleCount = 500;
+    const particleCount = 200;
     const r = 10;
     const rHalf = r / 2;
     const maxConnections = 6;
@@ -57,7 +59,7 @@ function GlobeNetwork(props: GlobeProps) {
     });
 
     useFrame((_, delta) => {
-        if (!linesGeometryRef.current || !particlesRef.current || !groupRef.current) return;
+        if (!linesGeometryRef.current || !particlesRef.current || !groupRef.current || particlesData.length <= 1) return;
         vertexpos = 0;
         colorpos = 0;
         numConnected = 0;
@@ -103,6 +105,7 @@ function GlobeNetwork(props: GlobeProps) {
                     particleDataB.numConnections++;
 
                     const alpha = 1.0 - dist / minDistance;
+                    const alphaGB = isStopped ? 0 : alpha;
 
                     positions[vertexpos++] = particlePositions[i * 3];
                     positions[vertexpos++] = particlePositions[i * 3 + 1];
@@ -113,12 +116,12 @@ function GlobeNetwork(props: GlobeProps) {
                     positions[vertexpos++] = particlePositions[j * 3 + 2];
 
                     colors[colorpos++] = alpha;
-                    colors[colorpos++] = alpha;
-                    colors[colorpos++] = alpha;
+                    colors[colorpos++] = alphaGB;
+                    colors[colorpos++] = alphaGB;
 
                     colors[colorpos++] = alpha;
-                    colors[colorpos++] = alpha;
-                    colors[colorpos++] = alpha;
+                    colors[colorpos++] = alphaGB;
+                    colors[colorpos++] = alphaGB;
 
                     numConnected++;
                 }

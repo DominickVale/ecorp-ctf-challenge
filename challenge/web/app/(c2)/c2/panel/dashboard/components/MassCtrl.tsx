@@ -67,7 +67,7 @@ const { randomData } = props
           <div className="relative h-16 w-32">
             <Image className="" src={massCtrlDeco} alt="" fill />
           </div>
-          <div className="absolute right-[-2rem] top-[-120%]">
+          <div className="absolute right-[-2rem] top-[-80%]">
             <div className="relative h-56 w-56">
               <Image className="" src={politicalSpectrum} alt="politicalSpectrum" fill />
             </div>

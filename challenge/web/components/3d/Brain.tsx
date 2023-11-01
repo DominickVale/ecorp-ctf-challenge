@@ -21,7 +21,7 @@ type BrainModelProps = {
 const ANIM_DAMPEN_RATIO = 0.4;
 const ANIM_DAMPEN_TSTEP = 0.1;
 
-const BrainModel = React.forwardRef<THREE.Group, BrainModelProps>((props, ref) => {
+const BrainModel = React.forwardRef<THREE.Mesh | undefined, BrainModelProps>((props, ref) => {
     const { wireframeColor, dotsColor, followMouse = true } = props;
     const { camera } = useThree();
     const { nodes } = useGLTF("/brain.gltf") as GLTFResult;
@@ -39,6 +39,9 @@ const BrainModel = React.forwardRef<THREE.Group, BrainModelProps>((props, ref) =
 
     const { width, height } = useWindowSize();
     const isDesktop = width > 1000;
+
+    // I still haven't figured out why i can't rotate the <Float group component directly... but k.
+    React.useImperativeHandle(ref, () => brainRef.current || undefined);
 
     function handleMouseMove(e: MouseEvent) {
         mouseRef.current.x = (e.clientX / width) * 2 - 1;
@@ -135,7 +138,6 @@ const BrainModel = React.forwardRef<THREE.Group, BrainModelProps>((props, ref) =
             rotationIntensity={0.3}
             floatIntensity={1}
             floatingRange={isDesktop ? [-10, 10] : [-5, 5]}
-            ref={ref}
             {...props}
         >
             <group>
@@ -145,7 +147,7 @@ const BrainModel = React.forwardRef<THREE.Group, BrainModelProps>((props, ref) =
                     position={isDesktop ? [200, 25, -20] : [0, height / 10, 0]}
                     rotation={isDesktop ? undefined : [0, degToRad(-85), 0]}
                 >
-                    <meshBasicMaterial color={wireframeColor || "#969494" } wireframe />
+                    <meshBasicMaterial color={wireframeColor || "#969494"} wireframe />
                 </mesh>
 
                 {brainLoaded && (
@@ -158,7 +160,7 @@ const BrainModel = React.forwardRef<THREE.Group, BrainModelProps>((props, ref) =
                         ]}
                     >
                         <icosahedronGeometry args={[1.2, 4]} />
-                        <meshBasicMaterial color={dotsColor || "#333" } />
+                        <meshBasicMaterial color={dotsColor || "#333"} />
                     </instancedMesh>
                 )}
             </group>

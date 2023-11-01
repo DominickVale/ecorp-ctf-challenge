@@ -6,9 +6,7 @@ import { Canvas } from "@react-three/fiber";
 import BrainModel from "./Brain";
 
 function BrainScene() {
-    const brainRef = useRef<THREE.Group | null>(null);
-
-    return <BrainModel ref={brainRef} position={[100, 20, 20]} scale={[0.8, 0.8, 0.8]} />;
+    return <BrainModel position={[80, 20, 20]} scale={[0.65, 0.65, 0.65]} />;
 }
 
 function BlogScene() {

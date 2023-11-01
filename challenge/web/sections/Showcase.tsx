@@ -1,17 +1,18 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import photo1 from "@/assets/images/device1.png";
 import photo2 from "@/assets/images/device2.png";
 import photo3 from "@/assets/images/device3.png";
 import photo4 from "@/assets/images/device4.png";
+import { GSAP_DESKTOP_MEDIA, GSAP_MOBILE_MEDIA } from "@/common/constants";
 import gsap from "gsap";
-import { createBreakpoint, useIsomorphicLayoutEffect } from "react-use";
+import { ScrollTrigger } from "gsap/all";
+import { useIsomorphicLayoutEffect } from "react-use";
 
 import { GoldenLayoutLines } from "@/components/golden-layout-lines";
 import { ShowcaseItem } from "@/components/ShowcaseItem";
-
 
 interface ShowcaseProps {}
 
@@ -36,50 +37,62 @@ const showcases: Array<ShowcaseItem> = [
     },
 ];
 
-const useBreakpoint = createBreakpoint({ Phone: 768, Laptop: 1280 });
-
 export function Showcase(props: ShowcaseProps) {
     const comp = useRef(null);
     const imgSm1 = useRef(null);
     const imgBig1 = useRef(null);
     const imgSm2 = useRef(null);
     const imgBig2 = useRef(null);
-    const breakpoint = useBreakpoint();
     const scrollProgres = useRef(0);
     const [activeItem, setActiveItem] = useState(0);
 
-    useIsomorphicLayoutEffect(() => {
-        if (activeItem) {
-            gsap.utils.toArray("[data-animate-id]").forEach((el, i) => {
-                if (!el) {
-                    console.error("no el");
-                    return;
-                }
 
-                if (breakpoint === "Laptop") {
+    const onResize = (e: any) => {
+        ScrollTrigger.refresh();
+    };
+
+    useEffect(() => {
+        window.addEventListener("resize", onResize);
+        return () => window.removeEventListener("resize", onResize);
+    }, []);
+
+    useIsomorphicLayoutEffect(() => {
+        const mm = gsap.matchMedia();
+
+        mm.add(GSAP_DESKTOP_MEDIA, () => {
+            if (activeItem) {
+                gsap.utils.toArray("[data-animate-id]").forEach((el, i) => {
+                    gsap.set("[data-animate-id]", { left: 0 });
+                    if (!el) return;
                     if (i === activeItem - 1) {
                         gsap.to(el, { opacity: 1, duration: 0.5 });
-                        gsap.set(el, { display: "block"})
+                        gsap.set(el, { display: "block" });
                     } else {
                         gsap.to(el, { opacity: 0, duration: 0.5 });
-                        gsap.set(el, { display: "none"})
+                        gsap.set(el, { display: "none" });
                     }
-                } else {
+                });
+            } else {
+                gsap.set("[data-animate-id]", { opacity: 0, display: "none" });
+            }
+        });
+        mm.add(GSAP_MOBILE_MEDIA, () => {
+            gsap.set("[data-animate-id]", { opacity: 1 });
+            if (activeItem) {
+                gsap.utils.toArray("[data-animate-id]").forEach((el, i) => {
+                    if (!el) return;
                     if (i === activeItem - 1) {
                         gsap.to(el, { left: 0, duration: 0.5 });
                     } else {
                         gsap.to(el, { left: "-180vw", duration: 0.5 });
                     }
-                }
-            });
-        } else {
-            if (breakpoint === "Laptop") {
-                gsap.set("[data-animate-id]", { opacity: 0, display: "none" });
+                });
             } else {
                 gsap.set("[data-animate-id]", { left: "-180vw" });
             }
-        }
-    }, [activeItem, breakpoint]);
+        });
+        return () => mm.revert();
+    }, [activeItem]);
 
     useIsomorphicLayoutEffect(() => {
         const scrollTrigger: ScrollTrigger.Vars = {
@@ -88,6 +101,7 @@ export function Showcase(props: ShowcaseProps) {
             end: "+=5000 top",
             scrub: 1,
             pin: true,
+            invalidateOnRefresh: true,
             onUpdate: (self) => {
                 const progress = Number(self.progress.toFixed(3));
                 scrollProgres.current = progress;
@@ -98,13 +112,16 @@ export function Showcase(props: ShowcaseProps) {
             },
         };
 
+        const mm = gsap.matchMedia();
+        mm.add(GSAP_DESKTOP_MEDIA, () => {
+            gsap.set("div[data-animate-id]", { opacity: 0 });
+        });
+
+        mm.add(GSAP_MOBILE_MEDIA, () => {
+            gsap.set("div[data-animate-id]", { left: "-180vw" });
+        });
+
         const ctx = gsap.context((self) => {
-            if (breakpoint === "Laptop") {
-                gsap.set("div[data-animate-id]", { opacity: 0 });
-            } else {
-                gsap.set("div[data-animate-id]", { left: "-180vw" });
-            }
-            // animate with gsap
             const tl1 = gsap
                 .timeline()
                 .to(imgSm1.current, { y: "-190vh", duration: 1.9, ease: "sine.inOut" })
@@ -116,8 +133,12 @@ export function Showcase(props: ShowcaseProps) {
 
             const masterTimeline = gsap.timeline({ scrollTrigger }).add(tl1, "<").add(tl2, "<50%");
         }, comp);
-        return () => ctx.revert(); // <- Cleanup!
-    }, [breakpoint]);
+
+        return () => {
+            mm.revert();
+            ctx.revert();
+        };
+    }, []);
 
     // @todo: refactor into smaller components
     return (

@@ -12,9 +12,12 @@ import { faker } from "@faker-js/faker";
 import { Client, StaffUser } from "@prisma/client";
 import { QueryClient, QueryClientProvider, useMutation, useQuery } from "@tanstack/react-query";
 import request, { gql } from "graphql-request";
+import gsap from "gsap";
+import CustomEase from "gsap/CustomEase";
 import { useMount } from "react-use";
 
 import { cn } from "@/lib/utils";
+import C2Scene from "@/components/3d/C2Scene";
 import Button from "@/components/buttons/button";
 import { Line } from "@/components/decorations/line";
 import { Input } from "@/components/inputs/input";
@@ -31,11 +34,12 @@ import {
     GetStaffUserDoc,
 } from "@/app/(c2)/c2/panel/gql-docs";
 
-import Modal from "./components/Modal";
 import BackgroundDecoration from "./components/BackgroundDecoration";
-import C2Scene from "@/components/3d/C2Scene";
 
 const Clock = dynamic(() => import("./components/Clock"), { ssr: false });
+
+gsap.registerPlugin(CustomEase);
+
 interface DashboardProps {}
 
 const URL = process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT_URL!;
@@ -139,6 +143,7 @@ function Dashboard(props: DashboardProps) {
         queryFn: async () => request(URL, GetClientsDoc),
     });
     const [selectedClient, setSelectedClient] = useState<Client | null>(null);
+    const [isStopped, setIsStopped] = useState(false);
 
     const handleClientClick = (client: Client) => {
         setSelectedClient(client);
@@ -149,23 +154,28 @@ function Dashboard(props: DashboardProps) {
     };
 
     const panic = async () => {
-        await fetch(`/api/v1/dev/panic`, {
-            method: "POST",
-            credentials: "same-origin",
-            mode: "same-origin",
-            cache: "no-cache",
-            referrerPolicy: "origin",
-            headers: {
-                "Content-Type": "application/json",
-                Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
-                "Accept-Language": "en-US,en;q=0.5",
-                "Accept-Encoding": "gzip, deflate, br",
-                "Upgrade-Insecure-Requests": "1",
-                "Sec-Fetch-Dest": "document",
-                "Sec-Fetch-Mode": "navigate",
-                "Sec-Fetch-Site": "same-origin",
-            },
-        });
+        try {
+            await fetch(`/api/v1/dev/panic`, {
+                method: "POST",
+                credentials: "same-origin",
+                mode: "same-origin",
+                cache: "no-cache",
+                referrerPolicy: "origin",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+                    "Accept-Language": "en-US,en;q=0.5",
+                    "Accept-Encoding": "gzip, deflate, br",
+                    "Upgrade-Insecure-Requests": "1",
+                    "Sec-Fetch-Dest": "document",
+                    "Sec-Fetch-Mode": "navigate",
+                    "Sec-Fetch-Site": "same-origin",
+                },
+            });
+            setIsStopped(true);
+        } catch (e) {
+            console.log(e);
+        }
     };
 
     const onSetLvl = () => {
@@ -188,7 +198,6 @@ function Dashboard(props: DashboardProps) {
         const id = prompt("Enter staff user id to delete");
         if (id) deleteMutation.mutate({ i: id });
     };
-    
 
     return (
         <div className="relative grid h-screen grid-cols-2 items-start gap-8 bg-background-dark px-14 py-8 text-background-light 3xl:flex 3xl:justify-between">
@@ -196,10 +205,10 @@ function Dashboard(props: DashboardProps) {
                 <title>E-Corp C2 Dashboard</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <BackgroundDecoration />
+            <BackgroundDecoration isStopped={isStopped} />
 
-            <section className="relative flex h-full w-full flex-col content-between justify-between">
-            <C2Scene />
+            <section className="relative z-40 flex h-full w-full flex-col content-between justify-between">
+                <C2Scene isStopped={isStopped} />
                 <nav className="mb-8 flex items-center">
                     <NavElement>
                         <Clock />
@@ -211,7 +220,9 @@ function Dashboard(props: DashboardProps) {
                     <Line o="bottom" className="mx-2 h-1 w-10" light isBg={false} />
                     <NavElement>
                         LVL {adminMode ? 0 : 1}&nbsp;&nbsp;
-                        <small className="font-normal">(&nbsp;{adminMode ? "ADMIN" : "VIEW ONLY"}&nbsp;)</small>
+                        <small className="font-normal">
+                            (&nbsp;{adminMode ? "ADMIN" : "VIEW ONLY"}&nbsp;)
+                        </small>
                     </NavElement>
                 </nav>
                 {adminMode && (
@@ -304,7 +315,7 @@ function Dashboard(props: DashboardProps) {
                     </div>
 
                     {isLoading ? (
-                        <p className="h-[28vh] mt-8">Loading...</p>
+                        <p className="mt-8 h-[28vh]">Loading...</p>
                     ) : isError ? (
                         <p className="text-red-500">Error fetching data.</p>
                     ) : (
@@ -392,9 +403,9 @@ function Dashboard(props: DashboardProps) {
                 <NewsPanel o="right" className="" />
             </section>
 
-            {selectedClient && (
-                <Modal isOpen={true} onClose={handleCloseModal} client={selectedClient} />
-            )}
+            {/* {selectedClient && ( */}
+            {/*     <Modal isOpen={true} onClose={handleCloseModal} client={selectedClient} /> */}
+            {/* )} */}
         </div>
     );
 }

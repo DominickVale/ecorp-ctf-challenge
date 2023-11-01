@@ -43,7 +43,7 @@ export function NewsPanel(props: NewsPanelProps) {
     return (
         <div
             className={cn(
-                "relative w-max rounded-xl bg-background-light pt-8",
+                "relative w-max min-w-[37rem] rounded-xl bg-background-light pt-8",
                 props.o === "left" ? "rounded-tl-none " : "rounded-tr-none",
                 props.className
             )}
@@ -67,18 +67,27 @@ export function NewsPanel(props: NewsPanelProps) {
             </div>
             <div className="mx-6 mb-2 flex flex-col gap-1">
                 <NewsElement
-                    date="05/11/2030"
-                    content="Lorem ipsum dolor sit amet consectetur. Urna enim penatibus dolor vivamus gravida."
-                    important={props.o === "left"}
-                />
-                <NewsElement
-                    date="05/11/2030"
-                    content="Lorem ipsum dolor sit amet consectetur. Urna enim penatibus dolor vivamus gravida."
+                    date="06/11/2030"
+                    content="Level 0 panel is WIP with ETA Q4."
                     important
                 />
+                { props.o === "left" ? (
+                  <NewsElement
+                      date="05/11/2030"
+                      content="Neurotap giveaway events planned next week. Increase emotional m. idx."
+                      important
+                  />
+                    ) :
+                  (
+                  <NewsElement
+                      date="25/10/2030"
+                      content="Level 1 user search functionality is still WIP due to bugs."
+                  />
+                  )
+                }
                 <NewsElement
-                    date="05/11/2030"
-                    content="Lorem ipsum dolor sit amet consectetur. Urna enim penatibus dolor vivamus gravida."
+                    date="24/10/2030"
+                    content="Make sure to join us for the security brief. (Monday to tuesday)"
                 />
             </div>
             <div className="relative mb-2">

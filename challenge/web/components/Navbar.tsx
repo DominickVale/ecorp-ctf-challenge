@@ -40,7 +40,7 @@ export function Navbar(props: NavbarProps) {
             gsap.to(underline.current, {
                 duration: 0.5,
                 ease: "power2.out",
-                x: (activeLink as HTMLAnchorElement).offsetLeft,
+                translateX: (activeLink as HTMLAnchorElement).offsetLeft,
                 width: activeLink.clientWidth,
             });
         }

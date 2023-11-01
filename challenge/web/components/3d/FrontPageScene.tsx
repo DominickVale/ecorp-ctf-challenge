@@ -1,24 +1,19 @@
 "use client";
 
-import { Suspense, useEffect, useLayoutEffect, useRef } from "react";
-import { View } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
-import { useIsomorphicLayoutEffect, useWindowSize } from "react-use";
+import { Suspense, useEffect, useRef } from "react";
+import { useIsomorphicLayoutEffect } from "react-use";
 import { degToRad } from "three/src/math/MathUtils";
 
+import { GSAP_DESKTOP_MEDIA, GSAP_MOBILE_MEDIA } from "@/common/constants";
 import BrainModel from "./Brain";
-
-const commonScrollTrigger: ScrollTrigger.Vars = {};
 
 gsap.registerPlugin(ScrollTrigger);
 
 function BrainScene() {
-    const brainRef = useRef<THREE.Group | null>(null);
-    const brainMeshRef = useRef<THREE.Mesh | null>(null);
-    const { width, height } = useWindowSize();
-    const isDesktop = width > 1000;
+    const brainRef = useRef<THREE.Mesh | null>(null);
 
     const onResize = (e: any) => {
         ScrollTrigger.refresh();
@@ -26,153 +21,141 @@ function BrainScene() {
 
     useEffect(() => {
         window.addEventListener("resize", onResize);
+        return () => window.removeEventListener("resize", onResize);
     }, []);
 
-    // cleanup
-    useLayoutEffect(
-        () => () => {
-            window.removeEventListener("resize", onResize);
-        },
-        []
-    );
-
     useIsomorphicLayoutEffect(() => {
-        const ctx = gsap.context(() => {
+        const mm = gsap.matchMedia();
+
+        mm.add(GSAP_DESKTOP_MEDIA, () => {
             if (!brainRef.current) return;
-
-            if (isDesktop) {
-                gsap.timeline({
-                    scrollTrigger: {
-                        trigger: "#hero",
-                        scrub: 1,
-                        start: "top top",
-                        end: "bottom+=100% bottom",
-                        invalidateOnRefresh: true,
-                        immediateRender: false,
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#hero",
+                    scrub: 1,
+                    start: "top top",
+                    end: "bottom+=100% bottom",
+                    invalidateOnRefresh: true,
+                    immediateRender: false,
+                },
+            })
+                .fromTo(
+                    "canvas",
+                    {
+                        autoAlpha: 0.3,
                     },
-                })
-                    .fromTo(
-                        "canvas",
-                        {
-                            autoAlpha: isDesktop ? 0.3 : 0.2,
-                        },
-                        {
-                            autoAlpha: 1,
-                            duration: 2,
-                            ease: "linear",
-                        }
-                    )
-                    .fromTo(
-                        brainRef.current.scale,
-                        {
-                            x: 0.8,
-                            y: 0.8,
-                            z: 0.8,
-                        },
-                        {
-                            x: 1,
-                            y: 1,
-                            z: 1,
-                            duration: 1,
-                            ease: "sine.inOut",
-                        },
-                        "<"
-                    )
-                    .to(
-                        brainRef.current.position,
-                        {
-                            x: -380,
-                            duration: 2,
-                            ease: "sine.inOut",
-                        },
-                        "<"
-                    );
+                    {
+                        autoAlpha: 1,
+                        duration: 0.5,
+                        ease: "linear",
+                    }
+                )
 
-                gsap.timeline({
-                    scrollTrigger: {
-                        trigger: "footer",
-                        scrub: 1,
-                        start: "top-=50% center",
-                        end: "bottom bottom",
-                        invalidateOnRefresh: true,
-                        immediateRender: false,
-                    },
-                })
-                    .to(brainRef.current.position, {
-                        x: 80,
+                .to(
+                    brainRef.current.position,
+                    {
+                        x: -180,
                         duration: 0.5,
                         ease: "sine.inOut",
-                    })
-                    .to(
-                        brainRef.current.scale,
-                        {
-                            x: 0.8,
-                            y: 0.8,
-                            z: 0.8,
-                            duration: 0.5,
-                            ease: "sine.inOut",
-                        },
-                        "<"
-                    );
-            } else {
-                gsap.set("canvas", { autoAlpha: 0.3 });
-                gsap.timeline({
-                    scrollTrigger: {
-                        trigger: "#hero",
-                        scrub: 1,
-                        start: "top top",
-                        end: "bottom+=100% bottom",
-                        invalidateOnRefresh: true,
-                        immediateRender: false,
                     },
+                    "<"
+                );
+
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: "footer",
+                    scrub: 1,
+                    start: "top-=50% center",
+                    end: "bottom bottom",
+                    invalidateOnRefresh: true,
+                    immediateRender: false,
+                },
+            })
+                .to(brainRef.current.position, {
+                    x: 200,
+                    duration: 0.5,
+                    ease: "sine.inOut",
                 })
-                    .fromTo(
-                        "canvas",
-                        {
-                            autoAlpha: isDesktop ? 0.3 : 0.2,
-                        },
-                        {
-                            autoAlpha: 1,
-                            duration: 0.5,
-                            ease: "linear",
-                        }
-                    )
-
-                    .to(brainRef.current.rotation, {
-                        y: 2,
-                        duration: 1,
-                        ease: "linear",
-                    });
-
-                gsap.timeline({
-                    scrollTrigger: {
-                        trigger: "footer",
-                        scrub: 1,
-                        start: "top-=50% center",
-                        end: "bottom bottom",
-                        invalidateOnRefresh: true,
-                        immediateRender: false,
+                .to(
+                    brainRef.current.scale,
+                    {
+                        x: 0.8,
+                        y: 0.8,
+                        z: 0.8,
+                        duration: 0.5,
+                        ease: "sine.inOut",
                     },
-                })
-                    .to(brainRef.current.rotation, {
-                        y: degToRad(-90),
-                        ease: "linear",
-                    })
-                    .to(
-                        brainRef.current.scale,
-                        {
-                            x: 0.8,
-                            y: 0.8,
-                            z: 0.8,
-                            duration: 0.5,
-                            ease: "sine.inOut",
-                        },
-                        "<"
-                    );
-            }
+                    "<"
+                );
         });
+        mm.add(GSAP_MOBILE_MEDIA, () => {
+            if (!brainRef.current) return;
+            gsap.set("canvas", { autoAlpha: 0.3 });
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#hero",
+                    scrub: 1,
+                    start: "top top",
+                    end: "bottom+=100% bottom",
+                    invalidateOnRefresh: true,
+                    immediateRender: false,
+                },
+            })
+                .fromTo(
+                    "canvas",
+                    {
+                        autoAlpha: 0.2,
+                    },
+                    {
+                        autoAlpha: 1,
+                        duration: 0.5,
+                        ease: "linear",
+                    }
+                )
+                .to(
+                    brainRef.current.scale,
+                    {
+                        x: 1,
+                        y: 1,
+                        z: 1,
+                        duration: 0.5,
+                        ease: "sine.inOut",
+                    },
+                    "<"
+                )
+                .to(brainRef.current.rotation, {
+                    y: degToRad(90),
+                    duration: 1,
+                    ease: "linear",
+                });
 
-        return () => ctx.revert();
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: "footer",
+                    scrub: 1,
+                    start: "top-=50% center",
+                    end: "bottom bottom",
+                    invalidateOnRefresh: true,
+                    immediateRender: false,
+                },
+            })
+                .to(brainRef.current.rotation, {
+                    y: degToRad(-90),
+                    ease: "linear",
+                })
+                .to(
+                    brainRef.current.scale,
+                    {
+                        x: 0.2,
+                        y: 0.2,
+                        z: 0.2,
+                        duration: 0.5,
+                        ease: "sine.inOut",
+                    },
+                    "<"
+                );
+        });
+        return () => mm.revert();
     }, []);
 
     return <BrainModel ref={brainRef} />;

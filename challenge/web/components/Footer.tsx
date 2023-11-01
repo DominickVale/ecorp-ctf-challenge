@@ -1,16 +1,14 @@
 "use client";
 
-import React, { Suspense } from "react";
+import React from "react";
 import Image from "next/image";
 import decorativeFooter from "@/assets/svg/decorative-footer-1.svg";
-import { Canvas } from "@react-three/fiber";
 
 import Button from "@/components/buttons/button";
 import { GoldenLayoutLines } from "@/components/golden-layout-lines";
 import { H2 } from "@/components/typography";
 
-import Earth from "./3d/Earth";
-import GlobeNetwork from "./3d/GlobeNetwork";
+import FooterScene from "./3d/FooterScene";
 
 interface FooterProps {}
 
@@ -60,22 +58,7 @@ export const Footer = React.forwardRef<HTMLDivElement, FooterProps>((props, ref)
         >
             <GoldenLayoutLines forceShowAll />
             <div className="relative row-span-2 flex h-max flex-col justify-between rounded-[3.168rem] bg-background-dark px-4 pb-20 pt-40 md:px-16 lg:min-h-[80vh] lg:rounded-[5%] lg:px-12 2xl:px-28">
-                <div
-                    id="footerGlobe"
-                    className="pointer-events-none absolute right-[10%] top-[16%] z-10 h-[16rem] w-[16rem] opacity-30 lg:opacity-100"
-                >
-                    <Canvas
-                        camera={{
-                            fov: 60,
-                            position: [0, 0, 25],
-                        }}
-                    >
-                        <Suspense fallback={null}>
-                            <GlobeNetwork position={[0.35, 0, 0]} />
-                            <Earth position={[0.35, 0, 0]} />
-                        </Suspense>
-                    </Canvas>
-                </div>
+            <FooterScene />
                 <section className="z-30 mb-16 lg:mb-12">
                     <Image
                         className="absolute left-14 top-14"

@@ -83,7 +83,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div className="relative col-start-2 col-end-[15]">{children}</div>
 
         <div className="relative col-span-1 col-start-[15] row-start-1 row-end-1 hidden place-items-center justify-center md:flex">
-          <small className="text-xs font-medium text-stone-500">420.666</small>
+          {/* <small className="text-xs font-medium text-stone-500">420.666</small> */}
         </div>
         <div className="col-start-2 col-end-15 mb-6 md:mb-12 flex grid-cols-[repeat(13,1fr)] flex-col content-center items-center justify-center border-t-gray-500 text-xs md:grid md:border-t-1 h-full">
           <p className="col-span-2 col-start-2 flex min-w-max flex-row gap-11">

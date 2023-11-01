@@ -16,12 +16,13 @@ const logRejection = (ctx: ValidationContext | null, error: GraphQLError) => {
 
 const armor = new ApolloArmor({
     blockFieldSuggestion: {
-        enabled: true,
+        enabled: false,
     },
     costLimit: {
         onReject: [logRejection],
     },
     maxAliases: {
+        allowList: [],
         onReject: [logRejection],
         n: 3,
     },
