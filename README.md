@@ -64,3 +64,17 @@ Useful links
 - https://youtu.be/NPDp7GHmMa0
 - https://www.apollographql.com/blog/graphql/security/securing-your-graphql-api-from-malicious-queries/
 - https://book.hacktricks.xyz/pentesting-web/hacking-jwt-json-web-tokens#tamper-data-without-modifying-anything
+
+## Hints:
+1.  Intel told us that they have a WIP C2 dashboard online. They must be trying to hide it in some way though... Maybe we can find the url in the robots.txt?
+
+2.  That's a lot of entries. That is such a futile attempt at concealing the real url. Luckily i know how to test for a valid response for each one of those urls!
+
+3.  That's a lot of entries. That is such a futile attempt at concealing the real url. Luckily i know how to check for each one of those urls!
+
+4.  Maybe the dashboard only allows employers with this neurotap device to access the page... How could they possibly test for which device i'm using?
+
+5.  Let's look at the source code...
+
+6.  This dashboard is full of logic bugs and access issues!
+
