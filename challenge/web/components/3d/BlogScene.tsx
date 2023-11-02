@@ -1,12 +1,11 @@
-"use client";
-
-import { Suspense, useRef } from "react";
+"use client"
+import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 
 import BrainModel from "./Brain";
 
 function BrainScene() {
-    return <BrainModel position={[80, 20, 20]} scale={[0.65, 0.65, 0.65]} />;
+    return <BrainModel position={[80, -20, 20]} scale={[0.65, 0.65, 0.65]} />;
 }
 
 function BlogScene() {

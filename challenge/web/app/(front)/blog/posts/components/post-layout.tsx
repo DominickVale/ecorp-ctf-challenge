@@ -104,9 +104,10 @@ export default function PostLayout(props: Props) {
                     {renderFurtherReadings(furtherReadingsData, id)}
                 </section>
             </main>
-            <Footer />
-
-            <BlogScene />
+            <div className="row-start-3 relative">
+                <Footer />
+                <BlogScene />
+            </div>
         </>
     );
 }

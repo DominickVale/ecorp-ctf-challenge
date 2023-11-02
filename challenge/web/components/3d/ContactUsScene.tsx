@@ -1,4 +1,4 @@
-import { Suspense, useRef } from "react";
+import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 
 import BrainModel from "./Brain";

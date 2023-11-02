@@ -26,11 +26,14 @@ export default function ContactUs() {
     const formData = new FormData(target);
     const name = formData.get("name") as string;
     const message = formData.get("message") as string;
+    const email = formData.get("email") as string;
     const supportType = formData.get("support-type") as SupportType;
 
     let _errors: string[] = [];
     if (name.length < 2) _errors.push("Name must be at least 2 characters long");
     if (message.length < 26) _errors.push("Message must be at least 26 characters long");
+    if (email.length <= 1) _errors.push("Please fill out the email form so we can contact you back");
+    if (supportType.length < 4) _errors.push("Please specify the nature of your inquiry");
 
     if (_errors.length > 0) {
       setErrors(_errors);
@@ -95,7 +98,7 @@ export default function ContactUs() {
             <div className="flex flex-col gap-6 mt-12">
               <div className="flex gap-6 flex-wrap xl:flex-nowrap">
                 <Input id="name" name="name" type="text" placeholder="Your full name" />
-                <Input id="name" name="name" type="email" placeholder="Your e-mail" />
+                <Input id="email" name="email" type="email" placeholder="Your e-mail" />
               </div>
               <Textarea id="message" name="message" placeholder="Your message" />
               <div className="flex flex-wrap-reverse gap-6 xl:flex-nowrap">
@@ -129,7 +132,7 @@ export default function ContactUs() {
             )}
             {isSent && (
               <div className="mt-3">
-                <p className="text-green-500">Message sent. Will be reviewed shortly.</p>
+                <p className="text-green-500">Message sent. Thank you for contacting us.</p>
               </div>
             )}
           </form>
