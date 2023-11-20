@@ -52,16 +52,16 @@ Useful links
  (You can also find the write up [here](./writeup.md))
 <details>
   <summary>Spoiler warning</summary>
-    ## Hints:
-    1. They say the dashboard in the clearnet... How would they try to hide it from search engines?
-    2. Maybe we can try to find out what kind of device ecorp employers are using by sending a payload in the contact-us section and spoofing it... Perhaps externally loaded content could work? The request should have the right headers to login.
-    3. This login page looks like it shouldn't be accessed with a browser.. Maybe looking at the source will reveal something.
-    4. Hmm. This security question login system looks mighty flawed for non-neurotap devices... I'm fairly sure one of the employers spilled too much information about them on their blogpost. Maybe we can find something useful to try and wing it.
-    5. This dashboard probably has some admin menu hidden. Let's intercept some request responses and change stuff to see what happens... Maybe the access level has something to do with it?
+    <b>Hints</b>:
+    1. They say the dashboard in the clearnet... How would they try to hide it from search engines?<br/>
+    2. Maybe we can try to find out what kind of device ecorp employers are using by sending a payload in the contact-us section and spoofing it... Perhaps externally loaded content could work? The request should have the right headers to login.<br/>
+    3. This login page looks like it shouldn't be accessed with a browser.. Maybe looking at the source will reveal something.<br/>
+    4. Hmm. This security question login system looks mighty flawed for non-neurotap devices... I'm fairly sure one of the employers spilled too much information about them on their blogpost. Maybe we can find something useful to try and wing it.<br/>
+    5. This dashboard probably has some admin menu hidden. Let's intercept some request responses and change stuff to see what happens... Maybe the access level has something to do with it?<br/>
 
-    **Objectives**:
+    **Original objectives (changed slightly with time)**:
     - [x] Reconnaissance: find the blog post of the cat obsessed high ranking team member (1st one in "latest & greatest")
-    - [x] find hidden dashboard: on url /c2/panel by checking the robots.txt (the file will be spammed with entries to make it harder to find, player will either just wing it or use burp suite to test the paths for the only ones that don't 404, the list is short, so they don't dos us lol)
+    - [x] find hidden dashboard: on url /c2/panel by checking the robots.txt (the file will be spammed with entries to make it harder to find, player will either just wing it or use burp suite / python scripts to test the paths for the only ones that don't 404, the list is short, so they don't dos us lol)
     - [x] the dashboard will have a user agent filter. Player will need to spoof it. They'll get the user agent by sending a malicious image in a message in the contact-us section (Send to sales support, which is the cat lady).
         The admin bot will make a request with the needed user agent to fake an employer viewing the image and leaking the user agent.
     - [x] once the dashboard is accessed, the player will need to discover graphql by looking at the source code, then play with mutation names to find the right ones by enumerating the schema via typos (introspection disabled, but suggestions enabled)...
