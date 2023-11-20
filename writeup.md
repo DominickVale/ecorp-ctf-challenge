@@ -9,7 +9,11 @@ We got some hints from the ctf description:
 
 ## Finding the Dashboard
 As mentioned, one of the ways to check for hidden paths without having to start using crawlers is to just check the robots.txt.
-In this case, we find an ugly sight. The file is filled with seemingly random paths, probably in an attempt to conceal the actual dashboard. But of course, that is futile.
+In this case, we find an ugly sight.
+
+![robots.txt](./images/robots.png)
+
+The file is filled with seemingly random paths, probably in an attempt to conceal the actual dashboard. But of course, that is futile.
 There are many ways to check which ones of those paths work and which don't. Let's take the most obvious choices, the ones that start with c2, dashboard or contain "login".
 We can first try a couple of them manually. /c2, /dashboard and /login all give 404.
 Given that we can test for the 404, let's try writing a quick script to weed out the 404s
@@ -110,18 +114,26 @@ X-Forwarded-Proto: https
 ```
 
 ## Spoofing User Agent
-That user-agent looks like our key. Let's use it. On chrome i'd use the Network Conditions tab. On firefox i just use [this extension](https://add0n.com/useragent-switcher.html)
+That user-agent looks like our key. Let's use it. On chrome i'd use the Network Conditions tab. On firefox i just use [this extension.](https://add0n.com/useragent-switcher.html).
+
 Going back to /c2/panel, we are greeted with what seems to be a login page. Of course we don't have a neurotap on us, so we won't be logging in as they want us to.
 
 Let's start checking out which requests are sent when the page is first loaded.
 We have a post request to api/graphql. Hmmmm this gives me a hunch that they might be using graphql, not sure.
 This is the request body:
-```{"query":"\n    query gsu($id: String!) {\n        getStaffUser(id: $id) {\n            id\n            level\n            securityQuestion\n            username\n        }\n    }\n","variables":{"id":"32FM19790306873AEB"},"operationName":"gsu"}```
+```json
+{"query":"\n    query gsu($id: String!) {\n        getStaffUser(id: $id) {\n            id\n            level\n            securityQuestion\n            username\n        }\n    }\n","variables":{"id":"32FM19790306873AEB"},"operationName":"gsu"}
+```
 and this is the response:
-``````
+```json
 {"data":{"getStaffUser":{"id":"32FM19790306873AEB,"level":1,"securityQuestion":"What is your favorite animal?","username":"Marilie_Ruecker"}}}
+```
+
 Yeah, i think they are using graphql.
 Let's check out the source code and see what we can find.
+
+![source code](./images/source1.png)
+
 They seem to be using nextjs in a production build, which means that the source is going to be split into many chunks. 
 Let's start with the one that looks it might be the most useful: _next/static/chunks/app/(c2)/c2/panel/login/page-(uuid).js and pretty-print it.
 
@@ -277,15 +289,15 @@ Copy-pasting the request in the console.log gives us a 403. Sounds like we don't
 
 In the network tab, we can try to intercept the response of the post to api/graphql, which seems to return the staff member's data along with its level.
 Once intercepted, we can change the level from 1 to 0 and see what happens.
+
+![burp suite intercept response](./images/burp1.png)
+
+![admin panel](./images/adminpanel.png)
 And there we go, we the admin panel is rendered. There is also the panic button, which if clicked, just sends the request we already tried.
 There seems to also be a SET LVL button. Which is also a graphql mutation we found in the source code.
 Clicking on SET LVL it asks us for the ID (which remember, is only the part in between the --- of our user agent, so 32FM19790306873AEB) and the new level to set (0).
 In the network tab we can see that the request actually went through and gave us a new cookie, so they probably missed checking for authentication on the backend for this endpoint.
 Clicking on panic, and this time we get a 200, with our flag.
-
-
-## Alternative, non intended solution
-The _devSetLevel mutation directly doesn't check for authentication, which means that using that returns the already privileged cookie, effectively bypassing the c2Login.
 
 
 This was my first time creating a CTF, and as expected, it didn't go down super well, but i learned a lot of things, and i hope it taught you something about real world testing scenarios: if there's an architecture overhaul, you can be damn sure some bugs are going to pop out. 
