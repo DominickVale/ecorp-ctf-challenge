@@ -52,17 +52,12 @@ Useful links
  (You can also find the write up [here](./writeup.md))
 <details>
   <summary>Spoiler warning</summary>
-    ## Hints:
-    1. They say the dashboard in the clearnet... How would they try to hide it from search engines?
-    
-    2. Maybe we can try to find out what kind of device ecorp employers are using by sending a payload in the contact-us section and spoofing it... Perhaps externally loaded content could work? The request should have the right headers to login.
-    
-    3. This login page looks like it shouldn't be accessed with a browser.. Maybe looking at the source will reveal something.
-    
-    4. Hmm. This security question login system looks mighty flawed for non-neurotap devices... I'm fairly sure one of the employers spilled too much information about them on their blogpost. Maybe we can find something useful to try and wing it.
-    
-    5. This dashboard probably has some admin menu hidden. Let's intercept some request responses and change stuff to see what happens... Maybe the access level has something to do with it?
-    
+    <b>Hints</b>:
+    1. They say the dashboard in the clearnet... How would they try to hide it from search engines?<br/>
+    2. Maybe we can try to find out what kind of device ecorp employers are using by sending a payload in the contact-us section and spoofing it... Perhaps externally loaded content could work? The request should have the right headers to login.<br/>
+    3. This login page looks like it shouldn't be accessed with a browser.. Maybe looking at the source will reveal something.<br/>
+    4. Hmm. This security question login system looks mighty flawed for non-neurotap devices... I'm fairly sure one of the employers spilled too much information about them on their blogpost. Maybe we can find something useful to try and wing it.<br/>
+    5. This dashboard probably has some admin menu hidden. Let's intercept some request responses and change stuff to see what happens... Maybe the access level has something to do with it?<br/>
 
     **Original objectives (changed slightly with time)**:
     - [x] Reconnaissance: find the blog post of the cat obsessed high ranking team member (1st one in "latest & greatest")
