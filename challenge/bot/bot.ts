@@ -13,11 +13,15 @@ async function loadPage(
   html: string,
   browser: puppeteer.Browser,
   userAgent: string
-): Promise<void> {
+): Promise<boolean> {
+  console.log("Loading page...");
   const context: puppeteer.BrowserContext = await browser.createIncognitoBrowserContext();
+  console.log("Created incognito context");
   const page: puppeteer.Page = await context.newPage();
+  console.log("Created new page");
 
   try {
+  console.log("Rendering...");
     page
       .on("console", (message) =>
         console.log(`${message.type().substr(0, 3).toUpperCase()} ${message.text()}`)
@@ -27,18 +31,38 @@ async function loadPage(
       .on("requestfailed", (request) =>
         console.log(`${request.failure().errorText} ${request.url()}`)
       );
+    console.log("Setting user agent: ", userAgent);
     await page.setUserAgent(userAgent);
     await page.setJavaScriptEnabled(false);
     page.setContent(html, { waitUntil: "domcontentloaded", timeout: 2000 });
+    console.log("Loaded page... Temporarily enabling js");
     await page.setJavaScriptEnabled(true);
     await page.evaluate(() => {
       return new Promise((resolve) => setTimeout(resolve, 1500));
     });
+    console.log("Done.");
   } catch (err) {
     console.log(`err in loadPage: ${err}`);
   }
-  await page.close();
-  await context.close();
+  try {
+    await page.close();
+    await context.close();
+    return true
+  } catch (e) {
+    console.log("Error trying to close context: ", e);
+    return false
+  }
+}
+
+async function handleWellnessCheck(socket: net.Socket, browser: puppeteer.Browser): Promise<void> {
+  try {
+    const isAlive = await loadPage("<body><p>test</p></body>", browser, "WELLNESS");
+    const response = isAlive ? "ok" : "error";
+    socket.write(response);
+  } catch (error) {
+    console.error(`Error handling wellness check: ${error}`);
+    socket.write("error");
+  }
 }
 
 (async function () {
@@ -68,7 +92,11 @@ async function loadPage(
         try {
           if (browser) {
             const job = JSON.parse(data.toString());
-            jobsQueue.push(job);
+            if(job.userAgent === "WELLNESS"){
+              handleWellnessCheck(socket, browser)
+            } else {
+              jobsQueue.push(job);
+            }
           } else {
             console.error("Invalid state / no puppeteer browser");
           }

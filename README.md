@@ -29,30 +29,12 @@ docker-compose -p ecorp-ctf-challenge down --rmi all --volumes --remove-orphans 
     But word got out that their implants are actually malicious in nature, stealing their clients data straight from their brains, running ads in their dreams and even manipulating their victims' thoughts to manipulate elections, buy items they don't need and convince everyone they know to buy a Neurotap as well. They must be stopped before they "infect" too many people... 
     Our intel says that they have an entire work in progress C2 dashboard exposed on their clearnet website, and they had recently started migrating back-end architecture. If we're lucky, they might've rushed things and made some mistakes! Find a way to erase all their data and deactivate the Neurotaps safely.
 
-
-**Tags**: reconnaissance, graphql, enumeration, robots.txt, malicious link, minified source code inspection
+**Tags**: reconnaissance, graphql, enumeration, robots.txt, malicious link, minified source code inspection, XSS
 
 **Design**: cyberpunk-like, futuristic user interface.
 
 **Design inspiration**: 
     - [FUI MoodBoard](https://www.behance.net/collection/203026051/FUI)
-
-**Objectives**:
-- [x] Reconnaissance: find the blog post of the cat obsessed high ranking team member (1st one in "latest & greatest")
-- [x] find hidden dashboard: on url /c2/panel by checking the robots.txt (the file will be spammed with entries to make it harder to find, player will either just wing it or use burp suite to test the paths for the only ones that don't 404, the list is short, so they don't dos us lol)
-- [x] the dashboard will have a user agent filter. Player will need to spoof it. They'll get the user agent by sending a malicious image in a message in the contact-us section (Send to sales support, which is the cat lady).
-    The admin bot will make a request with the needed user agent to fake an employer viewing the image and leaking the user agent.
-- [x] once the dashboard is accessed, the player will need to discover graphql by looking at the source code, then play with mutation names to find the right ones by enumerating the schema via typos (introspection disabled, but suggestions enabled)...
-    It is also possible to search for graphql mutation strings in the client's minified source code.
-- [x] the c2Login mutation will be used to login with id being contained in the user agent and password being the favorite animal "cat" (configurable)
-- [x] To access the admin/testing dashboard, they'll need to change the level to 0 when the request comes in by intercepting it and using something like match and replace from burp suite to replace the response data to level:0.
-    - Note: this will only set it client side.
-- [x] to actually temporarily escalate privilege, they'll need to find the _devSetLevel mutation and use it. It's gonna set the jwt level temporarily to 0
-- [x] after that, they'll be able to click the PANIC button which will clear all the clients/victims data and win the flag.
-
-The graphql endpoint will have both graphiql playground and introspection disabled to make it not solvable in 2 minutes. They'll need to work with error messages / suggestions / source code.
-
-The objectives might change slightly as I design it further but this should be the gist of it. It might end up being slightly easier or slightly harder depending on the dashboard design :)
 
 ## Notes
 
@@ -65,16 +47,30 @@ Useful links
 - https://www.apollographql.com/blog/graphql/security/securing-your-graphql-api-from-malicious-queries/
 - https://book.hacktricks.xyz/pentesting-web/hacking-jwt-json-web-tokens#tamper-data-without-modifying-anything
 
-## Hints:
-1.  Intel told us that they have a WIP C2 dashboard online. They must be trying to hide it in some way though... Maybe we can find the url in the robots.txt?
 
-2.  That's a lot of entries. That is such a futile attempt at concealing the real url. Luckily i know how to test for a valid response for each one of those urls!
+# SPOILERS AHEAD. Don't read if you want to try it first :)
+ (You can also find the write up [here](./writeup.md))
+<details>
+  <summary>Spoiler warning</summary>
+    ## Hints:
+    1. They say the dashboard in the clearnet... How would they try to hide it from search engines?
+    2. Maybe we can try to find out what kind of device ecorp employers are using by sending a payload in the contact-us section and spoofing it... Perhaps externally loaded content could work? The request should have the right headers to login.
+    3. This login page looks like it shouldn't be accessed with a browser.. Maybe looking at the source will reveal something.
+    4. Hmm. This security question login system looks mighty flawed for non-neurotap devices... I'm fairly sure one of the employers spilled too much information about them on their blogpost. Maybe we can find something useful to try and wing it.
+    5. This dashboard probably has some admin menu hidden. Let's intercept some request responses and change stuff to see what happens... Maybe the access level has something to do with it?
 
-3.  That's a lot of entries. That is such a futile attempt at concealing the real url. Luckily i know how to check for each one of those urls!
+    **Objectives**:
+    - [x] Reconnaissance: find the blog post of the cat obsessed high ranking team member (1st one in "latest & greatest")
+    - [x] find hidden dashboard: on url /c2/panel by checking the robots.txt (the file will be spammed with entries to make it harder to find, player will either just wing it or use burp suite to test the paths for the only ones that don't 404, the list is short, so they don't dos us lol)
+    - [x] the dashboard will have a user agent filter. Player will need to spoof it. They'll get the user agent by sending a malicious image in a message in the contact-us section (Send to sales support, which is the cat lady).
+        The admin bot will make a request with the needed user agent to fake an employer viewing the image and leaking the user agent.
+    - [x] once the dashboard is accessed, the player will need to discover graphql by looking at the source code, then play with mutation names to find the right ones by enumerating the schema via typos (introspection disabled, but suggestions enabled)...
+        It is also possible to search for graphql mutation strings in the client's minified source code.
+    - [x] the c2Login mutation will be used to login with id being contained in the user agent and password being the favorite animal "cat" (configurable)
+    - [x] To access the admin/testing dashboard, they'll need to change the level to 0 when the request comes in by intercepting it and using something like match and replace from burp suite to replace the response data to level:0.
+        - Note: this will only set it client side.
+    - [x] to actually temporarily escalate privilege, they'll need to find the _devSetLevel mutation and use it. It's gonna set the jwt level temporarily to 0
+    - [x] after that, they'll be able to click the PANIC button which will clear all the clients/victims data and win the flag.
 
-4.  Maybe the dashboard only allows employers with this neurotap device to access the page... How could they possibly test for which device i'm using?
-
-5.  Let's look at the source code...
-
-6.  This dashboard is full of logic bugs and access issues!
-
+    The graphql endpoint will have both graphiql playground and introspection disabled to make it not solvable in 2 minutes. Players will need to work with error messages / suggestions / source code.
+</details>

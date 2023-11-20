@@ -23,6 +23,7 @@ export async function middleware(req: NextRequest) {
         } else if (token) {
             try {
                 await jwtVerify(token.value, new TextEncoder().encode(process.env.JWT_SECRET!));
+                NextResponse.rewrite(new URL("/c2/panel/dashboard", req.url));
             } catch (e: any) {
                 console.log(e);
 
